@@ -119,11 +119,11 @@ class _MyQrCode extends State<MyQrCode> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).padding.top + 60,
+                          height: MediaQuery.of(context).padding.top + 30,
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width > 336
-                              ? 336
+                          width: MediaQuery.of(context).size.width > 320
+                              ? 320
                               : MediaQuery.of(context).size.width,
                           child: Stack(
                             children: [
@@ -131,7 +131,7 @@ class _MyQrCode extends State<MyQrCode> {
                                 child: Image.asset(
                                   'assets/profile_qr.png',
                                   width: MediaQuery.of(context).size.width,
-                                  height: 220,
+                                  height: 190,
                                   fit: BoxFit.contain,
                                 ),
                               ),

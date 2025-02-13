@@ -247,83 +247,113 @@ class _NotificationList extends State<NotificationList> {
         imageRightButton: 'assets/images/task_list.png',
       ),
       backgroundColor: Colors.white,
-      body: FutureBuilder<dynamic>(
-        future: _futureModel, // function where you call your api
-        builder: (context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            // print('snapshot.data.length' + snapshot.data.length);
-            if (snapshot.data.length > 0) {
-              return ListView.builder(
-                shrinkWrap: true, // 1st add
-                physics: ClampingScrollPhysics(), // 2nd
-                // scrollDirection: Axis.horizontal,
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  return card(context, snapshot.data[index]);
-                },
-              );
-            } else {
-              return Container(
-                width: width,
-                margin: EdgeInsets.only(top: height * 30 / 100),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 70,
-                      width: width,
-                      child: Image.asset(
-                        'assets/logo/logo.png',
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: height * 1 / 100),
-                      alignment: Alignment.center,
-                      width: width,
-                      child: Text(
-                        'ไม่พบข้อมูล',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                          fontFamily: 'Sarabun',
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }
-          } else if (snapshot.hasError) {
-            print('error-----');
-            return Container(
+      body: Container(
+        width: width,
+        margin: EdgeInsets.only(top: height * 30 / 100),
+        child: Column(
+          children: [
+            // Container(
+            //   height: 70,
+            //   width: width,
+            //   child: Image.asset(
+            //     'assets/logo/logo.png',
+            //   ),
+            // ),
+            Container(
+              margin: EdgeInsets.only(top: height * 1 / 100),
+              alignment: Alignment.center,
               width: width,
-              height: height,
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    _futureModel = postDio(
-                        '${notificationApi}read', {'skip': 0, 'limit': 999});
-                  });
-                },
-                child: Icon(Icons.refresh, size: 50.0, color: Colors.blue),
+              child: Text(
+                'ไม่พบข้อมูล',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Sarabun',
+                ),
               ),
-            );
-          } else {
-            return ListView.builder(
-              shrinkWrap: true, // 1st add
-              physics: ClampingScrollPhysics(), // 2nd
-              // scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return BlankLoading(
-                  width: width,
-                  height: height * 15 / 100,
-                );
-              },
-            );
-          }
-        },
+            )
+          ],
+        ),
       ),
     );
+
+    // FutureBuilder<dynamic>(
+    //   future: _futureModel, // function where you call your api
+    //   builder: (context, AsyncSnapshot<dynamic> snapshot) {
+    //     if (snapshot.hasData) {
+    //       // print('snapshot.data.length' + snapshot.data.length);
+    //       if (snapshot.data.length > 0) {
+    //         return ListView.builder(
+    //           shrinkWrap: true, // 1st add
+    //           physics: ClampingScrollPhysics(), // 2nd
+    //           // scrollDirection: Axis.horizontal,
+    //           itemCount: snapshot.data.length,
+    //           itemBuilder: (context, index) {
+    //             return card(context, snapshot.data[index]);
+    //           },
+    //         );
+    //       } else {
+    //         return Container(
+    //           width: width,
+    //           margin: EdgeInsets.only(top: height * 30 / 100),
+    //           child: Column(
+    //             children: [
+    //               Container(
+    //                 height: 70,
+    //                 width: width,
+    //                 child: Image.asset(
+    //                   'assets/logo/logo.png',
+    //                 ),
+    //               ),
+    //               Container(
+    //                 margin: EdgeInsets.only(top: height * 1 / 100),
+    //                 alignment: Alignment.center,
+    //                 width: width,
+    //                 child: Text(
+    //                   'ไม่พบข้อมูล',
+    //                   style: TextStyle(
+    //                     fontSize: 16.0,
+    //                     fontWeight: FontWeight.normal,
+    //                     fontFamily: 'Sarabun',
+    //                   ),
+    //                 ),
+    //               )
+    //             ],
+    //           ),
+    //         );
+    //       }
+    //     } else if (snapshot.hasError) {
+    //       print('error-----');
+    //       return Container(
+    //         width: width,
+    //         height: height,
+    //         child: InkWell(
+    //           onTap: () {
+    //             setState(() {
+    //               _futureModel = postDio(
+    //                   '${notificationApi}read', {'skip': 0, 'limit': 999});
+    //             });
+    //           },
+    //           child: Icon(Icons.refresh, size: 50.0, color: Colors.blue),
+    //         ),
+    //       );
+    //     } else {
+    //       return ListView.builder(
+    //         shrinkWrap: true, // 1st add
+    //         physics: ClampingScrollPhysics(), // 2nd
+    //         // scrollDirection: Axis.horizontal,
+    //         itemCount: 10,
+    //         itemBuilder: (context, index) {
+    //           return BlankLoading(
+    //             width: width,
+    //             height: height * 15 / 100,
+    //           );
+    //         },
+    //       );
+    //     }
+    //   },
+    //   ),
+    // );
   }
 
   card(BuildContext context, dynamic model) {

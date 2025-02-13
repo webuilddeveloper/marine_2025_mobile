@@ -40,7 +40,7 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
     return Scaffold(
       backgroundColor: Color(0xFFF3F5F5),
       resizeToAvoidBottomInset: true,
-      extendBodyBehindAppBar: true,
+      // extendBodyBehindAppBar: true,
       appBar: AppBar(
         // forceMaterialTransparency: true,
         elevation: 0,
@@ -109,341 +109,345 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
                 child: Container(),
               ),
             ),
-            Container(
-              alignment: Alignment.center,
-              // height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              color: Colors.transparent,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.top + 100,
-                    ),
-                    Container(
-                      // height: MediaQuery.of(context).size.height,
-                      // height: 226,
-                      width: MediaQuery.of(context).size.width > 336
-                          ? 336
-                          : MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: [
-                          widget.model['imageUrl'] != '' &&
-                                  widget.model['imageUrl'] != null
-                              ? Container(
-                                  child: Image.network(
-                                    '${widget.model['imageUrl']}',
-                                    // color: Color(0xFF224B45),
-                                    width: MediaQuery.of(context).size.width,
-                                    // height: MediaQuery.of(context).size.height,
-                                    fit: BoxFit.contain,
-                                    // height: 226,
-                                  ),
-                                )
-                              : Container(
-                                  child: Image.asset(
-                                    './assets/temp_screen.png',
-                                    width: MediaQuery.of(context).size.width,
-                                    fit: BoxFit.cover,
-                                    height: 226,
-                                  ),
-                                ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.top - 20,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(20),
-                      height: 500,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(35),
-                            topRight: Radius.circular(35)),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, -20),
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 20,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 10),
-                          Text(
-                            '${widget.model['title']}',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Color(0xFF213F91),
-                              fontFamily: 'Kanit',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '${widget.model['titleEN']}',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Color(0xFF213F91),
-                              fontFamily: 'Kanit',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'คุณสมบัติผู้เข้ารับการอบรม',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    '${widget.model['qualifications']}',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'ค่าอบรม',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    '${widget.model['fee']}',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'จำนวนที่รับสมัคร',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    '${widget.model['number']} คน',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'ระยะเวลาการฝึกอบรม',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    '${widget.model['day']} วัน / ( ${widget.model['hourDay']} ชม. )',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'ทฤษฎี',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    '${widget.model['hourTheory']} ชม.',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'ปฏิบัติ',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    '${widget.model['hourPractical']} ชม.',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+            ListView(
+              children: [
+                SizedBox(height: 20),
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          // height: MediaQuery.of(context).size.height,
+                          // height: 226,
+                          width: MediaQuery.of(context).size.width > 336
+                              ? 336
+                              : MediaQuery.of(context).size.width,
+                          child: Stack(
                             children: [
-                              Container(
-                                width: 150,
-                                margin: EdgeInsets.symmetric(vertical: 30.0),
-                                child: Material(
-                                  elevation: 2.0,
-                                  borderRadius: BorderRadius.circular(35.0),
-                                  color: Theme.of(context).primaryColor,
-                                  child: MaterialButton(
-                                    // minWidth: MediaQuery.of(context).size.width,
-                                    height: 40,
-                                    onPressed: () {
-                                      createPayment();
-                                    },
-                                    child: new Text(
-                                      'ลงทะเบียน',
-                                      style: new TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.normal,
-                                        fontFamily: 'Kanit',
+                              widget.model['imageUrl'] != '' &&
+                                      widget.model['imageUrl'] != null
+                                  ? Container(
+                                      child: Image.network(
+                                        '${widget.model['imageUrl']}',
+                                        // color: Color(0xFF224B45),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        // height: MediaQuery.of(context).size.height,
+                                        fit: BoxFit.contain,
+                                        height: 220,
+                                      ),
+                                    )
+                                  : Container(
+                                      child: Image.asset(
+                                        './assets/temp_screen.png',
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        fit: BoxFit.cover,
+                                        height: 220,
                                       ),
                                     ),
-                                  ),
-                                ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).padding.top - 20,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          // height: 600,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(35),
+                                topRight: Radius.circular(35)),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, -20),
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 20,
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 10),
+                              Text(
+                                '${widget.model['title']}',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Color(0xFF213F91),
+                                  fontFamily: 'Kanit',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${widget.model['titleEN']}',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Color(0xFF213F91),
+                                  fontFamily: 'Kanit',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'คุณสมบัติผู้เข้ารับการอบรม',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        '${widget.model['qualifications']}',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'ค่าอบรม',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        '${widget.model['fee']}',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'จำนวนที่รับสมัคร',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        '${widget.model['number']} คน',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'ระยะเวลาการฝึกอบรม',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        '${widget.model['day']} วัน / ( ${widget.model['hourDay']} ชม. )',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'ทฤษฎี',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        '${widget.model['hourTheory']} ชม.',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'ปฏิบัติ',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        '${widget.model['hourPractical']} ชม.',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.black,
+                                          fontFamily: 'Kanit',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 150,
+                                    margin:
+                                        EdgeInsets.symmetric(vertical: 30.0),
+                                    child: Material(
+                                      elevation: 2.0,
+                                      borderRadius: BorderRadius.circular(35.0),
+                                      color: Theme.of(context).primaryColor,
+                                      child: MaterialButton(
+                                        // minWidth: MediaQuery.of(context).size.width,
+                                        height: 40,
+                                        onPressed: () {
+                                          createPayment();
+                                        },
+                                        child: new Text(
+                                          'ลงทะเบียน',
+                                          style: new TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.normal,
+                                            fontFamily: 'Kanit',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        // SizedBox(height: 10),
+                      ],
                     ),
-                    // SizedBox(height: 10),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              ],
+            )
           ],
         ),
       ),

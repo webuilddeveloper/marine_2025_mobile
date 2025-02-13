@@ -46,10 +46,10 @@ class _MenuState extends State<Menu> {
         title: 'ปฏิทินกิจกรรม',
       ),
       MyQrCode(changePage: _changePage),
-      // NotificationList(
-      //   title: 'แจ้งเตือน',
-      // ),
-      UserInformationPage(),
+      NotificationList(
+        title: 'แจ้งเตือน',
+      ),
+      // UserInformationPage(),
       MyLicense(changePage: _changePage),
     ];
     super.initState();

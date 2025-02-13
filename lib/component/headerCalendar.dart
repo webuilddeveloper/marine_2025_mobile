@@ -33,20 +33,21 @@ headerCalendar(
       style: TextStyle(
         fontSize: 15,
         fontWeight: FontWeight.normal,
-        fontFamily: 'Sarabun',
+        fontFamily: 'Kanit',
+        color: Color(0xFFFFFFFF),
       ),
     ),
-    leading: showLeading ? InkWell(
-      onTap: () => functionGoBack(),
-      child: Container(
-        child: Image.asset(
-          "assets/images/arrow_left.png",
-          color: Colors.white,
-          width: 40,
-          height: 40,
-        ),
-      ),
-    ) : null,
+    // leading: showLeading ? InkWell(
+    //   onTap: () => functionGoBack(),
+    //   child: Container(
+    //     child: Image.asset(
+    //       "assets/images/arrow_left.png",
+    //       color: Colors.white,
+    //       width: 40,
+    //       height: 40,
+    //     ),
+    //   ),
+    // ) : null,
     actions: <Widget>[
       Container(
         child: Container(

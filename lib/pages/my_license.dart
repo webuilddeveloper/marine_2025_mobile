@@ -240,14 +240,14 @@ class _MyLicense extends State<MyLicense> {
                                       width: MediaQuery.of(context).size.width,
                                       // height: MediaQuery.of(context).size.height,
                                       fit: BoxFit.contain,
-                                      // height: 226,
+                                      height: 200,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                             SizedBox(
-                              height: MediaQuery.of(context).padding.top - 30,
+                              height: MediaQuery.of(context).padding.top - 50,
                             ),
                             // Container(
                             //   height: 80,

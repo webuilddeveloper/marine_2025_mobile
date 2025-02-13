@@ -43,7 +43,7 @@ header(
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.normal,
-          fontFamily: 'Sarabun',
+          fontFamily: 'Kanit',
         ),
       ),
       leading: isButtonLeft
