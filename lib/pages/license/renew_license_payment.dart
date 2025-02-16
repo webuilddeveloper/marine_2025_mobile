@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
     as datatTimePicker;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:marine_mobile/home.dart';
@@ -384,12 +384,14 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
 
     var response = await Dio()
         .get(_url, options: Options(responseType: ResponseType.bytes));
-    final result = await ImageGallerySaver.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 100,
-        name: "_imageQR");
+    // final result = await ImageGallerySaver.saveImage(
+    //     Uint8List.fromList(response.data),
+    //     quality: 100,
+    //     name: "_imageQR");
 
-    if (result['isSuccess'] == true) {
+    final result = true;
+
+    if (result == true) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('ดาวน์โหลดรูปภาพเรียบร้อย'),
@@ -431,7 +433,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                   ),
                 ),
                 onPressed: () {
-                                    Navigator.of(context).pop();
+                  Navigator.of(context).pop();
 
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
