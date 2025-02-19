@@ -63,8 +63,7 @@ class _MyQrCode extends State<MyQrCode> {
             children: [
               InkWell(
                 onTap: () {
-                  widget.changePage!(0);
-                  // Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: Container(
                   // alignment: Alignment.center,
@@ -159,7 +158,7 @@ class _MyQrCode extends State<MyQrCode> {
                                 width: 80,
                                 // padding: EdgeInsets.only(right: 10),
                                 child: checkAvatar(
-                                  context, '${snapshot.data['imageUrl']}'),
+                                    context, '${snapshot.data['imageUrl']}'),
                               ),
                             ),
                             Positioned(
@@ -212,21 +211,12 @@ class _MyQrCode extends State<MyQrCode> {
                     ),
                   );
                 } else {
-                  return BlankLoading(
-                    height: 80,
-                    width: 80,
-                  );
+                  return Container();
                 }
               } else if (snapshot.hasError) {
-                return BlankLoading(
-                  height: 80,
-                  width: 80,
-                );
+                return Container();
               } else {
-                return BlankLoading(
-                  height: 80,
-                  width: 80,
-                );
+                return Container();
               }
             },
           ),

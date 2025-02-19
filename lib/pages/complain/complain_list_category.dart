@@ -5,17 +5,17 @@ import '../../component/carousel_form.dart';
 import '../../component/link_url_in.dart';
 import '../../shared/api_provider.dart';
 import '../../widget/header.dart';
-import 'check_license_list_category_vertical.dart';
+import 'complain_list_category_vertical.dart';
 
-class CheckLicenseListCategory extends StatefulWidget {
-  CheckLicenseListCategory({super.key, this.title});
+class ComplainListCategory extends StatefulWidget {
+  ComplainListCategory({super.key, this.title});
   final String? title;
   @override
-  _CheckLicenseListCategory createState() => _CheckLicenseListCategory();
+  _ComplainListCategory createState() => _ComplainListCategory();
 }
 
-class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
-  CheckLicenseListCategoryVertical? contact;
+class _ComplainListCategory extends State<ComplainListCategory> {
+  ComplainListCategoryVertical? contact;
   bool hideSearch = true;
   final txtDescription = TextEditingController();
   String? keySearch;
@@ -24,28 +24,38 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
   dynamic _model = [
     {
       'code': '1',
-      'title': 'ใบรับรองด้านแรงงานทางทะเล (MLC)',
-      'description': 'ตรวจสอบข้อมูลใบอนุญาต',
-      'date': '06 ธันวาคม 2567',
-      'view': '535',
-      'staff': 'Marine Department Admin (S)'
+      'title': 'E-mail : marine@md.go.th ; mdlibrary2020@gmail.com'
     },
-    {
-      'code': '2',
-      'title': 'ใบรับรองแรงงานประมง (C188)',
-      'description': 'ตรวจสอบข้อมูลใบอนุญาต',
-      'date': '06 ธันวาคม 2567',
-      'view': '251',
-      'staff': 'Marine Department Admin (C)'
-    },
+    {'code': '2', 'title': 'จดหมาย : ถึงสำนัก/ศูนย์/กอง/สาขา/ ของกรม'},
     {
       'code': '3',
-      'title': 'ใบทะเบียนผู้ประกอบการขนส่งต่อเนื่องหลายรูปแบบ',
-      'description': 'ตรวจสอบข้อมูลใบอนุญาต',
-      'date': '06 ธันวาคม 2567',
-      'view': '311',
-      'staff': 'Marine Department Admin (S)'
+      'title': 'ศูนย์รับเรื่องราวร้องทุกข์ของรัฐบาล 1111 (สำนักนายกรัฐมนตรี)',
+      'url': 'https://www.traffy.in.th/?page_id=3321'
     },
+    {
+      'code': '4',
+      'title': 'ศูนย์ประสานงานเรื่องราวร้องทุกข์ คมนาคม (กระทรวงคมนาคม)',
+      'url': 'http://olap.mot.go.th/webboard/create_question.jsp'
+    },
+    {
+      'code': '5',
+      'title': 'การติดต่อด้วยตนเอง : ที่สำนัก/ศูนย์/กอง/สาขา ของกรม',
+      'url': ''
+    },
+    {'code': '6', 'title': 'สายด่วน 1199', 'url': ''},
+    {'code': '7', 'title': 'การสำรวจรายกลุ่ม', 'url': ''},
+    {
+      'code': '8',
+      'title': 'สื่อต่างๆ : หนังสือพิมพ์ และสื่อออนไลน์',
+      'url': ''
+    },
+    {
+      'code': '9',
+      'title':
+          'Facebook : กรมเจ้าท่า Marine department , ประชาสัมพันธ์เจ้าท่า กรมเจ้าท่า ,   ข่าวกรมเจ้าท่า (News clippings) สื่อออนไลน์',
+      'url': 'https://www.facebook.com/marinesmartmd/'
+    },
+    {'code': '10', 'title': 'โทรศัพท์หน่วยงาน หมายเลข 0-22331311-8', 'url': ''},
   ];
 
   Future<dynamic>? _futureBanner;
@@ -67,7 +77,7 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
 
     // _controller.addListener(_scrollListener);
     super.initState();
-    // contact = new CheckLicenseListCategoryVertical(
+    // contact = new ComplainListCategoryVertical(
     //   site: "DDPM",
     //   model: service
     //       .post('${service.contactCategoryApi}read', {'skip': 0, 'limit': 100}),
@@ -125,7 +135,7 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
               ),
               Expanded(
                 child: Text(
-                  'ตรวจสอบข้อมูลใบอนุญาต',
+                  'ร้องเรียน',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -149,8 +159,22 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
           physics: ScrollPhysics(),
           shrinkWrap: true,
           children: [
-            SizedBox(height: 50),
-            CheckLicenseListCategoryVertical(
+            SizedBox(height: 20),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                'ช่องทาง ศูนย์เครือข่ายประสานและแก้ไขปัญหาตามข้อร้องเรียนของประชาชนฯ',
+                style: new TextStyle(
+                  fontSize: 20.0,
+                  color: Color(0xFF000000),
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Kanit',
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+
+            ComplainListCategoryVertical(
               site: "DDPM",
               model: Future.value(_model),
               title: "",

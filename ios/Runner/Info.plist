@@ -51,5 +51,11 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ขออนุญาติเข้าถึงคลังภาพเพื่อบันทึกรูปภาพ</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+	<string>เพื่อแสดงตำแหน่งปัจจุบันของคุณ และแนะนำจุดน่าสนใจให้กับคุณ</string>
+	<key>NSLocationUsageDescription</key>
+	<string>เพื่อแสดงตำแหน่งปัจจุบันของคุณ และแนะนำจุดน่าสนใจให้กับคุณ</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>เพื่อแสดงตำแหน่งปัจจุบันของคุณ และแนะนำจุดน่าสนใจให้กับคุณ</string>
 </dict>
 </plist>

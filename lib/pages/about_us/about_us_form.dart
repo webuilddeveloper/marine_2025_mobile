@@ -1,27 +1,35 @@
 import 'dart:async';
-import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:marine_mobile/component/link_url_out.dart';
+import 'package:marine_mobile/component/material/check_avatar.dart';
+import 'package:marine_mobile/widget/text_form_field.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../component/link_url_out.dart';
+import '../../component/carousel_banner.dart';
+import '../../component/carousel_form.dart';
+import '../../component/link_url_in.dart';
+import '../../shared/api_provider.dart';
 import '../../widget/header.dart';
 
-// ignore: must_be_immutable
 class AboutUsForm extends StatefulWidget {
-  AboutUsForm({super.key, this.model, this.title});
+  AboutUsForm({super.key, this.title, this.code});
   final String? title;
-  final Future<dynamic>? model;
-
+  final String? code;
   @override
   _AboutUsForm createState() => _AboutUsForm();
 }
 
 class _AboutUsForm extends State<AboutUsForm> {
-  // final Set<Marker> _markers = {};
   Completer<GoogleMapController> _mapController = Completer();
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -29,7 +37,7 @@ class _AboutUsForm extends State<AboutUsForm> {
   }
 
   void goBack() async {
-    Navigator.pop(context, false);
+    Navigator.pop(context, true);
     // Navigator.of(context).push(
     //   MaterialPageRoute(
     //     builder: (context) => Menu(),
@@ -37,431 +45,266 @@ class _AboutUsForm extends State<AboutUsForm> {
     // );
   }
 
-  void launchURLMap(String lat, String lng) async {
-    String homeLat = lat;
-    String homeLng = lng;
-
-    final String googleMapslocationUrl =
-        "https://www.google.com/maps/search/?api=1&query=" +
-            homeLat +
-            ',' +
-            homeLng;
-
-    final String encodedURl = Uri.encodeFull(googleMapslocationUrl);
-
-    if (await canLaunch(encodedURl)) {
-      await launch(encodedURl);
-    } else {
-      throw 'Could not launch $encodedURl';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<dynamic>(
-      future: widget.model, // function where you call your api
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        // AsyncSnapshot<Your object type>
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container();
-          // return Center(
-          //   child: Image.asset(
-          //     "assets/background/login.png",
-          //     fit: BoxFit.cover,
-          //   ),
-          // );
-        } else {
-          if (snapshot.hasError)
-            return Center(child: Text('Error: ${snapshot.error}'));
-          else if (snapshot.hasData) {
-            var lat = double.parse(snapshot.data['latitude'] != ''
-                ? snapshot.data['latitude']
-                : 0.0);
-            var lng = double.parse(snapshot.data['longitude'] != ''
-                ? snapshot.data['longitude']
-                : 0.0);
-            return Scaffold(
-              appBar: header(context, goBack, title: 'เกี่ยวกับเรา'),
-              body: NotificationListener<OverscrollIndicatorNotification>(
-                onNotification: (OverscrollIndicatorNotification overScroll) {
-                  overScroll.disallowIndicator();
-                  return false;
+    return Scaffold(
+      appBar: AppBar(
+        // forceMaterialTransparency: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        titleSpacing: 5,
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          width: double.infinity,
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 20,
+            left: 15,
+            right: 15,
+          ),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
                 },
                 child: Container(
-                  color: Colors.white,
-                  child: ListView(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    // controller: _controller,
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            // padding: EdgeInsets.only(top: 50),
-                            // color: Colors.orange,
-                            child: Image.network(
-                              snapshot.data['imageBgUrl'],
-                              height: 350.0,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              loadingBuilder: (context,
-                                  child,
-                                  loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          // SubHeader(th: "เกี่ยวกับเรา", en: "About Us"),
-                          Container(
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.only(
-                              top: 290.0,
-                              left: 15.0,
-                              right: 15.0,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            height: 120.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  // color: Colors.orange,
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Image.network(
-                                    snapshot.data['imageLogoUrl'],
-                                    height: 90,
-                                    width: 90,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.only(left: 5.0, right: 5.0),
-                                    child: Text(
-                                      snapshot.data['title'],
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Sarabun',
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Group56.png",
-                        ),
-                        title: snapshot.data['address'] ?? '',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Path34.png",
-                        ),
-                        title: snapshot.data['telephone'] ?? '',
-                        value: '${snapshot.data['telephone']}',
-                        typeBtn: 'phone',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Group62.png",
-                        ),
-                        title: snapshot.data['email'] ?? '',
-                        value: '${snapshot.data['email']}',
-                        typeBtn: 'email',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Group369.png",
-                        ),
-                        title: snapshot.data['site'] ?? '',
-                        value: '${snapshot.data['site']}',
-                        typeBtn: 'link',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Group356.png",
-                        ),
-                        title: snapshot.data['facebook'] ?? '',
-                        value: '${snapshot.data['facebook']}',
-                        typeBtn: 'link',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/youtube.png",
-                        ),
-                        title: snapshot.data['youtube'] ?? '',
-                        value: '${snapshot.data['youtube']}',
-                        typeBtn: 'link',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/socials/Group331.png",
-                        ),
-                        title: snapshot.data['lineOfficial'] ?? '',
-                        value: '${snapshot.data['lineOfficial']}',
-                        typeBtn: 'link',
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      // googleMap(lat, lng),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.5,
-                        width: double.infinity,
-                        child: googleMap(lat, lng),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        color: Colors.transparent,
-                        child: Material(
-                          elevation: 5.0,
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            child: MaterialButton(
-                              minWidth: MediaQuery.of(context).size.width,
-                              onPressed: () {
-                                launchURLMap(lat.toString(), lng.toString());
-                              },
-                              child: Text(
-                                'ตำแหน่ง Google Map',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontFamily: 'Sarabun',
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                  // alignment: Alignment.center,
+                  width: 35,
+                  decoration: BoxDecoration(
+                    color: Color(0XFF213F91),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.arrow_back_ios_new,
+                      size: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            );
-          } else {
-            return MaterialApp(
-              title: "About Us",
-              home: Scaffold(
-                appBar: header(context, goBack, title: 'เกี่ยวกับเรา'),
-                body: NotificationListener<OverscrollIndicatorNotification>(
-                  onNotification: (OverscrollIndicatorNotification overScroll) {
-                    overScroll.disallowIndicator();
-                    return false;
-                  },
-                  child: ListView(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    // controller: _controller,
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(top: 50),
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            // color: Colors.orange,
-                            child: Image.network('',
-                                height: 350,
-                                width: double.infinity,
-                                fit: BoxFit.cover),
-                          ),
-                          // SubHeader(th: "เกี่ยวกับเรา", en: "About Us"),
-                          Container(
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.only(
-                                top: 350.0, left: 15.0, right: 15.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            height: 120.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  // color: Colors.orange,
-                                  padding: EdgeInsets.symmetric(vertical: 17.0),
-                                  child: Image.asset(
-                                    "assets/logo/logo.png",
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.only(left: 10.0, right: 5.0),
-                                    child: Text(
-                                      'สหกรณ์ออมทรัพท์ตำรวจทางหลวง จำกัด',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: 'Sarabun',
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Group56.png",
-                        ),
-                        title: '-',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Path34.png",
-                        ),
-                        title: '-',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Group62.png",
-                        ),
-                        title: '-',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Group369.png",
-                        ),
-                        title: '-',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/Group356.png",
-                        ),
-                        title: '-',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/icons/youtube.png",
-                        ),
-                        title: '-',
-                      ),
-                      rowData(
-                        image: Image.asset(
-                          "assets/logo/socials/Group331.png",
-                        ),
-                        title: '-',
-                      ),
-                      SizedBox(
-                        height: 25.0,
-                      ),
-                      Container(
-                        height: 300,
-                        width: double.infinity,
-                        child: googleMap(13.8462512, 100.5234803),
-                      ),
-                    ],
+              Expanded(
+                child: Text(
+                  'ตรวจสอบข้อมูลใบอนุญาต',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Kanit',
+                    color: Colors.black,
                   ),
                 ),
               ),
-            );
-          }
-        }
-      },
+              SizedBox(width: 30),
+            ],
+          ),
+        ),
+      ),
+      body: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (OverscrollIndicatorNotification overScroll) {
+          overScroll.disallowIndicator();
+          return false;
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white,
+          // padding: EdgeInsets.all(15),
+          padding: EdgeInsets.zero,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              SizedBox(height: 20),
+              _buildProfile(),
+              SizedBox(
+                height: 40.0,
+              ),
+              rowData(
+                image: Image.asset(
+                  "assets/logo/icons/Group56.png",
+                ),
+                title: '1278 ถ.โยธา แขวงตลาดน้อย เขตสัมพันธวงศ์ กรุงเทพฯ 10100',
+              ),
+              rowData(
+                image: Image.asset(
+                  "assets/logo/icons/Path34.png",
+                ),
+                title: 'โทรศัพท์: 0-22331311-8 โทรสาร: 0-2238-3017',
+              ),
+              rowData(
+                image: Image.asset(
+                  "assets/logo/icons/Path34.png",
+                ),
+                title: 'ตู้ ปณ. 1199 สายด่วน 1199 (ตลอด 24 ชั่วโมง)',
+              ),
+              rowData(
+                  image: Image.asset(
+                    "assets/logo/icons/Group62.png",
+                  ),
+                  title: 'อีเมล์: marine@md.go.th',
+                  typeBtn: 'email',
+                  value: 'marine@md.go.th'),
+              SizedBox(
+                height: 25.0,
+              ),
+              Container(
+                height: 300,
+                width: double.infinity,
+                child: googleMap(13.7325251, 100.5132745),
+              ),
+              Container(
+                padding: EdgeInsets.all(15),
+                color: Colors.transparent,
+                child: Material(
+                  elevation: 5.0,
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      border: Border.all(
+                        color: Color(0xFF011895),
+                      ),
+                    ),
+                    child: MaterialButton(
+                      minWidth: MediaQuery.of(context).size.width,
+                      onPressed: () {
+                        launchURLMap('13.7325251', '100.5132745');
+                      },
+                      child: Text(
+                        'ตำแหน่ง Google Map',
+                        style: TextStyle(
+                          color: Color(0xFF011895),
+                          fontFamily: 'Kanit',
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  googleMap(double lat, double lng) {
-    return GoogleMap(
-      myLocationEnabled: true,
-      compassEnabled: true,
-      tiltGesturesEnabled: false,
-      mapType: MapType.normal,
-      initialCameraPosition: CameraPosition(
-        target: LatLng(lat, lng),
-        zoom: 16,
-      ),
-      gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-        new Factory<OneSequenceGestureRecognizer>(
-          () => new EagerGestureRecognizer(),
-        ),
-      ].toSet(),
-      onMapCreated: (GoogleMapController controller) {
-        controller.moveCamera(
-          CameraUpdate.newLatLngBounds(
-            LatLngBounds(
-                southwest: LatLng(lat - 0.05, lng - 0.08),
-                northeast: LatLng(lat + 0.05, lng + 0.05)),
-            5.0,
+  checkLicense() {}
+
+  _buildProfile() {
+    return Container(
+      height: 320,
+      child: Stack(
+        children: [
+          Container(
+            height: 270,
+            child: Image.asset(
+              'assets/background/bg_home_marine.png',
+              fit: BoxFit.cover,
+            ),
           ),
-        );
-        controller.animateCamera(CameraUpdate.newCameraPosition(
-            CameraPosition(target: LatLng(lat, lng), tilt: 10, zoom: 15)));
-        _mapController.complete(controller);
-      },
-      // onTap: _handleTap,
-      markers: <Marker>[
-        Marker(
-          markerId: MarkerId('1'),
-          position: LatLng(lat, lng),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        ),
-      ].toSet(),
+          Positioned.fill(
+            top: 290,
+            // top: 190,
+            bottom: 20,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            top: 200,
+            // bottom: 20,
+            // child: _buildMenu(context),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+              ),
+              child: Container(
+                height: 40,
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 3),
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 6,
+                    ),
+                  ],
+                ),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                        // padding: const EdgeInsets.only(right: 10),
+                        child: Image.asset(
+                          'assets/icon-marine.png',
+                          height: 100,
+                          width: 100,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Container(
+                          // color: Colors.red,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              right: BorderSide(
+                                color: Color(0XFFD5E7D7),
+                              ),
+                            ),
+                          ),
+                          child: const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'กรมเจ้าท่า',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Color(0XFF0C387D),
+                                  fontFamily: 'Kanit',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                'MARINE DEPARTMENT',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Color(0XFF0C387D),
+                                  fontFamily: 'Kanit',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -472,9 +315,11 @@ class _AboutUsForm extends State<AboutUsForm> {
     String typeBtn = '',
   }) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10.0),
+      margin: EdgeInsets.only(bottom: 20.0),
       padding: EdgeInsets.symmetric(horizontal: 15.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 30.0,
@@ -503,8 +348,8 @@ class _AboutUsForm extends State<AboutUsForm> {
                 child: Text(
                   title,
                   style: TextStyle(
-                    fontFamily: 'Sarabun',
-                    fontSize: 10,
+                    fontFamily: 'Kanit',
+                    fontSize: 16,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
@@ -514,5 +359,47 @@ class _AboutUsForm extends State<AboutUsForm> {
         ],
       ),
     );
+  }
+
+  googleMap(double lat, double lng) {
+    return GoogleMap(
+      myLocationEnabled: true,
+      compassEnabled: true,
+      tiltGesturesEnabled: false,
+      mapType: MapType.normal,
+      initialCameraPosition: CameraPosition(
+        target: LatLng(lat, lng),
+        zoom: 16,
+      ),
+      gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+        new Factory<OneSequenceGestureRecognizer>(
+          () => new EagerGestureRecognizer(),
+        ),
+      ].toSet(),
+      onMapCreated: (GoogleMapController controller) {
+        _mapController.complete(controller);
+      },
+      // onTap: _handleTap,
+      markers: <Marker>[
+        Marker(
+          markerId: MarkerId('1'),
+          position: LatLng(lat, lng),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        ),
+      ].toSet(),
+    );
+  }
+
+  void launchURLMap(String lat, String lng) async {
+    String homeLat = lat;
+    String homeLng = lng;
+
+    final String googleMapslocationUrl =
+        "https://www.google.com/maps/search/?api=1&query=" +
+            homeLat +
+            ',' +
+            homeLng;
+    final String encodedURl = Uri.encodeFull(googleMapslocationUrl);
+    launchUrl(Uri.parse(encodedURl), mode: LaunchMode.externalApplication);
   }
 }

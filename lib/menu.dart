@@ -45,12 +45,11 @@ class _MenuState extends State<Menu> {
       EventCalendarMain(
         title: 'ปฏิทินกิจกรรม',
       ),
-      MyQrCode(changePage: _changePage),
+      MyLicense(changePage: _changePage),
       NotificationList(
         title: 'แจ้งเตือน',
       ),
-      // UserInformationPage(),
-      MyLicense(changePage: _changePage),
+      UserInformationPage(),
     ];
     super.initState();
   }

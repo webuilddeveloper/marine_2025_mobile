@@ -9,7 +9,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'component/button_menu_full.dart';
 import 'component/carousel_rotation.dart';
 import 'login.dart';
-import 'pages/about_us/about_us_form.dart';
+import 'pages/about_us/about_us_form_bk.dart';
 import 'pages/blank_page/blank_loading.dart';
 import 'pages/blank_page/toast_fail.dart';
 import 'pages/contact/contact_list_category.dart';
@@ -585,7 +585,7 @@ class _HomePageV2State extends State<HomePageV2> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => AboutUsForm(
+                builder: (context) => AboutUsFormBK(
                   model: _futureAboutUs,
                   title: 'ติดต่อเรา',
                 ),

@@ -80,7 +80,58 @@ class _KnowledgeList extends State<KnowledgeList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: header(context, goBack, title: 'คลังความรู้'),
+      appBar: AppBar(
+        // forceMaterialTransparency: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        titleSpacing: 5,
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          width: double.infinity,
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 20,
+            left: 15,
+            right: 15,
+          ),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  // alignment: Alignment.center,
+                  width: 35,
+                  decoration: BoxDecoration(
+                    color: Color(0XFF213F91),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.arrow_back_ios_new,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  'คลังความรู้',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Kanit',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(width: 30),
+            ],
+          ),
+        ),
+      ),
       body: new GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
@@ -103,7 +154,7 @@ class _KnowledgeList extends State<KnowledgeList> {
             physics: ScrollPhysics(),
             shrinkWrap: true,
             children: [
-              SizedBox(height: 5),
+              SizedBox(height: 20),
               CategorySelector(
                 model: service.postCategory(
                   '${service.knowledgeCategoryApi}read',

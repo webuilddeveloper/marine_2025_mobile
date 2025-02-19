@@ -125,7 +125,7 @@ labelTextFormField(String label) {
       label,
       style: TextStyle(
         fontSize: 15.000,
-        fontFamily:'Kanit',
+        fontFamily: 'Kanit',
         // color: Color(0xFFCB0000),
       ),
     ),
@@ -694,6 +694,86 @@ textFormIdCardFieldEdit(
       } else {
         return 'กรุณากรอกรูปแบบเลขบัตรประชาชนให้ถูกต้อง';
       }
+    },
+    controller: model,
+    enabled: enabled,
+  );
+}
+
+textFormFieldNoValidatorQuestion(
+  TextEditingController model,
+  String hintText,
+  bool enabled,
+  bool isEmail,
+) {
+  return TextFormField(
+    style: TextStyle(
+      color: enabled ? const Color(0xFF000000) : const Color(0xFFFFFFFF),
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Kanit',
+      fontSize: 15.00,
+    ),
+    decoration: InputDecoration(
+      filled: true,
+      fillColor: enabled ? const Color(0xFFFFFFFF) : const Color(0xFF707070),
+      contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+      hintText: hintText,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: Color(0XFF213F91),
+          width: 2.0,
+        ),
+      ),
+      errorStyle: const TextStyle(
+        fontWeight: FontWeight.normal,
+        fontFamily: 'Kanit',
+        fontSize: 10.0,
+      ),
+    ),
+    validator: (model) {
+      // return true;
+    },
+    controller: model,
+    enabled: enabled,
+  );
+}
+
+textAreaFormFieldNoValidatorQuestion(
+  TextEditingController model,
+  String hintText,
+  bool enabled,
+  bool isEmail,
+) {
+  return TextFormField(
+    style: TextStyle(
+      color: enabled ? const Color(0xFF000000) : const Color(0xFFFFFFFF),
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Kanit',
+      fontSize: 15.00,
+    ),
+    decoration: InputDecoration(
+      filled: true,
+      fillColor: enabled ? const Color(0xFFFFFFFF) : const Color(0xFF707070),
+      contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+      hintText: hintText,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: Color(0XFF213F91),
+          width: 2.0,
+        ),
+      ),
+      errorStyle: const TextStyle(
+        fontWeight: FontWeight.normal,
+        fontFamily: 'Kanit',
+        fontSize: 10.0,
+      ),
+    ),
+    maxLines: 5,
+    minLines: 3,
+    validator: (model) {
+      // return true;
     },
     controller: model,
     enabled: enabled,

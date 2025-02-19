@@ -91,7 +91,7 @@ class _UserInformationPageState extends State<UserInformationPage> {
                     height: 270,
                     width: double.infinity,
                     child: Image.asset(
-                      'assets/bg_header.png',
+                      'assets/bg_home_marine.png',
                       fit: BoxFit.cover,
                     ),
                   ),

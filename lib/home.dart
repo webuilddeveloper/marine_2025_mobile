@@ -4,7 +4,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:marine_mobile/pages/about_us/about_us_form.dart';
+import 'package:marine_mobile/pages/about_us/about_us_form_bk.dart';
+import 'package:marine_mobile/pages/complain/complain_list_category.dart';
 import 'package:marine_mobile/pages/license/check_license_list_category.dart';
+import 'package:marine_mobile/pages/my_qr_code.dart';
+import 'package:marine_mobile/pages/question/question_list.dart';
 import 'package:marine_mobile/pages/training_course/training_course_list.dart';
 import 'package:marine_mobile/pages/training_course/training_course_list_category.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -394,7 +399,14 @@ class _HomePageState extends State<HomePage> {
                             ),
                             SizedBox(width: 10),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyQrCode(),
+                                  ),
+                                );
+                              },
                               child: Container(
                                 // padding: EdgeInsets.all(10.0),
                                 decoration: BoxDecoration(
@@ -891,23 +903,9 @@ class _HomePageState extends State<HomePage> {
               crossAxisCount: 2,
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.all(8),
-              childAspectRatio: 1 / 0.9,
+              childAspectRatio: 1 / 0.8,
               shrinkWrap: true,
               children: [
-                _buildServiceIcon(
-                  path: 'assets/icons/icon_menu1.png',
-                  title: 'จับคู่งาน',
-                  callBack: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => KnowledgeList(
-                    //       title: 'จับคู่งาน',
-                    //     ),
-                    //   ),
-                    // );
-                  },
-                ),
                 _buildServiceIcon(
                   path: 'assets/icons/icon_menu2.png',
                   title: 'ข่าวสาร',
@@ -929,8 +927,7 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RenewLicensePage(
-                        ),
+                        builder: (context) => RenewLicensePage(),
                       ),
                     );
                   },
@@ -966,13 +963,12 @@ class _HomePageState extends State<HomePage> {
                   path: 'assets/icons/icon_menu6.png',
                   title: 'ถามตอบ',
                   callBack: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) =>
-                    //         ContactListCategory(title: 'ถามตอบ'),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuestionList(title: 'ถามตอบ'),
+                      ),
+                    );
                   },
                 ),
                 _buildServiceIcon(
@@ -992,13 +988,28 @@ class _HomePageState extends State<HomePage> {
                   path: 'assets/icons/icon_menu8.png',
                   title: 'ร้องเรียน',
                   callBack: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) =>
-                    //         ContactListCategory(title: 'ร้องเรียน'),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ComplainListCategory(title: 'ร้องเรียน'),
+                      ),
+                    );
+                  },
+                ),
+                _buildServiceIcon(
+                  path: 'assets/icons/icon_menu1.png',
+                  title: 'เกี่ยวกับเรา',
+                  callBack: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AboutUsForm(
+                          // model: _futureAboutUs,
+                          title: 'ติดต่อเรา',
+                        ),
+                      ),
+                    );
                   },
                 ),
               ],
