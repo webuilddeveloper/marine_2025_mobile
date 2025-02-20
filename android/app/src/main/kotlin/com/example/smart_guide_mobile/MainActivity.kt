@@ -1,4 +1,4 @@
-package com.example.smart_guide_mobile
+package com.example.marine
 
 import io.flutter.embedding.android.FlutterActivity
 
