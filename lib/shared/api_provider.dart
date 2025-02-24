@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'dart:io';
+import 'package:dio/io.dart';
 
 import '../login.dart';
 import '../models/user.dart';
@@ -426,6 +427,7 @@ Future<dynamic> postDio(String url, dynamic criteria) async {
   }
 
   if (criteria['card_id'] == '' ||
+      // ignore: curly_braces_in_flow_control_structures
       criteria['card_id'] == null) if (idcard != '' && idcard != null) {
     criteria = {'card_id': idcard, ...criteria};
   }
@@ -434,10 +436,25 @@ Future<dynamic> postDio(String url, dynamic criteria) async {
     criteria = {'username': username, ...criteria};
   }
 
-  Dio dio = new Dio();
-  var response = await dio.post(url, data: criteria);
-  // print(response.data['objectData'].toString());
-  return Future.value(response.data['objectData']);
+  // สร้าง Dio instance พร้อม options
+  Dio dio = new Dio(BaseOptions(
+    connectTimeout: Duration(seconds: 60),
+    receiveTimeout: Duration(seconds: 60),
+  ));
+
+  // แก้ปัญหา SSL Certificate
+  (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (client) {
+    client.badCertificateCallback = (cert, host, port) => true;
+    return client;
+  };
+
+  try {
+    var response = await dio.post(url, data: criteria);
+    return Future.value(response.data['objectData']);
+  } catch (e) {
+    print('Error in postDio: $e');
+    throw e;
+  }
 }
 
 Future<dynamic> postAnyDio(String url, dynamic criteria) async {

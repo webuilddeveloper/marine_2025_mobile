@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:marine_mobile/login.dart';
@@ -13,6 +14,14 @@ import 'pages/blank_page/dialog_fail.dart';
 
 // import 'home_v2.dart';
 // import 'login.dart';
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 class SplashPage extends StatefulWidget {
   @override
@@ -24,6 +33,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
+    HttpOverrides.global = MyHttpOverrides();
     _callRead();
     super.initState();
   }
@@ -34,7 +44,8 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   _callRead() {
-    futureModel = postDio(server + 'm/splash/read', {"code":'20241030113208-998-123'});
+    futureModel =
+        postDio(server + 'm/splash/read', {"code": '20241030113208-998-123'});
     // futureModel = postDio(server + 'm/splash/read', {});
   }
 
@@ -92,6 +103,7 @@ class _SplashPageState extends State<SplashPage> {
                     )
                   : Container();
             } else if (snapshot.hasError) {
+              print('Error in FutureBuilder: ${snapshot.error}');
               return Center(
                 child: Container(
                   color: Colors.white,
