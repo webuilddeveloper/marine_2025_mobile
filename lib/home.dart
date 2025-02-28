@@ -36,6 +36,7 @@ import 'pages/poll/poll_list.dart';
 import 'pages/privilege/privilege_main.dart';
 import 'shared/api_provider.dart';
 import 'package:intl/intl.dart';
+import 'component/carousel_rotation.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key, this.changePage});
@@ -70,22 +71,31 @@ class _HomePageState extends State<HomePage> {
   List<dynamic> _dataPolicy = [];
   bool checkDirection = false;
 
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(
+      initialRefresh: false,
+      initialRefreshStatus: RefreshStatus.idle,
+      initialLoadStatus: LoadStatus.idle);
 
   LatLng latLng = const LatLng(13.743989326935178, 100.53754006134743);
 
+  int _currentNewsPage = 0;
+  int _newsLimit = 4;
+  List<dynamic> _newsList = [];
+  bool _hasMoreNews = true;
+
   @override
   void initState() {
+    _newsList = [];
     _read();
+    currentBackPressTime = DateTime.now();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
+      // backgroundColor: Colors.transparent,
       // appBar: _buildHeader(),
       body: WillPopScope(
         child: _buildBackground(),
@@ -172,33 +182,36 @@ class _HomePageState extends State<HomePage> {
   _buildSmartRefresher() {
     return SmartRefresher(
       enablePullDown: true,
-      enablePullUp: false,
-      header: WaterDropHeader(
-        complete: Container(
-          child: const Text(''),
-        ),
-        completeDuration: const Duration(milliseconds: 0),
-      ),
-      footer: CustomFooter(
-        builder: (context, mode) {
-          Widget body;
-          if (mode == LoadStatus.idle) {
-            body = const Text("pull up load");
-          } else if (mode == LoadStatus.loading) {
-            body = const Text("loading");
-          } else if (mode == LoadStatus.failed) {
-            body = const Text("Load Failed!Click retry!");
-          } else if (mode == LoadStatus.canLoading) {
-            body = const Text("release to load more");
-          } else {
-            body = const Text("No more Data");
-          }
-          return Container(
-            height: 55.0,
-            child: Center(child: body),
-          );
-        },
-      ),
+      enablePullUp: true,
+      // header: WaterDropHeader(
+      //   complete: Container(
+      //     child: const Text(''),
+      //   ),
+      //   completeDuration: const Duration(milliseconds: 0),
+      // ),
+      // footer: CustomFooter(
+      //   builder: (context, mode) {
+      //     Widget body;
+      //     if (mode == LoadStatus.idle) {
+      //       body = const Text("pull up load");
+      //     } else if (mode == LoadStatus.loading) {
+      //       body = const Text("loading");
+      //     } else if (mode == LoadStatus.failed) {
+      //       body = const Text("Load Failed!Click retry!");
+      //     } else if (mode == LoadStatus.canLoading) {
+      //       body = const Text("release to load more");
+      //     } else {
+      //       body = const Text("No more Data");
+      //     }
+      //     return Container(
+      //       height: 55.0,
+      //       child: Center(child: body),
+      //     );
+      //   },
+      // ),
+      header: const ClassicHeader(),
+      footer: const ClassicFooter(),
+      physics: const BouncingScrollPhysics(),
       controller: _refreshController,
       onRefresh: _onRefresh,
       onLoading: _onLoading,
@@ -245,25 +258,42 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildMenu(context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      // padding: EdgeInsets.all(15),
-      padding: EdgeInsets.zero,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          _buildProfile(),
-          _buildService(),
-          const SizedBox(
-            height: 20,
-          ),
-          _buildNews(),
-          const SizedBox(
-            height: 100,
-          ),
-        ],
+    // return Container(
+    //   height: MediaQuery.of(context).size.height,
+    //   width: MediaQuery.of(context).size.width,
+    //   color: Colors.white,
+    //   // padding: EdgeInsets.all(15),
+    //   padding: EdgeInsets.zero,
+    //   child: SingleChildScrollView(
+    //     child: ListView(
+    //       padding: EdgeInsets.zero,
+    //       children: [
+    //         _buildProfile(),
+    //         _buildService(),
+    //         const SizedBox(
+    //           height: 20,
+    //         ),
+    //         _buildNews(),
+    //         const SizedBox(
+    //           height: 100,
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+    return SingleChildScrollView(
+      child: Container(
+        // color: Color(0XFFF3F5F5),
+        color: Colors.white,
+        child: Column(
+          children: [
+            _buildProfile(),
+            const SizedBox(height: 20),
+            _buildBanner(),
+            _buildService(),
+            _buildNews(),
+          ],
+        ),
       ),
     );
   }
@@ -360,7 +390,7 @@ class _HomePageState extends State<HomePage> {
                               child: checkAvatar(
                                   context, '${snapshot.data['imageUrl']}'),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Expanded(
@@ -371,14 +401,14 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Text(
                                       '${snapshot.data['firstName'] ?? ''} ${snapshot.data['lastName'] ?? ''}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 18.0,
                                         color: Color(0xFF0C387D),
                                         fontFamily: 'Kanit',
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Text(
+                                    const Text(
                                       'นายท้ายเรือ',
                                       style: TextStyle(
                                         fontSize: 24.0,
@@ -391,13 +421,13 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
-                            VerticalDivider(
+                            const SizedBox(width: 10),
+                            const VerticalDivider(
                               thickness: 1,
                               endIndent: 0,
                               color: Color(0xFFD5E7D7),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -422,10 +452,10 @@ class _HomePageState extends State<HomePage> {
                                       height: 40,
                                       color: Colors.black,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
-                                    Text(
+                                    const Text(
                                       'my qrcode',
                                       style: TextStyle(
                                         fontSize: 11.0,
@@ -1128,85 +1158,256 @@ class _HomePageState extends State<HomePage> {
           ),
           FutureBuilder<dynamic>(
             future: _futureNews,
+            // builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            //   if (snapshot.hasData) {
+            //     return Container(
+            //       height: 280,
+            //       color: Colors.transparent,
+            //       // alignment: Alignment.center,
+            //       child: ListView.builder(
+            //         physics: ScrollPhysics(),
+            //         shrinkWrap: true,
+            //         scrollDirection: Axis.horizontal,
+            //         itemCount: snapshot.data.length,
+            //         itemBuilder: (context, index) {
+            //           return GestureDetector(
+            //             onTap: () {
+            //               Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                   builder: (context) => NewsForm(
+            //                     url: newsApi,
+            //                     code: snapshot.data[index]['code'],
+            //                     model: snapshot.data[index],
+            //                     urlComment: newsApi,
+            //                     urlGallery: newsGalleryApi,
+            //                   ),
+            //                 ),
+            //               );
+            //             },
+            //             child: Container(
+            //               width: MediaQuery.of(context).size.width * 0.45,
+            //               padding:
+            //                   EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            //               child: Card(
+            //                 elevation: 4,
+            //                 shape: RoundedRectangleBorder(
+            //                   borderRadius: BorderRadius.circular(16),
+            //                 ),
+            //                 child: Column(
+            //                   mainAxisSize: MainAxisSize.min,
+            //                   children: [
+            //                     ClipRRect(
+            //                       borderRadius: BorderRadius.only(
+            //                         topLeft: Radius.circular(16),
+            //                         topRight: Radius.circular(16),
+            //                       ),
+            //                       child:
+            //                           snapshot.data[index]['imageUrl'] != null
+            //                               ? Image.network(
+            //                                   '${snapshot.data[index]['imageUrl']}',
+            //                                   fit: BoxFit.cover,
+            //                                   width: 180,
+            //                                   height: 180,
+            //                                 )
+            //                               : BlankLoading(
+            //                                   height: 180,
+            //                                 ),
+            //                     ),
+            //                     Padding(
+            //                       padding: const EdgeInsets.all(12.0),
+            //                       child: Text(
+            //                         '${snapshot.data[index]['title']}',
+            //                         maxLines: 2,
+            //                         overflow: TextOverflow.ellipsis,
+            //                         style: TextStyle(
+            //                             fontFamily: 'Sarabun',
+            //                             fontSize: 14.0,
+            //                             fontWeight: FontWeight.w400,
+            //                             color: Color(0xFF000000)),
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             ),
+            //           );
+            //         },
+            //       ),
+            //     );
+            //   } else if (snapshot.hasError) {
+            //     return BlankLoading();
+            //   } else {
+            //     return const Center(
+            //       child: Text(
+            //         'ไม่พบข้อมูล',
+            //         style: TextStyle(
+            //           fontSize: 20.0,
+            //           fontFamily: 'Kanit',
+            //           fontWeight: FontWeight.w600,
+            //         ),
+            //       ),
+            //     );
+            //   }
+            // },
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
-                return Container(
-                  height: 280,
-                  color: Colors.transparent,
-                  // alignment: Alignment.center,
-                  child: ListView.builder(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => NewsForm(
-                                url: newsApi,
-                                code: snapshot.data[index]['code'],
-                                model: snapshot.data[index],
-                                urlComment: newsApi,
-                                urlGallery: newsGalleryApi,
+                print("กำลังรับข้อมูลจาก FutureBuilder");
+                if (_newsList.isEmpty) {
+                  _newsList = snapshot.data;
+                  print("รับข้อมูล ${_newsList.length} รายการ");
+                }
+
+                return Center(
+                  child: Container(
+                    child: Wrap(
+                      spacing: 15.0,
+                      runSpacing: 15.0,
+                      children: _newsList.map<Widget>(
+                        (data) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NewsForm(
+                                    url: data['url'] ?? '',
+                                    code: data['code'] ?? '',
+                                    model: data ?? '',
+                                    urlComment: newsApi,
+                                    urlGallery: newsGalleryApi,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.43,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  const BoxShadow(
+                                    color: Colors.transparent,
+                                    spreadRadius: 0,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(14),
+                                      topRight: Radius.circular(14),
+                                    ),
+                                    // child: Container(
+                                    //   decoration: BoxDecoration(
+                                    //     borderRadius: BorderRadius.only(
+                                    //       topLeft: Radius.circular(14),
+                                    //       topRight: Radius.circular(14),
+                                    //     ),
+                                    //     color: Color(0xFFFFFFFF),
+                                    //   ),
+                                    //   constraints: BoxConstraints(
+                                    //     minHeight: 200,
+                                    //     maxHeight: 200,
+                                    //     minWidth: double.infinity,
+                                    //   ),
+                                    //   child: data['imageUrl'] != null
+                                    //       ? Image.network(
+                                    //           '${data['imageUrl']}',
+                                    //           fit: BoxFit.contain,
+                                    //         )
+                                    //       : BlankLoading(
+                                    //           height: 200,
+                                    //           width: null,
+                                    //         ),
+                                    // ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.vertical(
+                                          top: Radius.circular(14),
+                                        ),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.1),
+                                            blurRadius: 5,
+                                            spreadRadius: 2,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      constraints: const BoxConstraints(
+                                        minHeight: 200,
+                                        maxHeight: 200,
+                                        minWidth: double.infinity,
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.vertical(
+                                          top: Radius.circular(14),
+                                        ),
+                                        child: data['imageUrl'] != null &&
+                                                data['imageUrl']
+                                                    .toString()
+                                                    .isNotEmpty
+                                            ? Image.network(
+                                                data['imageUrl'],
+                                                fit: BoxFit.cover,
+                                                width: double.infinity,
+                                                height: 200,
+                                                errorBuilder: (context, error,
+                                                        stackTrace) =>
+                                                    const Icon(
+                                                  Icons.broken_image,
+                                                  size: 50,
+                                                  color: Colors.grey,
+                                                ),
+                                              )
+                                            : BlankLoading(
+                                                height: 200,
+                                                width: null,
+                                              ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 60,
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(14),
+                                        bottomRight: Radius.circular(14),
+                                      ),
+                                      color: Color(0xFFFFFFFF),
+                                    ),
+                                    padding: const EdgeInsets.all(5.0),
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '${data['title']}',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontFamily: 'Sarabun',
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           );
                         },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.45,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          child: Card(
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(16),
-                                    topRight: Radius.circular(16),
-                                  ),
-                                  child:
-                                      snapshot.data[index]['imageUrl'] != null
-                                          ? Image.network(
-                                              '${snapshot.data[index]['imageUrl']}',
-                                              fit: BoxFit.cover,
-                                              width: 180,
-                                              height: 180,
-                                            )
-                                          : BlankLoading(
-                                              height: 180,
-                                            ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text(
-                                    '${snapshot.data[index]['title']}',
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontFamily: 'Sarabun',
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xFF000000)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
+                      ).toList(),
+                    ),
                   ),
                 );
               } else if (snapshot.hasError) {
-                return BlankLoading();
+                return BlankLoading(
+                  width: null,
+                  height: null,
+                );
               } else {
                 return const Center(
                   child: Text(
@@ -1517,7 +1718,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => LoginPage(),
+          builder: (context) => const LoginPage(),
         ),
         (Route<dynamic> route) => false,
       );
@@ -1596,18 +1797,70 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _onRefresh() async {
-    // getCurrentUserData();
-    _read();
+  // void _onRefresh() async {
+  //   // getCurrentUserData();
+  //   _read();
 
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-    // _refreshController.loadComplete();
+  //   // if failed,use refreshFailed()
+  //   _refreshController.refreshCompleted();
+  //   // _refreshController.loadComplete();
+  // }
+
+  // void _onLoading() async {
+  //   await Future.delayed(const Duration(milliseconds: 1000));
+  //   _refreshController.loadComplete();
+  // }
+  void _onLoading() async {
+    if (!_hasMoreNews) {
+      _refreshController.loadComplete();
+      return;
+    }
+    _currentNewsPage++;
+    final moreNews = await postDio('${newsApi}read', {
+      'skip': _currentNewsPage * _newsLimit,
+      'limit': _newsLimit,
+      'app': 'marine',
+    });
+    if (moreNews != null && moreNews.length < _newsLimit) {
+      _hasMoreNews = false;
+    }
+    if (moreNews == null || moreNews.isEmpty) {
+      _hasMoreNews = false;
+      _refreshController.loadNoData();
+      return;
+    }
+    setState(() {
+      if (_newsList.isEmpty) {
+        _newsList = moreNews;
+      } else {
+        _newsList.addAll(moreNews);
+      }
+    });
+    _refreshController.loadComplete();
   }
 
-  void _onLoading() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    _refreshController.loadComplete();
+  void _onRefresh() async {
+    print("เริ่มรีเฟรช");
+    _currentNewsPage = 0;
+    _newsList = [];
+
+    try {
+      var newsData = await postDio('${newsApi}read', {
+        'skip': 0,
+        'limit': _newsLimit,
+        'app': 'marine',
+      });
+
+      setState(() {
+        _newsList = newsData;
+        print("รีเฟรชข้อมูลเสร็จสิ้น: ${_newsList.length} รายการ");
+      });
+    } catch (e) {
+      print("เกิดข้อผิดพลาดในการรีเฟรช: $e");
+    }
+
+    _refreshController.refreshCompleted();
+    _hasMoreNews = true;
   }
 
   _getLocation() async {

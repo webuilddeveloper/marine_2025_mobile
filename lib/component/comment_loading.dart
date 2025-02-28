@@ -28,31 +28,21 @@ class _CommentLoading extends State<CommentLoading>
     super.dispose();
   }
 
-  Animatable<Color> background = TweenSequence<Color>([
-    ////////////////////////////////////////////////////////////////
-    // TweenSequenceItem(
-    //   weight: 1.0,
-    //   tween: ColorTween(
-    //     begin: Colors.black.withAlpha(20),
-    //     end: Colors.black.withAlpha(50),
-    //   ),
-    // ),
-    // TweenSequenceItem(
-    //   weight: 1.0,
-    //   tween: ColorTween(
-    //     begin: Colors.black.withAlpha(50),
-    //     end: Colors.black.withAlpha(20),
-    //   ),
-    // ),
-    ////////////////////////////////////////////////////////////////
-
-    // TweenSequenceItem(
-    //   weight: 1.0,
-    //   tween: ColorTween(
-    //     begin: Colors.blue,
-    //     end: Colors.pink,
-    //   ),
-    // ),
+  Animatable<Color?> background = TweenSequence<Color?>([
+    TweenSequenceItem(
+      weight: 1.0,
+      tween: ColorTween(
+        begin: Colors.black.withAlpha(20),
+        end: Colors.black.withAlpha(50),
+      ),
+    ),
+    TweenSequenceItem(
+      weight: 1.0,
+      tween: ColorTween(
+        begin: Colors.black.withAlpha(50),
+        end: Colors.black.withAlpha(20),
+      ),
+    ),
   ]);
 
 // @override
@@ -152,7 +142,11 @@ class _CommentLoading extends State<CommentLoading>
                     Container(
                       // padding: EdgeInsets.only(
                       //     top: 5, bottom: 5, left: 15, right: 15),
-                      width: index == 0 ? 150 : index == 1 ? 250 : 200,
+                      width: index == 0
+                          ? 150
+                          : index == 1
+                              ? 250
+                              : 200,
                       margin: EdgeInsets.only(bottom: 5),
                       decoration: BoxDecoration(
                         color: Colors.transparent,

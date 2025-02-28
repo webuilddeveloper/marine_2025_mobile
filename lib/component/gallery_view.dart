@@ -20,10 +20,11 @@ const _kMaxDragSpeed = 400.0;
 // }
 
 class GalleryView extends StatefulWidget {
-  GalleryView({super.key, this.imageUrl, this.imageProvider});
+  GalleryView({Key? key, required this.imageUrl, required this.imageProvider})
+      : super(key: key);
 
-  final List? imageUrl;
-  final List<ImageProvider>? imageProvider;
+  final List imageUrl;
+  final List<ImageProvider> imageProvider;
 
   @override
   _GalleryViewState createState() => _GalleryViewState();
@@ -36,9 +37,10 @@ class _GalleryViewState extends State<GalleryView> {
   }
 
   dataImage(index) {
+    print('---------${widget.imageProvider}');
     return ImageViewer(
-      initialIndex: index,
-      imageProviders: widget.imageProvider ?? [],
+      initialIndex: 0,
+      imageProviders: widget.imageProvider,
     );
   }
 
@@ -46,8 +48,7 @@ class _GalleryViewState extends State<GalleryView> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        if (widget.imageUrl == null) Container(),
-        if (widget.imageUrl!.length > 0)
+        if (widget.imageUrl.length > 0)
           Material(
             child: InkWell(
               onTap: () {
@@ -60,9 +61,9 @@ class _GalleryViewState extends State<GalleryView> {
               },
               child: Container(
                 child: ClipRRect(
-                  child: widget.imageUrl![0] != null
+                  child: widget.imageUrl[0] != null
                       ? Image.network(
-                          '${widget.imageUrl![0]}',
+                          '${widget.imageUrl[0]}',
                           width: MediaQuery.of(context).size.width,
                           height: 360.0,
                           fit: BoxFit.cover,
@@ -72,15 +73,15 @@ class _GalleryViewState extends State<GalleryView> {
               ),
             ),
           ),
-        const SizedBox(
+        SizedBox(
           height: 5.0,
         ),
-        if (widget.imageUrl!.length > 1)
+        if (widget.imageUrl.length > 1)
           Container(
             width: double.infinity,
             child: Row(
               children: <Widget>[
-                if (widget.imageUrl!.length > 1)
+                if (widget.imageUrl.length > 1)
                   Material(
                     child: InkWell(
                       onTap: () {
@@ -93,9 +94,9 @@ class _GalleryViewState extends State<GalleryView> {
                       },
                       child: Container(
                         child: ClipRRect(
-                          child: widget.imageUrl![1] != null
+                          child: widget.imageUrl[1] != null
                               ? Image.network(
-                                  '${widget.imageUrl![1]}',
+                                  '${widget.imageUrl[1]}',
                                   width:
                                       MediaQuery.of(context).size.width / 3.035,
                                   height:
@@ -107,7 +108,7 @@ class _GalleryViewState extends State<GalleryView> {
                       ),
                     ),
                   ),
-                if (widget.imageUrl!.length > 2)
+                if (widget.imageUrl.length > 2)
                   Material(
                     child: InkWell(
                       onTap: () {
@@ -119,11 +120,11 @@ class _GalleryViewState extends State<GalleryView> {
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.only(left: 2.0, right: 2.0),
+                        padding: EdgeInsets.only(left: 2.0, right: 2.0),
                         child: ClipRRect(
-                          child: widget.imageUrl![2] != null
+                          child: widget.imageUrl[2] != null
                               ? Image.network(
-                                  '${widget.imageUrl![2]}',
+                                  '${widget.imageUrl[2]}',
                                   width:
                                       MediaQuery.of(context).size.width / 3.035,
                                   height:
@@ -135,7 +136,7 @@ class _GalleryViewState extends State<GalleryView> {
                       ),
                     ),
                   ),
-                if (widget.imageUrl!.length > 3)
+                if (widget.imageUrl.length > 3)
                   Material(
                     child: InkWell(
                       onTap: () {
@@ -151,9 +152,9 @@ class _GalleryViewState extends State<GalleryView> {
                         children: [
                           Container(
                             child: ClipRRect(
-                              child: widget.imageUrl![3] != null
+                              child: widget.imageUrl[3] != null
                                   ? Image.network(
-                                      '${widget.imageUrl![3]}',
+                                      '${widget.imageUrl[3]}',
                                       width: MediaQuery.of(context).size.width /
                                           3.035,
                                       height:
@@ -164,12 +165,12 @@ class _GalleryViewState extends State<GalleryView> {
                                   : null,
                             ),
                           ),
-                          if (widget.imageUrl!.length > 4)
+                          if (widget.imageUrl.length > 4)
                             Positioned(
                               // right: 50,
                               // top: 50,
                               child: Container(
-                                color: const Color.fromRGBO(0, 0, 0, 0.5),
+                                color: Color.fromRGBO(0, 0, 0, 0.5),
                                 width:
                                     MediaQuery.of(context).size.width / 3.035,
                                 height:
@@ -180,14 +181,14 @@ class _GalleryViewState extends State<GalleryView> {
                                   children: [
                                     Text(
                                       '+ ' +
-                                          (widget.imageUrl!.length - 4)
+                                          (widget.imageUrl.length - 4)
                                               .toString(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 15,
                                           fontFamily: 'Sarabun',
                                           color: Colors.white),
                                     ),
-                                    const Text(
+                                    Text(
                                       'รูปภาพ',
                                       style: TextStyle(
                                           fontSize: 15,
@@ -213,12 +214,12 @@ class _GalleryViewState extends State<GalleryView> {
 
 class ImageViewer extends StatefulWidget {
   ImageViewer({
-    this.initialIndex,
-    this.imageProviders,
+    required this.initialIndex,
+    required this.imageProviders,
   });
 
-  final int? initialIndex;
-  final List<ImageProvider>? imageProviders;
+  final int initialIndex;
+  final List<ImageProvider> imageProviders;
 
   @override
   _ImageViewerState createState() => _ImageViewerState();
@@ -226,32 +227,31 @@ class ImageViewer extends StatefulWidget {
 
 class _ImageViewerState extends State<ImageViewer>
     with TickerProviderStateMixin {
-  PageController? _pageController;
-  int? _currentPageIndex;
+  late PageController _pageController;
+  late int _currentPageIndex;
   bool _isLocked = false;
 
-  double? _start;
-  AnimationController? _offsetController;
-  Animation<Offset>? _offsetAnimation;
-  Tween<Offset>? _offsetTween;
+  late double _start;
+  late AnimationController _offsetController;
+  late Animation<Offset> _offsetAnimation;
+  late Tween<Offset> _offsetTween;
   bool _isDragging = false;
 
-  AnimationController? _opacityController;
-  Animation<double>? _opacityAnimation;
-  Tween<double>? _opacityTween;
-  Listenable? _listenable;
+  late AnimationController _opacityController;
+  late Animation<double> _opacityAnimation;
+  late Tween<double> _opacityTween;
 
   @override
   void initState() {
     _pageController = PageController(initialPage: widget.initialIndex ?? 0);
-    _currentPageIndex = widget.initialIndex ?? 0;
+    _currentPageIndex = widget.initialIndex;
 
     _offsetController =
         AnimationController(vsync: this, duration: Duration.zero);
     _offsetTween = Tween<Offset>(begin: Offset.zero, end: Offset.zero);
-    _offsetAnimation = _offsetTween?.animate(
+    _offsetAnimation = _offsetTween.animate(
       CurvedAnimation(
-        parent: _offsetController!,
+        parent: _offsetController,
         curve: Curves.easeOut,
       ),
     );
@@ -259,16 +259,16 @@ class _ImageViewerState extends State<ImageViewer>
     _opacityController =
         AnimationController(vsync: this, duration: Duration.zero);
     _opacityTween = Tween<double>(begin: 1.0, end: 0.0);
-    _opacityAnimation = _opacityTween?.animate(_opacityController!);
+    _opacityAnimation = _opacityTween.animate(_opacityController);
 
     super.initState();
   }
 
   @override
   void dispose() {
-    _pageController?.dispose();
-    _offsetController?.dispose();
-    _opacityController?.dispose();
+    _pageController.dispose();
+    _offsetController.dispose();
+    _opacityController.dispose();
     super.dispose();
   }
 
@@ -278,7 +278,7 @@ class _ImageViewerState extends State<ImageViewer>
 
   void _onPageChanged(int index) {
     setState(() => _currentPageIndex =
-        mapToRange(index, 0, widget.imageProviders!.length - 1));
+        mapToRange(index, 0, widget.imageProviders.length - 1));
   }
 
   void _onDragStart(DragStartDetails details) {
@@ -288,23 +288,24 @@ class _ImageViewerState extends State<ImageViewer>
   }
 
   void _onDragEnd(double velocity) {
-    _start = null;
+    // ลบตัวแปรที่ไม่ได้ใช้ออก
+    // double? _start = null;
 
     if (velocity > _kMaxDragSpeed ||
-        _offsetTween!.end!.dy >= MediaQuery.of(context).size.height / 2) {
+        _offsetTween.end!.dy >= MediaQuery.of(context).size.height / 2) {
       Navigator.of(context).pop();
     } else {
-      _opacityTween!.begin = _opacityTween!.end;
-      _opacityTween!.end = 1.0;
-      _opacityController!.duration = const Duration(milliseconds: 200);
-      _opacityController!.reset();
-      _opacityController!.forward();
+      _opacityTween.begin = _opacityTween.end;
+      _opacityTween.end = 1.0;
+      _opacityController.duration = Duration(milliseconds: 200);
+      _opacityController.reset();
+      _opacityController.forward();
 
-      _offsetTween!.begin = Offset(0, _offsetTween!.end!.dy);
-      _offsetTween!.end = Offset.zero;
-      _offsetController!.duration = const Duration(milliseconds: 200);
-      _offsetController!.reset();
-      _offsetController!.forward();
+      _offsetTween.begin = Offset(0, _offsetTween.end!.dy);
+      _offsetTween.end = Offset.zero;
+      _offsetController.duration = Duration(milliseconds: 200);
+      _offsetController.reset();
+      _offsetController.forward();
     }
 
     setState(() => _isDragging = false);
@@ -314,24 +315,24 @@ class _ImageViewerState extends State<ImageViewer>
     if (dy < 0) {
       return;
     }
-    _offsetTween!.begin = Offset.zero;
-    _offsetTween!.end = Offset(0, dy);
+    _offsetTween.begin = Offset.zero;
+    _offsetTween.end = Offset(0, dy);
 
-    _offsetController!.duration = Duration.zero;
-    _offsetController!.reset();
-    _offsetController!.forward();
+    _offsetController.duration = Duration.zero;
+    _offsetController.reset();
+    _offsetController.forward();
 
-    _opacityTween!.begin = _opacityTween!.end;
-    _opacityTween!.end =
+    _opacityTween.begin = _opacityTween.end;
+    _opacityTween.end =
         mapValue(dy, 0, MediaQuery.of(context).size.height, 1.0, 0.0);
-    _opacityController!.duration = Duration.zero;
-    _opacityController!.reset();
-    _opacityController!.forward();
+    _opacityController.duration = Duration.zero;
+    _opacityController.reset();
+    _opacityController.forward();
   }
 
   Widget _buildPage(_, int index) {
-    final idx = mapToRange(index, 0, widget.imageProviders!.length - 1);
-    final ImageProvider provider = widget.imageProviders![idx];
+    final idx = mapToRange(index, 0, widget.imageProviders.length - 1);
+    final ImageProvider provider = widget.imageProviders[idx];
 
     return ZoomableImage(
       imageProvider: provider,
@@ -339,13 +340,13 @@ class _ImageViewerState extends State<ImageViewer>
     );
   }
 
-  Widget _wrapWithCloseGesture({Widget? child}) {
+  Widget _wrapWithCloseGesture({required Widget child}) {
     return GestureDetector(
       onVerticalDragStart: _isLocked ? null : _onDragStart,
       onVerticalDragUpdate: _isLocked
           ? null
           : (details) {
-              _onDrag(details.globalPosition.dy - _start!);
+              _onDrag(details.globalPosition.dy - _start);
             },
       onVerticalDragCancel: _isLocked ? null : () => _onDragEnd(0.0),
       onVerticalDragEnd: _isLocked
@@ -361,7 +362,7 @@ class _ImageViewerState extends State<ImageViewer>
   Widget build(BuildContext context) {
     final pageView = PageView.builder(
       itemBuilder: _buildPage,
-      physics: _isLocked || widget.imageProviders!.length <= 1
+      physics: _isLocked || widget.imageProviders.length <= 1
           ? const NeverScrollableScrollPhysics()
           : null,
       controller: _pageController,
@@ -369,22 +370,21 @@ class _ImageViewerState extends State<ImageViewer>
     );
 
     return OffsetTransition(
-      offset: _offsetAnimation!,
-      listenable: _listenable!,
+      offset: _offsetAnimation,
       child: FadeTransition(
-        opacity: _opacityAnimation!,
+        opacity: _opacityAnimation,
         child: CupertinoPageScaffold(
           backgroundColor: CupertinoColors.black,
           navigationBar: CupertinoNavigationBar(
             automaticallyImplyLeading: false,
             backgroundColor: kTranslucentBlackColor,
-            middle: widget.imageProviders!.length > 1
+            middle: widget.imageProviders.length > 1
                 ? AnimatedOpacity(
                     duration: const Duration(milliseconds: 200),
                     opacity: _isDragging ? 0.0 : 1.0,
                     child: Text(
-                      '${_currentPageIndex! + 1} of ${widget.imageProviders!.length}',
-                      style: const TextStyle(
+                      '${_currentPageIndex + 1} of ${widget.imageProviders.length}',
+                      style: TextStyle(
                         color: CupertinoColors.white,
                       ),
                     ),
@@ -396,7 +396,7 @@ class _ImageViewerState extends State<ImageViewer>
               child: CupertinoButton(
                 padding: const EdgeInsets.symmetric(vertical: 0.0),
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text(
+                child: Text(
                   'Close',
                   style: TextStyle(
                     color: CupertinoColors.white,
@@ -417,11 +417,11 @@ class _ImageViewerState extends State<ImageViewer>
 
 class ZoomableImage extends StatefulWidget {
   ZoomableImage({
-    this.imageProvider,
+    required this.imageProvider,
     // this.onScaleStateChanged,
   });
 
-  final ImageProvider? imageProvider;
+  final ImageProvider imageProvider;
 
   // final PhotoViewScaleStateChangedCallback onScaleStateChanged;
 
@@ -479,22 +479,23 @@ int mapToRange(int value, int low, int high) {
 
 class OffsetTransition extends AnimatedWidget {
   const OffsetTransition({
-    super.key,
-    @required Animation<Offset>? offset,
-    this.child, required super.listenable,
-  });
+    Key? key,
+    required Animation<Offset> offset,
+    required this.child,
+  }) : super(key: key, listenable: offset);
 
-  final Widget? child;
+  final Widget child;
 
-  Animation<Offset>? get offset => listenable as Animation<Offset>;
+  Animation<Offset> get offset => listenable as Animation<Offset>;
 
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
-      offset: offset!.value,
+      offset: offset.value,
       child: child,
     );
   }
 }
+
 
 // main() => runApp(GalleryView());

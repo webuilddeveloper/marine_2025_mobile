@@ -109,7 +109,7 @@ class _NewsList extends State<NewsList> {
                     color: Color(0XFF213F91),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.arrow_back_ios_new,
                       size: 20,
@@ -118,8 +118,8 @@ class _NewsList extends State<NewsList> {
                   ),
                 ),
               ),
-              SizedBox(width: 10),
-              Expanded(
+              const SizedBox(width: 10),
+              const Expanded(
                 child: Text(
                   'ข่าวประชาสัมพันธ์',
                   textAlign: TextAlign.center,
@@ -143,7 +143,7 @@ class _NewsList extends State<NewsList> {
         child: SmartRefresher(
           enablePullDown: false,
           enablePullUp: true,
-          footer: ClassicFooter(
+          footer: const ClassicFooter(
             loadingText: ' ',
             canLoadingText: ' ',
             idleText: ' ',
