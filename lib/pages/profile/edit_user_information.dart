@@ -179,6 +179,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
     if (profileCode != '') {
       final result =
           await postObjectData("m/Register/read", {'code': profileCode});
+      print('================>>>>> ${result}');
 
       if (result['status'] == 'S') {
         await storage.write(
@@ -1160,7 +1161,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                           height: 31.0,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            color: Color(0xFFF5A623),
+                            color: Color(0XFF213F91),
                           ),
                           margin: EdgeInsets.only(top: 90.0, left: 70.0),
                           child: Container(

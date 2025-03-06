@@ -5,16 +5,17 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:marine_mobile/pages/about_us/about_us_form.dart';
-import 'package:marine_mobile/pages/about_us/about_us_form_bk.dart';
+// import 'package:marine_mobile/pages/about_us/about_us_form_bk.dart';
 import 'package:marine_mobile/pages/complain/complain_list_category.dart';
 import 'package:marine_mobile/pages/license/check_license_list_category.dart';
 import 'package:marine_mobile/pages/my_qr_code.dart';
 import 'package:marine_mobile/pages/question/question_list.dart';
-import 'package:marine_mobile/pages/training_course/training_course_list.dart';
+// import 'package:marine_mobile/pages/training_course/training_course_list.dart';
 import 'package:marine_mobile/pages/training_course/training_course_list_category.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:marine_mobile/component/material/check_avatar.dart';
 import 'package:marine_mobile/pages/license/renew_license.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import 'component/button_menu_full.dart';
 import 'component/carousel_banner.dart';
@@ -24,9 +25,9 @@ import 'component/link_url_in.dart';
 import 'login.dart';
 import 'pages/blank_page/blank_loading.dart';
 import 'pages/blank_page/toast_fail.dart';
-import 'pages/coming_soon.dart';
+// import 'pages/coming_soon.dart';
 import 'pages/contact/contact_list_category.dart';
-import 'pages/event_calendar/event_calendar_main.dart';
+// import 'pages/event_calendar/event_calendar_main.dart';
 import 'pages/knowledge/knowledge_list.dart';
 import 'pages/main_popup/dialog_main_popup.dart';
 import 'pages/news/news_form.dart';
@@ -36,7 +37,7 @@ import 'pages/poll/poll_list.dart';
 import 'pages/privilege/privilege_main.dart';
 import 'shared/api_provider.dart';
 import 'package:intl/intl.dart';
-import 'component/carousel_rotation.dart';
+// import 'component/carousel_rotation.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key, this.changePage});
@@ -250,7 +251,7 @@ class _HomePageState extends State<HomePage> {
 
   _buildProfile() {
     return Container(
-      height: 300,
+      height: 310,
       child: Stack(
         children: [
           Container(
@@ -301,14 +302,29 @@ class _HomePageState extends State<HomePage> {
                   future: _futureProfile,
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    final item = snapshot.data ?? {}; // ป้องกัน Null
+
+                    final queryParameters =
+                        item.map<String, String?>((key, value) {
+                      if (key is! String) return MapEntry(key.toString(), null);
+                      if (value == null) return MapEntry(key, null);
+                      return MapEntry(key, value.toString());
+                    })
+                          ..removeWhere((key, value) => value == null);
+
+                    final Uri qrUri = Uri(
+                      scheme: "http",
+                      host: "gateway.we-builds.com",
+                      path: "security_information.html",
+                      queryParameters: queryParameters,
+                    );
                     if (snapshot.hasData) {
                       if (profileCode == snapshot.data['code']) {
                         return Row(
                           children: [
-                            Container(
+                            SizedBox(
                               height: 60,
                               width: 60,
-                              // padding: EdgeInsets.only(right: 10),
                               child: checkAvatar(
                                   context, '${snapshot.data['imageUrl']}'),
                             ),
@@ -355,27 +371,26 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => MyQrCode(),
+                                    builder: (context) => MyQrCode(
+                                      model: snapshot.data,
+                                    ),
                                   ),
                                 );
                               },
                               child: Container(
-                                // padding: EdgeInsets.all(10.0),
                                 decoration: BoxDecoration(
-                                  // color: Color(0XFFB03432),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Image.asset(
-                                      'assets/icons/qr_code2.png',
-                                      height: 40,
-                                      color: Colors.black,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
+                                    QrImageView(
+                                      data: qrUri.toString(),
+                                      size:
+                                          80, // Replace 'Me' with a valid size like 200.0
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Color(0xFF0C387D),
                                     ),
                                     const Text(
                                       'my qrcode',
@@ -1499,10 +1514,12 @@ class _HomePageState extends State<HomePage> {
 
     //read profile
     profileCode = (await storage.read(key: 'profileCode2'))!;
+    print('==============>>>>> ${profileCode}');
     if (profileCode != '') {
       setState(() {
         _futureProfile = postDio(profileReadApi, {"code": profileCode});
       });
+
       _futureMenu = postDio('${menuApi}read', {'limit': 10});
       _futureBanner = postDio('${mainBannerApi}read', {'limit': 10});
       _futureRotation = postDio('${mainRotationApi}read', {'limit': 10});

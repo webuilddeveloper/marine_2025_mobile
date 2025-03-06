@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-import '../component/material/check_avatar.dart';
-import '../shared/api_provider.dart';
-import 'blank_page/blank_loading.dart';
+// import '../component/material/check_avatar.dart';
+// import '../shared/api_provider.dart';
+// import 'blank_page/blank_loading.dart';
 
 class MyQrCode extends StatefulWidget {
   MyQrCode({super.key, this.model, this.changePage});
@@ -17,24 +18,25 @@ class MyQrCode extends StatefulWidget {
 
 class _MyQrCode extends State<MyQrCode> {
   bool showCalendar = false;
-  final storage = new FlutterSecureStorage();
-  Future<dynamic>? _futureProfile;
+  final storage = const FlutterSecureStorage();
+
+  // Future<dynamic>? _futureProfile;
+
   String profileCode = '';
 
   @override
   void initState() {
-    _callRead();
     super.initState();
   }
 
-  _callRead() async {
-    profileCode = (await storage.read(key: 'profileCode2'))!;
-    if (profileCode != '' && profileCode != null) {
-      setState(() {
-        _futureProfile = postDio(profileReadApi, {"code": profileCode});
-      });
-    }
-  }
+  // _callRead() async {
+  //   profileCode = (await storage.read(key: 'profileCode2'))!;
+  //   if (profileCode != '' && profileCode != null) {
+  //     setState(() {
+  //       _futureProfile = postDio(profileReadApi, {"code": profileCode});
+  //     });
+  //   }
+  // }
 
   void goBack() async {
     Navigator.pop(context, false);
@@ -42,59 +44,75 @@ class _MyQrCode extends State<MyQrCode> {
 
   @override
   Widget build(BuildContext context) {
+    final item = widget.model;
+
+    final queryParameters = item.map<String, String?>((key, value) {
+      if (key is! String) return MapEntry(key.toString(), null);
+      if (value == null) return MapEntry(key, null);
+      return MapEntry(key, value.toString());
+    })
+      ..removeWhere((key, value) => value == null);
+
+    final Uri qrUri = Uri(
+      scheme: "http",
+      host: "gateway.we-builds.com",
+      path: "security_information.html",
+      queryParameters: queryParameters,
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        // forceMaterialTransparency: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        titleSpacing: 5,
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 20,
-            left: 15,
-            right: 15,
-          ),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  // alignment: Alignment.center,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      size: 20,
-                      color: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          titleSpacing: 5,
+          automaticallyImplyLeading: false,
+          flexibleSpace: SafeArea(
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        color: const Color(0XFF213F91),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  'คิวอาโค้ดของฉัน',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Kanit',
-                    color: Colors.black,
+                  const SizedBox(width: 10),
+                  const Expanded(
+                    child: Text(
+                      'คิวอาโค้ดของฉัน',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Kanit',
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -103,177 +121,265 @@ class _MyQrCode extends State<MyQrCode> {
           overScroll.disallowIndicator();
           return false;
         },
-        child: Container(
-          alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.transparent,
-          child: FutureBuilder<dynamic>(
-            future: _futureProfile,
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                if (profileCode == snapshot.data['code']) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).padding.top + 30,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width > 320
-                              ? 320
-                              : MediaQuery.of(context).size.width,
-                          child: Stack(
-                            children: [
-                              Container(
-                                child: Image.asset(
-                                  'assets/profile_qr.png',
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 190,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).padding.top - 80,
-                        ),
-                        Stack(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 15),
-                              child: Image.asset(
-                                "assets/bg_bottom_profile.png",
-                                // height: MediaQuery.of(context).size.height,
-                                width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned(
-                              left: MediaQuery.of(context).size.width / 2 - 40,
-                              child: Container(
-                                height: 80,
-                                width: 80,
-                                // padding: EdgeInsets.only(right: 10),
-                                child: checkAvatar(
-                                    context, '${snapshot.data['imageUrl']}'),
-                              ),
-                            ),
-                            Positioned(
-                              top: 100,
-                              left: MediaQuery.of(context).size.width / 2 - 150,
-                              child: Container(
-                                width: 300,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  '${snapshot.data['firstName'] ?? ''} ${snapshot.data['lastName'] ?? ''}',
-                                  style: TextStyle(
-                                    color: Color(0xFFFFFFFF),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Kanit',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top:
-                                  150, // Distance from top (including the profile)
-                              left: 20, // Add padding from the left side
-                              right: 20, // Add padding from the right side
-                              child: Column(
-                                children: [
-                                  LicenseInfoRow(
-                                    'สถานะใบอนุญาตใช้เรือ',
-                                    'เข้ารับและผ่านการอบรม',
-                                    isStatus: true,
-                                  ),
-                                  LicenseInfoRow(
-                                    'เลขที่ใบอนุญาต',
-                                    '012-21313446',
-                                  ),
-                                  LicenseInfoRow(
-                                    'วันออกใบอนุญาต',
-                                    '01/11/2563',
-                                  ),
-                                  LicenseInfoRow(
-                                    'วันหมดอายุ',
-                                    '01/11/2566',
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                } else {
-                  return Container();
-                }
-              } else if (snapshot.hasError) {
-                return Container();
-              } else {
-                return Container();
-              }
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
-  LicenseInfoRow(
-    String title,
-    String value, {
-    bool isStatus = false,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: Color(0xFFFFFFFF),
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-              fontFamily: 'Kanit',
-            ),
-          ),
-          isStatus
-              ? Container(
-                  width: 100,
-                  height: 35,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
+        child: Stack(
+          children: [
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.12,
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                color: Color(0XFFF3F5F5),
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.05,
                   ),
-                  child: Text(
-                    'มีใบอนุญาต',
-                    style: TextStyle(
-                      fontFamily: 'Kanit',
-                      fontSize: 15,
-                      color: Color(0xFF000000),
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                )
-              : Text(
-                  value,
-                  style: TextStyle(
-                    color: Color(0xFFFFFFFF),
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                    fontFamily: 'Kanit',
+                  child: QrImageView(
+                    data: qrUri.toString(),
+                    size: 250,
+                    backgroundColor: Colors.white,
+                    foregroundColor: Color(0xFF0C387D),
                   ),
                 ),
-        ],
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Image.asset(
+                "assets/images/bg_buttom_qr_code.png",
+                height: MediaQuery.of(context).size.height * 0.47,
+                width: MediaQuery.of(context).size.width,
+                color: const Color(0xFF0C387D),
+                fit: BoxFit.fill,
+              ),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.47,
+              child: Container(
+                alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // รูปโปรไฟล์
+                      Container(
+                        height: 185,
+                        width: 185,
+                        padding: EdgeInsets.only(right: 10),
+                        child: item["imageUrl"] != ''
+                            ? CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                backgroundImage:
+                                    NetworkImage(item["imageUrl"] ?? ''),
+                              )
+                            : Container(
+                                padding: EdgeInsets.all(10.0),
+                                child: Image.asset(
+                                  'assets/images/user_not_found.png',
+                                  color: Theme.of(context).primaryColorLight,
+                                ),
+                              ),
+                      ),
+                      const SizedBox(height: 10),
+
+                      Text(
+                        '${item['firstName'] ?? ''} ${item['lastName'] ?? ''}',
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                          color: Color(0XFFF5F5F5),
+                          fontFamily: 'Kanit',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+
+                      const Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'สมรรถภาพทางกาย',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Color(0XFFFFFFFF),
+                                fontFamily: 'Kanit',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'ผ่านเกณฑ์',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Color(0XFFFFFFFF),
+                                fontFamily: 'Kanit',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Expanded(
+                            flex: 1,
+                            child: Text(
+                              'สถานะการอบรม',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Color(0XFFFFFFFF),
+                                fontFamily: 'Kanit',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
+                              ),
+                              child: const Text(
+                                'เข้ารับและผ่านการอบรม',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Color(0XFF000000),
+                                  fontFamily: 'Kanit',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+
+                      Row(
+                        children: [
+                          const Expanded(
+                            flex: 1,
+                            child: Text(
+                              'สถานะใบอนุญาต',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Color(0XFFFFFFFF),
+                                fontFamily: 'Kanit',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
+                              ),
+                              child: const Text(
+                                'มีใบอนุญาตเป็นพนักงาน',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Color(0XFF000000),
+                                  fontFamily: 'Kanit',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+
+                      const Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'วันออกใบอนุญาต',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Color(0XFFFFFFFF),
+                                fontFamily: 'Kanit',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              '01/11/2563',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Color(0XFFFFFFFF),
+                                fontFamily: 'Kanit',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+
+                      const Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'วันหมดอายุ',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Color(0XFFFFFFFF),
+                                fontFamily: 'Kanit',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              '01/11/2566',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Color(0XFFFFFFFF),
+                                fontFamily: 'Kanit',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

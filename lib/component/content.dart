@@ -10,7 +10,7 @@ import 'link_url_out.dart';
 
 // ignore: must_be_immutable
 class Content extends StatefulWidget {
-  Content({
+  const Content({
     super.key,
     this.code,
     this.url,
