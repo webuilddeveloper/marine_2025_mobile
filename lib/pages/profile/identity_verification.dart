@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as datatTimePicker;
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
+    as datatTimePicker;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 
@@ -2112,7 +2113,8 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color(0xFFC5DAFC),
-                    contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                     hintText: "วันเดือนปีเกิด",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -2986,31 +2988,83 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
     return FutureBuilder<dynamic>(
       future: futureModel,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasError)
+        if (snapshot.hasError) {
           return Center(
             child: Container(
               color: Colors.white,
               child: dialogFail(context),
             ),
           );
-        else
+        } else {
           return Scaffold(
-            appBar: header(context, goBack, title: 'ข้อมูลสมาชิก'),
-            backgroundColor: const Color(0xFFFFFFFF),
-            body: Container(
-              child: ListView(
-                controller: scrollController,
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                children: <Widget>[
-                  Container(
-                    color: Colors.white,
-                    child: contentCard(),
-                  ),
-                ],
+            // appBar: header(context, goBack, title: 'ข้อมูลสมาชิก'),
+            appBar: AppBar(
+              // forceMaterialTransparency: true,
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              titleSpacing: 5,
+              automaticallyImplyLeading: false,
+              flexibleSpace: Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 20,
+                  left: 15,
+                  right: 15,
+                ),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        // alignment: Alignment.center,
+                        width: 35,
+                        decoration: BoxDecoration(
+                          color: Color(0XFF213F91),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'ข้อมูลสมาชิก',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Kanit',
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 30),
+                  ],
+                ),
               ),
             ),
+
+            backgroundColor: const Color(0xFFFFFFFF),
+            body: ListView(
+              controller: scrollController,
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  child: contentCard(),
+                ),
+              ],
+            ),
           );
+        }
       },
     );
   }

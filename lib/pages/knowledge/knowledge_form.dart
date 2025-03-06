@@ -8,7 +8,6 @@ import '../../component/link_url_out.dart';
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
 
-
 class KnowledgeForm extends StatefulWidget {
   KnowledgeForm({super.key, required this.code, this.model, this.urlComment});
   final String? code;
@@ -141,7 +140,7 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         Container(
-                                          child: new Padding(
+                                          child: Padding(
                                             padding: EdgeInsets.all(5.0),
                                             child: Image.asset(
                                               'assets/logo/icons/Group337.png',
@@ -259,7 +258,7 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
                         child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width,
                           onPressed: () {
-                            launchURL(model['fileUrl']);
+                            launchURL(model['linkUrl']);
                             // launchInWebViewWithJavaScript(model['fileUrl']);
                             // Navigator.push(
                             //   context,
@@ -273,9 +272,11 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              Container(
-                                child: new Padding(
-                                  padding: EdgeInsets.all(5.0),
+                              SizedBox(
+                                width: 35.0,
+                                height: 35.0,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
                                   child: Image.asset(
                                     'assets/logo/icons/Group337.png',
                                     height: 5.0,
@@ -283,8 +284,6 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),
-                                width: 35.0,
-                                height: 35.0,
                               ),
                               Text(
                                 'อ่าน',
@@ -378,13 +377,13 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
                 width: 380,
                 padding: EdgeInsets.only(left: 10.0, top: 5, right: 10.0),
                 alignment: Alignment.topLeft,
-                child: new Html(
-                  data: model['description'] != '' ? model['description'] : '',
-                  onLinkTap: (url, context, attributes) {
-              // ignore: deprecated_member_use
-                    launch(url!);
-                  }
-                ),
+                child: Html(
+                    data:
+                        model['description'] != '' ? model['description'] : '',
+                    onLinkTap: (url, context, attributes) {
+                      // ignore: deprecated_member_use
+                      launch(url!);
+                    }),
 
                 // HtmlView(
                 //   data: model['description'] != '' ? model['description'] : '',

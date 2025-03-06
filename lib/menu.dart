@@ -243,7 +243,7 @@ class _MenuState extends State<Menu> {
               // margin: EdgeInsets.all(10),
               decoration: _currentPage == index
                   ? BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                       boxShadow: [
                         BoxShadow(
                           color: const Color(0xFFFFFFFF).withOpacity(0.50),

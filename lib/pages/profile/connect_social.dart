@@ -500,7 +500,6 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
               ),
             ),
             child: TextButton(
-              
               style: ButtonStyle(
                 padding: WidgetStateProperty.all<EdgeInsets>(
                     const EdgeInsets.all(0)),
@@ -674,7 +673,9 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
                     },
                   ),
                   filled: true,
-                  fillColor: showIsEdit ? const Color(0xFFC5DAFC) : const Color(0xFF707070),
+                  fillColor: showIsEdit
+                      ? const Color(0xFFC5DAFC)
+                      : const Color(0xFF707070),
                   contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                   hintText: 'รหัสผ่านใหม่',
                   border: OutlineInputBorder(
@@ -738,9 +739,11 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
                       },
                     ),
                     filled: true,
-                    fillColor:
-                        showIsEdit ? const Color(0xFFC5DAFC) : const Color(0xFF707070),
-                    contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                    fillColor: showIsEdit
+                        ? const Color(0xFFC5DAFC)
+                        : const Color(0xFF707070),
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                     hintText: 'ยืนยันรหัสผ่านใหม่',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -850,7 +853,8 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
               getIDSocial == '' ? 'เชื่อมต่อ' : 'ยกเลิกการเชื่อมต่อ',
               style: new TextStyle(
                 fontSize: 14.0,
-                color: getIDSocial == '' ? Colors.blue : const Color(0xFFFC4137),
+                color:
+                    getIDSocial == '' ? Colors.blue : const Color(0xFFFC4137),
                 fontWeight: FontWeight.normal,
                 fontFamily: 'Sarabun',
               ),
@@ -891,7 +895,59 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
           );
         } else {
           return Scaffold(
-            appBar: header(context, goBack, title: 'การเชื่อมต่อ'),
+            // appBar: header(context, goBack, title: 'การเชื่อมต่อ'),
+            appBar: AppBar(
+              // forceMaterialTransparency: true,
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              titleSpacing: 5,
+              automaticallyImplyLeading: false,
+              flexibleSpace: Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 20,
+                  left: 15,
+                  right: 15,
+                ),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        // alignment: Alignment.center,
+                        width: 35,
+                        decoration: BoxDecoration(
+                          color: Color(0XFF213F91),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'การเชื่อมต่อ',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Kanit',
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 30),
+                  ],
+                ),
+              ),
+            ),
             backgroundColor: Colors.white,
             body: Container(
               child: ListView(

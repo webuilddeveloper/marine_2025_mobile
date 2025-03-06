@@ -453,7 +453,59 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     //         return Center(child: Text('Error: ${snapshot.error}'));
     //       else
     return Scaffold(
-      appBar: header(context, goBack, title: 'เปลี่ยนรหัสผ่าน'),
+      // appBar: header(context, goBack, title: 'เปลี่ยนรหัสผ่าน'),
+      appBar: AppBar(
+        // forceMaterialTransparency: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        titleSpacing: 5,
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          width: double.infinity,
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 20,
+            left: 15,
+            right: 15,
+          ),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  // alignment: Alignment.center,
+                  width: 35,
+                  decoration: BoxDecoration(
+                    color: const Color(0XFF213F91),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.arrow_back_ios_new,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              const Expanded(
+                child: Text(
+                  'เปลี่ยนรหัสผ่าน',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Kanit',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 30),
+            ],
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: InkWell(
         splashColor: Colors.transparent,

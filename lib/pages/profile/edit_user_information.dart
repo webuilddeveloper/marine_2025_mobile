@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as datatTimePicker;
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
+    as datatTimePicker;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -1025,7 +1026,59 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, goBack, title: 'แก้ไขข้อมูล'),
+      // appBar: header(context, goBack, title: 'แก้ไขข้อมูล'),
+      appBar: AppBar(
+        // forceMaterialTransparency: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        titleSpacing: 5,
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          width: double.infinity,
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 20,
+            left: 15,
+            right: 15,
+          ),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  // alignment: Alignment.center,
+                  width: 35,
+                  decoration: BoxDecoration(
+                    color: Color(0XFF213F91),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.arrow_back_ios_new,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  'แก้ไขข้อมูล',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Kanit',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(width: 30),
+            ],
+          ),
+        ),
+      ),
       backgroundColor: Color(0xFFF5F8FB),
       body: FutureBuilder<dynamic>(
         future: futureModel,
@@ -1093,7 +1146,9 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                                     padding: EdgeInsets.all(10.0),
                                     child: Image.asset(
                                       'assets/images/user_not_found.png',
-                                      color: Theme.of(context).colorScheme.secondary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                   ),
                           ),

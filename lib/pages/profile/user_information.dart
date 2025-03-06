@@ -145,7 +145,7 @@ class _UserInformationPageState extends State<UserInformationPage> {
               ),
               Container(
                 height: 60,
-                margin: EdgeInsets.only(
+                margin: const EdgeInsets.only(
                     top: 200.0, left: 20.0, right: 20.0, bottom: 30.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,7 +156,7 @@ class _UserInformationPageState extends State<UserInformationPage> {
                         alignment: Alignment.center,
                         child: Text(
                           model['firstName'] + ' ' + model['lastName'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Sarabun',
                             fontSize: 25.0,
                             color: Colors.white,
@@ -171,9 +171,9 @@ class _UserInformationPageState extends State<UserInformationPage> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.only(top: 270.0, bottom: 30.0),
-                constraints: BoxConstraints(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(top: 270.0, bottom: 30.0),
+                constraints: const BoxConstraints(
                   minHeight: 200,
                 ),
                 decoration: BoxDecoration(
