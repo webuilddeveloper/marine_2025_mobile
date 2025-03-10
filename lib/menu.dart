@@ -154,25 +154,17 @@ class _MenuState extends State<Menu> {
         height: 66 + MediaQuery.of(context).padding.bottom,
         decoration: BoxDecoration(
           color: Colors.white,
-          // gradient: LinearGradient(
-          //   colors: [
-          //     Theme.of(context).custom.f7cafce,
-          //     Theme.of(context).custom.f796dc3
-          //   ],
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          // ),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
           boxShadow: [
             BoxShadow(
               color: const Color(0xFF000000).withOpacity(0.10),
-              spreadRadius: 0,
               blurRadius: 4,
-              offset: const Offset(0, -3), // changes position of shadow
+              offset: const Offset(0, -3),
             ),
           ],
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             // Text(_ListNotiModel.length.toString()),
             _buildTap(
@@ -190,7 +182,10 @@ class _MenuState extends State<Menu> {
             _buildTap(
               2,
               'ใบอนุญาต',
+              // isLicense: true,
               isLicense: true,
+              icon: 'assets/icons/icon_license.png',
+              iconActive: 'assets/icons/icon_license.png',
             ),
             _buildTap(3, 'แจ้งเตือน',
                 icon: 'assets/icons/noti_icon.png',
@@ -223,120 +218,82 @@ class _MenuState extends State<Menu> {
     }
 
     return Flexible(
-      key: key,
       flex: 1,
       child: Center(
         child: Material(
           color: Colors.transparent,
           child: GestureDetector(
-            // radius: 60,
-            // splashColor: Theme.of(context).primaryColor.withOpacity(0.3),
-            onTap: () {
-              _onItemTapped(index!);
-              // postTrackClick("แท็บ$title");
-            },
+            onTap: () => _onItemTapped(index!),
             child: Container(
               alignment: Alignment.center,
               width: double.infinity,
-              height: double.infinity,
-              // padding: EdgeInsets.all(10),
-              // margin: EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(
+                  vertical: 10, horizontal: 5), // ✅ เพิ่ม Padding
               decoration: _currentPage == index
                   ? BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFFFFFFFF).withOpacity(0.50),
-                          // spreadRadius: 0,
-                          // blurRadius: 0,
-                          // offset:
-                          //     const Offset(0, 0), // changes position of shadow
+                          color: Colors.white.withOpacity(0.50),
+                          blurRadius: 4,
                         ),
                       ],
                     )
                   : null,
-              // borderRadius: BorderRadius.circular(15),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  isIconsData
-                      ? isNetwork
-                          ? Image.memory(
-                              checkAvatar(context, _imageProfile),
-                              fit: BoxFit.cover,
-                              height: 30,
-                              width: 30,
-                              errorBuilder: (_, __, ___) => Image.asset(
-                                "assets/images/profile_menu.png",
-                                fit: BoxFit.fill,
+                  if (isLicense)
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF0C387D),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Image.asset(
+                        _currentPage == index ? iconActive! : icon!,
+                        height: 30,
+                        fit: BoxFit.contain,
+                        width: 30,
+                      ),
+                    )
+                  else if (isNoti)
+                    Stack(
+                      children: [
+                        Image.asset(
+                          _currentPage == index ? iconActive! : icon!,
+                          height: 30,
+                          width: 30,
+                        ),
+                        if (_ListNotiModel.isNotEmpty)
+                          Positioned(
+                            top: 0,
+                            right: 3,
+                            child: Container(
+                              height: 10,
+                              width: 10,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFFE40000),
                               ),
-                            )
-                          : Image.asset(
-                              'assets/images/profile_menu.png',
-                              height: 30,
-                              width: 30,
-                              color: color,
-                            )
-                      : isNoti
-                          ? Stack(
-                              children: [
-                                Image.asset(
-                                  // _currentPage == index ? iconActive : icon,
-                                  _currentPage == index ? iconActive! : icon!,
-                                  height: 30,
-                                  width: 30,
-                                  // color: color,
-                                ),
-                                _ListNotiModel.isNotEmpty
-                                    ? Positioned(
-                                        top: 0,
-                                        right: 3,
-                                        child: Container(
-                                          height: 10,
-                                          // height: 226,
-                                          width: 10,
-                                          child: Container(
-                                            // alignment: Alignment.topCenter,
-                                            // padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
-                                            decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Color(0xFFE40000)),
-                                          ),
-                                        ),
-                                      )
-                                    : Container()
-                              ],
-                            )
-                          : isLicense
-                              ? Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF0C387D),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Image.asset(
-                                    'assets/icons/icon_license.png',
-                                    height: 30,
-                                    fit: BoxFit.contain,
-                                    width: 30,
-                                  ),
-                                )
-                              : Image.asset(
-                                  _currentPage == index ? iconActive! : icon!,
-                                  height: 30,
-                                  width: 30,
-                                  // color: color,
-                                ),
-                  // Text(
-                  //   title,
-                  //   style: TextStyle(
-                  //     fontSize: 8.0,
-                  //     fontFamily: 'Kanit',
-                  //     fontWeight: FontWeight.w400,
-                  //     color: color,
-                  //   ),
-                  // ),
+                            ),
+                          ),
+                      ],
+                    )
+                  else
+                    Image.asset(
+                      _currentPage == index ? iconActive! : icon!,
+                      height: 30,
+                      width: 30,
+                    ),
+                  const SizedBox(height: 5), // ✅ เพิ่มระยะห่างจากไอคอน
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: color,
+                    ),
+                  ),
                 ],
               ),
             ),
