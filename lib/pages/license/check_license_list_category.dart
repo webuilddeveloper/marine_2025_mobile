@@ -21,7 +21,7 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
   String? keySearch;
   String? category;
 
-  dynamic _model = [
+  final dynamic _model = [
     {
       'code': '1',
       'title': 'ใบรับรองด้านแรงงานทางทะเล (MLC)',
@@ -111,10 +111,10 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
                   // alignment: Alignment.center,
                   width: 35,
                   decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
+                    color: const Color(0XFF213F91),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.arrow_back_ios_new,
                       size: 20,
@@ -123,7 +123,7 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: Text(
                   'ตรวจสอบข้อมูลใบอนุญาต',
                   textAlign: TextAlign.center,
@@ -135,7 +135,7 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
                   ),
                 ),
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
             ],
           ),
         ),
@@ -146,10 +146,10 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
           return false;
         },
         child: ListView(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           shrinkWrap: true,
           children: [
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             CheckLicenseListCategoryVertical(
               site: "DDPM",
               model: Future.value(_model),

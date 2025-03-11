@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:marine_mobile/pages/license/check_license.dart';
 
 class CheckLicenseListCategoryVertical extends StatefulWidget {
-  CheckLicenseListCategoryVertical({
+  const CheckLicenseListCategoryVertical({
     super.key,
     this.site,
     this.model,
@@ -17,11 +16,11 @@ class CheckLicenseListCategoryVertical extends StatefulWidget {
   final String? url;
 
   @override
-  _CheckLicenseListCategoryVertical createState() =>
-      _CheckLicenseListCategoryVertical();
+  CheckLicenseListCategoryVerticalState createState() =>
+      CheckLicenseListCategoryVerticalState();
 }
 
-class _CheckLicenseListCategoryVertical
+class CheckLicenseListCategoryVerticalState
     extends State<CheckLicenseListCategoryVertical> {
   @override
   void initState() {
@@ -41,7 +40,7 @@ class _CheckLicenseListCategoryVertical
             return Container(
               alignment: Alignment.center,
               height: 200,
-              child: Text(
+              child: const Text(
                 'ไม่พบข้อมูล',
                 style: TextStyle(
                   fontSize: 18,
@@ -54,9 +53,9 @@ class _CheckLicenseListCategoryVertical
             return Container(
               color: Colors.transparent,
               alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: ListView.builder(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot.data.length,
@@ -84,23 +83,23 @@ class _CheckLicenseListCategoryVertical
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 0,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                             // color: Color.fromRGBO(0, 0, 2, 1),
                           ),
-                          margin: EdgeInsets.only(bottom: 10.0),
+                          margin: const EdgeInsets.only(bottom: 10.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 // height: 80.0,
                                 decoration: BoxDecoration(
-                                  borderRadius: new BorderRadius.circular(5.0),
-                                  color: Color(0xFFFFFFFF),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: const Color(0xFFFFFFFF),
                                 ),
-                                padding: EdgeInsets.all(5.0),
+                                padding: const EdgeInsets.all(5.0),
                                 alignment: Alignment.centerLeft,
                                 child: Column(
                                   children: [
@@ -110,17 +109,17 @@ class _CheckLicenseListCategoryVertical
                                       children: [
                                         Row(
                                           children: [
-                                            SizedBox(width: 20),
+                                            const SizedBox(width: 20),
                                             Container(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
                                                   0.75,
-                                              padding: EdgeInsets.all(5),
+                                              padding: const EdgeInsets.all(5),
                                               // color: Colors.red,
                                               child: Text(
                                                 '${snapshot.data[index]['title']}',
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontWeight: FontWeight.normal,
                                                   fontSize: 16,
                                                   fontFamily: 'Kanit',
@@ -132,24 +131,21 @@ class _CheckLicenseListCategoryVertical
                                             ),
                                           ],
                                         ),
-                                        Container(
-                                          // color: Colors.yellow,
-                                          child: Icon(
-                                            Icons.keyboard_arrow_right,
-                                            color: Color.fromRGBO(0, 0, 0, 0.5),
-                                            size: 40.0,
-                                          ),
+                                        const Icon(
+                                          Icons.keyboard_arrow_right,
+                                          color: Color.fromRGBO(0, 0, 0, 0.5),
+                                          size: 40.0,
                                         ),
                                       ],
                                     ),
                                     Container(
                                       width: MediaQuery.of(context).size.width,
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                           vertical: 5, horizontal: 25),
                                       // color: Colors.red,
                                       child: Text(
                                         '${snapshot.data[index]['description']}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 15,
                                           fontFamily: 'Kanit',
@@ -161,7 +157,7 @@ class _CheckLicenseListCategoryVertical
                                     ),
                                     Container(
                                       width: MediaQuery.of(context).size.width,
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                           vertical: 5, horizontal: 20),
                                       // color: Colors.red,
                                       child: Row(
@@ -169,11 +165,11 @@ class _CheckLicenseListCategoryVertical
                                         children: [
                                           Icon(
                                             Icons.schedule,
-                                            color: Color(0xFF000000)
+                                            color: const Color(0xFF000000)
                                                 .withOpacity(0.6),
                                           ),
-                                          SizedBox(width: 5),
-                                          Text(
+                                          const SizedBox(width: 5),
+                                          const Text(
                                             'วันที่',
                                             style: TextStyle(
                                               fontWeight: FontWeight.normal,
@@ -188,18 +184,18 @@ class _CheckLicenseListCategoryVertical
                                               fontWeight: FontWeight.normal,
                                               fontSize: 15,
                                               fontFamily: 'Kanit',
-                                              color: Color(0xFF000000)
+                                              color: const Color(0xFF000000)
                                                   .withOpacity(0.6),
                                             ),
                                           ),
-                                          SizedBox(width: 5),
+                                          const SizedBox(width: 5),
                                           Icon(
                                             Icons.visibility,
-                                            color: Color(0xFF000000)
+                                            color: const Color(0xFF000000)
                                                 .withOpacity(0.6),
                                           ),
-                                          SizedBox(width: 5),
-                                          Text(
+                                          const SizedBox(width: 5),
+                                          const Text(
                                             'เข้าชม',
                                             style: TextStyle(
                                               fontWeight: FontWeight.normal,
@@ -214,7 +210,7 @@ class _CheckLicenseListCategoryVertical
                                               fontWeight: FontWeight.normal,
                                               fontSize: 15,
                                               fontFamily: 'Kanit',
-                                              color: Color(0xFF000000)
+                                              color: const Color(0xFF000000)
                                                   .withOpacity(0.6),
                                             ),
                                           ),
@@ -223,7 +219,7 @@ class _CheckLicenseListCategoryVertical
                                     ),
                                     Container(
                                       width: MediaQuery.of(context).size.width,
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                           vertical: 5, horizontal: 20),
                                       // color: Colors.red,
                                       child: Row(
@@ -231,13 +227,13 @@ class _CheckLicenseListCategoryVertical
                                         children: [
                                           Icon(
                                             Icons.person,
-                                            color: Color(0xFF000000)
+                                            color: const Color(0xFF000000)
                                                 .withOpacity(0.6),
                                           ),
-                                          SizedBox(width: 5),
+                                          const SizedBox(width: 5),
                                           Text(
                                             'ผู้จัดทำ ${snapshot.data[index]['staff']}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.normal,
                                               fontSize: 15,
                                               fontFamily: 'Kanit',

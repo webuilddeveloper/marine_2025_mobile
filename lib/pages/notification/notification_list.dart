@@ -236,6 +236,7 @@ class _NotificationList extends State<NotificationList> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: header(
         context,
@@ -249,111 +250,44 @@ class _NotificationList extends State<NotificationList> {
       backgroundColor: Colors.white,
       body: Container(
         width: width,
-        margin: EdgeInsets.only(top: height * 30 / 100),
-        child: Column(
+        margin: EdgeInsets.only(top: 10), // ปรับตำแหน่งให้เหมาะสม
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
           children: [
-            // Container(
-            //   height: 70,
-            //   width: width,
-            //   child: Image.asset(
-            //     'assets/logo/logo.png',
-            //   ),
-            // ),
-            Container(
-              margin: EdgeInsets.only(top: height * 1 / 100),
-              alignment: Alignment.center,
-              width: width,
-              child: Text(
-                'ไม่พบข้อมูล',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.normal,
-                  fontFamily: 'Sarabun',
-                ),
-              ),
-            )
+            _buildNotificationCard(
+              title: "คุณได้ต่ออายุใบอนุญาตขับขี่เรือแล้ว",
+              icon: Icons.check_circle,
+              color: Colors.green,
+            ),
+            _buildNotificationCard(
+              title: "ใบอนุญาตขับขี่เรือของคุณใกล้จะหมดอายุ",
+              icon: Icons.warning,
+              color: Colors.orange,
+            ),
           ],
         ),
       ),
     );
+  }
 
-    // FutureBuilder<dynamic>(
-    //   future: _futureModel, // function where you call your api
-    //   builder: (context, AsyncSnapshot<dynamic> snapshot) {
-    //     if (snapshot.hasData) {
-    //       // print('snapshot.data.length' + snapshot.data.length);
-    //       if (snapshot.data.length > 0) {
-    //         return ListView.builder(
-    //           shrinkWrap: true, // 1st add
-    //           physics: ClampingScrollPhysics(), // 2nd
-    //           // scrollDirection: Axis.horizontal,
-    //           itemCount: snapshot.data.length,
-    //           itemBuilder: (context, index) {
-    //             return card(context, snapshot.data[index]);
-    //           },
-    //         );
-    //       } else {
-    //         return Container(
-    //           width: width,
-    //           margin: EdgeInsets.only(top: height * 30 / 100),
-    //           child: Column(
-    //             children: [
-    //               Container(
-    //                 height: 70,
-    //                 width: width,
-    //                 child: Image.asset(
-    //                   'assets/logo/logo.png',
-    //                 ),
-    //               ),
-    //               Container(
-    //                 margin: EdgeInsets.only(top: height * 1 / 100),
-    //                 alignment: Alignment.center,
-    //                 width: width,
-    //                 child: Text(
-    //                   'ไม่พบข้อมูล',
-    //                   style: TextStyle(
-    //                     fontSize: 16.0,
-    //                     fontWeight: FontWeight.normal,
-    //                     fontFamily: 'Sarabun',
-    //                   ),
-    //                 ),
-    //               )
-    //             ],
-    //           ),
-    //         );
-    //       }
-    //     } else if (snapshot.hasError) {
-    //       print('error-----');
-    //       return Container(
-    //         width: width,
-    //         height: height,
-    //         child: InkWell(
-    //           onTap: () {
-    //             setState(() {
-    //               _futureModel = postDio(
-    //                   '${notificationApi}read', {'skip': 0, 'limit': 999});
-    //             });
-    //           },
-    //           child: Icon(Icons.refresh, size: 50.0, color: Colors.blue),
-    //         ),
-    //       );
-    //     } else {
-    //       return ListView.builder(
-    //         shrinkWrap: true, // 1st add
-    //         physics: ClampingScrollPhysics(), // 2nd
-    //         // scrollDirection: Axis.horizontal,
-    //         itemCount: 10,
-    //         itemBuilder: (context, index) {
-    //           return BlankLoading(
-    //             width: width,
-    //             height: height * 15 / 100,
-    //           );
-    //         },
-    //       );
-    //     }
-    //   },
-    //   ),
-    // );
+// ฟังก์ชันสร้างการ์ดแจ้งเตือน
+  Widget _buildNotificationCard({
+    required String title,
+    required IconData icon,
+    required Color color,
+  }) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      margin: EdgeInsets.only(bottom: 12.0),
+      child: ListTile(
+        leading: Icon(icon, color: color, size: 32.0),
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
   }
 
   card(BuildContext context, dynamic model) {
@@ -379,13 +313,14 @@ class _NotificationList extends State<NotificationList> {
           height: (height * 15) / 100,
           width: width,
           decoration: BoxDecoration(
-            color: model['status'] == 'A' ? Colors.white : Color(0xFFE7E7EE),
+            color:
+                model['status'] == 'A' ? Colors.white : const Color(0xFFE7E7EE),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 0,
                 blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), // changes position of shadow
               ),
             ],
           ),
@@ -419,7 +354,7 @@ class _NotificationList extends State<NotificationList> {
                             fontSize: (height * 2) / 100,
                             fontFamily: 'Sarabun',
                             fontWeight: FontWeight.normal,
-                            color: Color(0xFFFF7514),
+                            color: const Color(0xFFFF7514),
                           ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
@@ -482,7 +417,7 @@ class _NotificationList extends State<NotificationList> {
           // message: Text(''),
           actions: <Widget>[
             CupertinoActionSheetAction(
-              child: Text(
+              child: const Text(
                 'อ่านทั้งหมด',
                 style: TextStyle(
                   fontSize: 15.0,
@@ -505,7 +440,7 @@ class _NotificationList extends State<NotificationList> {
               },
             ),
             CupertinoActionSheetAction(
-              child: Text(
+              child: const Text(
                 'ลบทั้งหมด',
                 style: TextStyle(
                   fontSize: 15.0,
@@ -530,7 +465,7 @@ class _NotificationList extends State<NotificationList> {
           ],
           cancelButton: CupertinoActionSheetAction(
             isDefaultAction: true,
-            child: Text('ยกเลิก',
+            child: const Text('ยกเลิก',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontFamily: 'Sarabun',

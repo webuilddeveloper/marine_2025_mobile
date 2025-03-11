@@ -26,10 +26,10 @@ class Content extends StatefulWidget {
   final String? pathShare;
 
   @override
-  _Content createState() => _Content();
+  ContentState createState() => ContentState();
 }
 
-class _Content extends State<Content> {
+class ContentState extends State<Content> {
   Future<dynamic>? _futureModel;
 
   String _urlShared = '';
@@ -57,10 +57,10 @@ class _Content extends State<Content> {
       for (var item in result['objectData']) {
         data.add(item['imageUrl']);
 
-
-
         dataPro.add(
-          item!['imageUrl'] != null ? NetworkImage(item!['imageUrl']!) : NetworkImage(""),
+          item!['imageUrl'] != null
+              ? NetworkImage(item!['imageUrl']!)
+              : const NetworkImage(""),
         );
       }
       setState(() {
@@ -109,12 +109,14 @@ class _Content extends State<Content> {
   myContent(dynamic model) {
     List image = ['${model['imageUrl']}'];
     List<ImageProvider> imagePro = [
-      model['imageUrl'] != null ? NetworkImage(model['imageUrl']) : NetworkImage("")
+      model['imageUrl'] != null
+          ? NetworkImage(model['imageUrl'])
+          : const NetworkImage("")
     ];
 
     return ListView(
       shrinkWrap: true, // 1st add
-      physics: ClampingScrollPhysics(), // 2nd
+      physics: const ClampingScrollPhysics(), // 2nd
       children: [
         Container(
           // width: 500.0,
@@ -127,14 +129,14 @@ class _Content extends State<Content> {
         ),
         Container(
           // color: Colors.green,
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             right: 10.0,
             left: 10.0,
           ),
-          margin: EdgeInsets.only(right: 50.0, top: 10.0),
+          margin: const EdgeInsets.only(right: 50.0, top: 10.0),
           child: Text(
             '${model['title']}',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18.0,
               fontFamily: 'Sarabun',
               fontWeight: FontWeight.w500,
@@ -151,22 +153,19 @@ class _Content extends State<Content> {
               ),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.1,
                     child: model['userList'] != null &&
                             model['userList'].length > 0
                         ? CircleAvatar(
-                            backgroundImage:
-                                '${model['userList'][0]['imageUrl']}' != null
-                                    ? NetworkImage(
-                                        '${model['userList'][0]['imageUrl']}')
-                                    : null,
+                            backgroundImage: NetworkImage(
+                                '${model['userList'][0]['imageUrl']}'),
                           )
                         : Container(),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.6,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -175,7 +174,7 @@ class _Content extends State<Content> {
                                   model['userList'].length > 0
                               ? '${model['userList'][0]['firstName']} ${model['userList'][0]['lastName']}'
                               : '${model['createBy']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15,
                             fontFamily: 'Sarabun',
                             fontWeight: FontWeight.w300,
@@ -189,15 +188,15 @@ class _Content extends State<Content> {
                                   ? dateStringToDate(model['createDate']) +
                                       ' | '
                                   : '',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 10,
                                 fontFamily: 'Sarabun',
                                 fontWeight: FontWeight.w300,
                               ),
                             ),
                             Text(
-                              'เข้าชม ' + '${model['view']}' + ' ครั้ง',
-                              style: TextStyle(
+                              'เข้าชม ${model['view']} ครั้ง',
+                              style: const TextStyle(
                                 fontSize: 10,
                                 fontFamily: 'Sarabun',
                                 fontWeight: FontWeight.w300,
@@ -208,7 +207,7 @@ class _Content extends State<Content> {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.24,
                     child: Container(
                       width: 100.0,
@@ -217,15 +216,13 @@ class _Content extends State<Content> {
                       child: TextButton(
                         // padding: EdgeInsets.all(0.0),
                         onPressed: () {
-                          final RenderBox? box = context.findRenderObject() as RenderBox;
+                          final RenderBox box =
+                              context.findRenderObject() as RenderBox;
                           Share.share(
-                            _urlShared +
-                                widget.pathShare! +
-                                '${model['code']}' +
-                                ' ${model['title']}',
+                            '$_urlShared${widget.pathShare!}${model['code']} ${model['title']}',
                             subject: '${model['title']}',
                             sharePositionOrigin:
-                                box!.localToGlobal(Offset.zero) & box.size,
+                                box.localToGlobal(Offset.zero) & box.size,
                           );
                         },
                         child: Image.asset('assets/images/share.png'),
@@ -270,17 +267,17 @@ class _Content extends State<Content> {
             right: 10,
             left: 10,
           ),
-          child: new Html(
-            data: '${model['description']}',
-            onLinkTap: (url, context, attributes) {
-              // ignore: deprecated_member_use
-              launch(url!);
-            }
-            // (String url, RenderContext context,
-            //     Map<String, String> attributes, element) {
-            //   launch();
-            // },
-          ),
+          child: Html(
+              data: '${model['description']}',
+              onLinkTap: (url, context, attributes) {
+                // ignore: deprecated_member_use
+                launchUrl(Uri.parse(url.toString()));
+              }
+              // (String url, RenderContext context,
+              //     Map<String, String> attributes, element) {
+              //   launch();
+              // },
+              ),
 
           // HtmlView(
           //   data: model['description'],
@@ -305,7 +302,7 @@ class _Content extends State<Content> {
       alignment: Alignment.center,
       width: double.infinity,
       height: 45.0,
-      padding: EdgeInsets.symmetric(horizontal: 80.0),
+      padding: const EdgeInsets.symmetric(horizontal: 80.0),
       child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(10.0),
@@ -347,7 +344,7 @@ class _Content extends State<Content> {
         onTap: () {
           launchURL('${model['fileUrl']}');
         },
-        child: Text(
+        child: const Text(
           'เปิดเอกสารแนบ',
           style: TextStyle(
             fontFamily: 'Sarabun',

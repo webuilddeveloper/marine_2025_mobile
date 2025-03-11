@@ -1,13 +1,26 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:marine_mobile/splash.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  LineSDK.instance.setup('2006568128').then((_) {
-    print('LineSDK Prepared');
-  });
+  // LineSDK.instance.setup('2006568128').then((_) {
+  //   // ignore: avoid_print
+  //   print('LineSDK Prepared');
+  // });
 
+  await Firebase
+      .initializeApp(); // ✅ ต้องเรียกก่อนใช้งาน Firebase Authentication
+
+  try {
+    await LineSDK.instance.setup('2006568128');
+    print("LINE SDK Setup Completed!");
+  } catch (e) {
+    print("LINE SDK Setup Failed: $e");
+  }
+
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

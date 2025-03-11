@@ -65,14 +65,16 @@
 		<key>CFBundleURLSchemes</key>
 		<array>
 		<!-- Specify URL scheme to use when returning from LINE to your app. -->
-		<string>line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<string>line3rdp.td.webuild.marine</string>
 		</array>
 	</dict>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<!-- Specify URL scheme to use when launching LINE from your app. -->
+		<string>line</string>
+		<string>lineauth</string>
 		<string>lineauth2</string>
+		<string>line3rdp</string>
 	</array>
 </dict>
 </plist>

@@ -21,7 +21,7 @@ class AboutUsFormBK extends StatefulWidget {
 
 class _AboutUsFormBK extends State<AboutUsFormBK> {
   // final Set<Marker> _markers = {};
-  Completer<GoogleMapController> _mapController = Completer();
+  final Completer<GoogleMapController> _mapController = Completer();
 
   @override
   void initState() {
@@ -42,10 +42,7 @@ class _AboutUsFormBK extends State<AboutUsFormBK> {
     String homeLng = lng;
 
     final String googleMapslocationUrl =
-        "https://www.google.com/maps/search/?api=1&query=" +
-            homeLat +
-            ',' +
-            homeLng;
+        "https://www.google.com/maps/search/?api=1&query=$homeLat,$homeLng";
 
     final String encodedURl = Uri.encodeFull(googleMapslocationUrl);
 
@@ -104,9 +101,8 @@ class _AboutUsFormBK extends State<AboutUsFormBK> {
                               height: 350.0,
                               width: double.infinity,
                               fit: BoxFit.cover,
-                              loadingBuilder: (context,
-                                  child,
-                                  loadingProgress) {
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
                                 if (loadingProgress == null) return child;
                                 return Center(
                                   child: CircularProgressIndicator(
@@ -491,9 +487,9 @@ class _AboutUsFormBK extends State<AboutUsFormBK> {
             child: InkWell(
               onTap: () => typeBtn != ''
                   ? typeBtn == 'email'
-                      ? launchURL('mailto:' + value)
+                      ? launchURL('mailto:$value')
                       : typeBtn == 'phone'
-                          ? launch('tel://' + value)
+                          ? launchUrl(Uri.parse('tel://$value'))
                           : typeBtn == 'link'
                               ? launchURL(value)
                               : null

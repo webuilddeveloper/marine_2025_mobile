@@ -4,27 +4,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:marine_mobile/component/link_url_out.dart';
-import 'package:marine_mobile/component/material/check_avatar.dart';
-import 'package:marine_mobile/widget/text_form_field.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../component/carousel_banner.dart';
-import '../../component/carousel_form.dart';
-import '../../component/link_url_in.dart';
-import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
-
 class AboutUsForm extends StatefulWidget {
-  AboutUsForm({super.key, this.title, this.code});
+  const AboutUsForm({super.key, this.title, this.code});
   final String? title;
   final String? code;
   @override
-  _AboutUsForm createState() => _AboutUsForm();
+  AboutUsFormState createState() => AboutUsFormState();
 }
 
-class _AboutUsForm extends State<AboutUsForm> {
-  Completer<GoogleMapController> _mapController = Completer();
+class AboutUsFormState extends State<AboutUsForm> {
+  // final Completer<GoogleMapController> _mapController = Completer();
 
   @override
   void dispose() {
@@ -71,10 +62,10 @@ class _AboutUsForm extends State<AboutUsForm> {
                   // alignment: Alignment.center,
                   width: 35,
                   decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
+                    color: const Color(0XFF213F91),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.arrow_back_ios_new,
                       size: 20,
@@ -83,7 +74,7 @@ class _AboutUsForm extends State<AboutUsForm> {
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: Text(
                   'ตรวจสอบข้อมูลใบอนุญาต',
                   textAlign: TextAlign.center,
@@ -95,7 +86,7 @@ class _AboutUsForm extends State<AboutUsForm> {
                   ),
                 ),
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
             ],
           ),
         ),
@@ -114,9 +105,9 @@ class _AboutUsForm extends State<AboutUsForm> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildProfile(),
-              SizedBox(
+              const SizedBox(
                 height: 40.0,
               ),
               rowData(
@@ -144,16 +135,16 @@ class _AboutUsForm extends State<AboutUsForm> {
                   title: 'อีเมล์: marine@md.go.th',
                   typeBtn: 'email',
                   value: 'marine@md.go.th'),
-              SizedBox(
+              const SizedBox(
                 height: 25.0,
               ),
+              // SizedBox(
+              //   height: 300,
+              //   width: double.infinity,
+              //   child: googleMap(13.7325251, 100.5132745),
+              // ),
               Container(
-                height: 300,
-                width: double.infinity,
-                child: googleMap(13.7325251, 100.5132745),
-              ),
-              Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 color: Colors.transparent,
                 child: Material(
                   elevation: 5.0,
@@ -163,7 +154,7 @@ class _AboutUsForm extends State<AboutUsForm> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5.0),
                       border: Border.all(
-                        color: Color(0xFF011895),
+                        color: const Color(0xFF011895),
                       ),
                     ),
                     child: MaterialButton(
@@ -171,7 +162,7 @@ class _AboutUsForm extends State<AboutUsForm> {
                       onPressed: () {
                         launchURLMap('13.7325251', '100.5132745');
                       },
-                      child: Text(
+                      child: const Text(
                         'ตำแหน่ง Google Map',
                         style: TextStyle(
                           color: Color(0xFF011895),
@@ -183,7 +174,7 @@ class _AboutUsForm extends State<AboutUsForm> {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -194,11 +185,11 @@ class _AboutUsForm extends State<AboutUsForm> {
   checkLicense() {}
 
   _buildProfile() {
-    return Container(
+    return SizedBox(
       height: 320,
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             height: 270,
             child: Image.asset(
               'assets/background/bg_home_marine.png',
@@ -250,7 +241,7 @@ class _AboutUsForm extends State<AboutUsForm> {
                   ),
                   child: Row(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 100,
                         width: 100,
                         // padding: const EdgeInsets.only(right: 10),
@@ -260,7 +251,7 @@ class _AboutUsForm extends State<AboutUsForm> {
                           width: 100,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Container(
                           // color: Colors.red,
@@ -315,8 +306,8 @@ class _AboutUsForm extends State<AboutUsForm> {
     String typeBtn = '',
   }) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20.0),
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      margin: const EdgeInsets.only(bottom: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -328,7 +319,7 @@ class _AboutUsForm extends State<AboutUsForm> {
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(15)),
             child: Container(
-              padding: EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(5.0),
               child: image,
             ),
           ),
@@ -336,15 +327,15 @@ class _AboutUsForm extends State<AboutUsForm> {
             child: InkWell(
               onTap: () => typeBtn != ''
                   ? typeBtn == 'email'
-                      ? launchURL('mailto:' + value)
+                      ? launchUrl(Uri.parse('mailto:$value'))
                       : typeBtn == 'phone'
-                          ? launch('tel://' + value)
+                          ? launchUrl(Uri.parse('tel://$value'))
                           : typeBtn == 'link'
-                              ? launchURL(value)
+                              ? launchUrl(Uri.parse(value))
                               : null
                   : null,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   title,
                   style: TextStyle(
@@ -361,44 +352,41 @@ class _AboutUsForm extends State<AboutUsForm> {
     );
   }
 
-  googleMap(double lat, double lng) {
-    return GoogleMap(
-      myLocationEnabled: true,
-      compassEnabled: true,
-      tiltGesturesEnabled: false,
-      mapType: MapType.normal,
-      initialCameraPosition: CameraPosition(
-        target: LatLng(lat, lng),
-        zoom: 16,
-      ),
-      gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-        new Factory<OneSequenceGestureRecognizer>(
-          () => new EagerGestureRecognizer(),
-        ),
-      ].toSet(),
-      onMapCreated: (GoogleMapController controller) {
-        _mapController.complete(controller);
-      },
-      // onTap: _handleTap,
-      markers: <Marker>[
-        Marker(
-          markerId: MarkerId('1'),
-          position: LatLng(lat, lng),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        ),
-      ].toSet(),
-    );
-  }
+  // googleMap(double lat, double lng) {
+  //   return GoogleMap(
+  //     myLocationEnabled: true,
+  //     compassEnabled: true,
+  //     tiltGesturesEnabled: false,
+  //     mapType: MapType.normal,
+  //     initialCameraPosition: CameraPosition(
+  //       target: LatLng(lat, lng),
+  //       zoom: 16,
+  //     ),
+  //     gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+  //       Factory<OneSequenceGestureRecognizer>(
+  //         () => EagerGestureRecognizer(),
+  //       ),
+  //     },
+  //     onMapCreated: (GoogleMapController controller) {
+  //       _mapController.complete(controller);
+  //     },
+  //     // onTap: _handleTap,
+  //     markers: <Marker>{
+  //       Marker(
+  //         markerId: const MarkerId('1'),
+  //         position: LatLng(lat, lng),
+  //         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+  //       ),
+  //     },
+  //   );
+  // }
 
   void launchURLMap(String lat, String lng) async {
     String homeLat = lat;
     String homeLng = lng;
 
     final String googleMapslocationUrl =
-        "https://www.google.com/maps/search/?api=1&query=" +
-            homeLat +
-            ',' +
-            homeLng;
+        "https://www.google.com/maps/search/?api=1&query=$homeLat,$homeLng";
     final String encodedURl = Uri.encodeFull(googleMapslocationUrl);
     launchUrl(Uri.parse(encodedURl), mode: LaunchMode.externalApplication);
   }

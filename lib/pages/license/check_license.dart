@@ -2,15 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:marine_mobile/pages/license/check_license_detail.dart';
 import 'package:marine_mobile/widget/text_form_field.dart';
 
-import '../../component/carousel_banner.dart';
-import '../../component/carousel_form.dart';
-import '../../component/link_url_in.dart';
-import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
-import 'check_license_list_category_vertical.dart';
-
 class CheckLicense extends StatefulWidget {
-  CheckLicense({super.key, this.title, this.code});
+  const CheckLicense({super.key, this.title, this.code});
   final String? title;
   final String? code;
   @override
@@ -23,11 +16,9 @@ class _CheckLicense extends State<CheckLicense> {
   String? keySearch;
   String? category;
 
-  Future<dynamic>? _futureBanner;
-  Future<dynamic>? _futureCategoryContact;
   final txtLicense = TextEditingController();
   dynamic _model = {};
-  dynamic _tempModel = [
+  final dynamic _tempModel = [
     {
       'code': '1',
       'boatName': 'Uniwise A1',
@@ -130,10 +121,10 @@ class _CheckLicense extends State<CheckLicense> {
                   // alignment: Alignment.center,
                   width: 35,
                   decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
+                    color: const Color(0XFF213F91),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.arrow_back_ios_new,
                       size: 20,
@@ -142,7 +133,7 @@ class _CheckLicense extends State<CheckLicense> {
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: Text(
                   'ตรวจสอบข้อมูลใบอนุญาต',
                   textAlign: TextAlign.center,
@@ -154,7 +145,7 @@ class _CheckLicense extends State<CheckLicense> {
                   ),
                 ),
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
             ],
           ),
         ),
@@ -165,12 +156,12 @@ class _CheckLicense extends State<CheckLicense> {
           return false;
         },
         child: ListView(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           shrinkWrap: true,
           children: [
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
                 boxShadow: [
@@ -182,45 +173,41 @@ class _CheckLicense extends State<CheckLicense> {
                 ],
                 // color: Color.fromRGBO(0, 0, 2, 1),
               ),
-              margin: EdgeInsets.only(bottom: 10.0),
+              margin: const EdgeInsets.only(bottom: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: new BorderRadius.circular(15.0),
-                      color: Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: const Color(0xFFFFFFFF),
                     ),
-                    padding: EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(15.0),
                     alignment: Alignment.centerLeft,
                     child: Column(
                       children: [
-                        Container(
-                          child: Text(
-                            'ตรวจสอบเลขที่ใบอนุญาต',
-                            style: new TextStyle(
-                              fontSize: 22.0,
-                              color: Color(0XFF213F91),
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Kanit',
-                            ),
-                            textAlign: TextAlign.center,
+                        const Text(
+                          'ตรวจสอบเลขที่ใบอนุญาต',
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            color: Color(0XFF213F91),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Kanit',
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                        Container(
-                          child: Text(
-                            '${widget.title}',
-                            style: new TextStyle(
-                              fontSize: 22.0,
-                              color: Color(0XFF213F91),
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Kanit',
-                            ),
-                            textAlign: TextAlign.center,
+                        Text(
+                          '${widget.title}',
+                          style: const TextStyle(
+                            fontSize: 22.0,
+                            color: Color(0XFF213F91),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Kanit',
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         Container(
                           child: textFormFieldNoValidator(
                             txtLicense,
@@ -229,8 +216,8 @@ class _CheckLicense extends State<CheckLicense> {
                             false,
                           ),
                         ),
-                        SizedBox(height: 30),
-                        Container(
+                        const SizedBox(height: 30),
+                        SizedBox(
                           width: 200,
                           // margin: EdgeInsets.symmetric(
                           //     vertical: 10.0, horizontal: 40),
@@ -244,9 +231,9 @@ class _CheckLicense extends State<CheckLicense> {
                               onPressed: () {
                                 checkLicense();
                               },
-                              child: new Text(
+                              child: const Text(
                                 'ตรวจสอบ',
-                                style: new TextStyle(
+                                style: TextStyle(
                                   fontSize: 16.0,
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
@@ -256,14 +243,14 @@ class _CheckLicense extends State<CheckLicense> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

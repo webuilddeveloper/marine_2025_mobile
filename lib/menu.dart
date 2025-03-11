@@ -22,12 +22,10 @@ class _MenuState extends State<Menu> {
   dynamic futureNotificationTire;
   int notiCount = 0;
   int _currentPage = 0;
-  String _profileCode = '';
-  String _imageProfile = '';
+  final String _imageProfile = '';
   bool hiddenMainPopUp = false;
   List<Widget> pages = <Widget>[];
   bool notShowOnDay = false;
-  int _currentBanner = 0;
   List<dynamic> _ListNotiModel = [];
 
   var loadingModel = {
@@ -67,7 +65,6 @@ class _MenuState extends State<Menu> {
         setState(
           () {
             _ListNotiModel = value;
-            print('>>>>>>>>>> ${_ListNotiModel.length}');
           },
         )
       },

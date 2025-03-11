@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'component/button_menu_full.dart';
 import 'component/carousel_rotation.dart';
 import 'login.dart';
 import 'pages/about_us/about_us_form_bk.dart';
@@ -17,17 +16,11 @@ import 'pages/dispute_an_allegation.dart';
 import 'pages/event_calendar/event_calendar_main.dart';
 import 'pages/knowledge/knowledge_list.dart';
 import 'pages/main_popup/dialog_main_popup.dart';
-import 'pages/menu_grid_item.dart';
 import 'pages/news/news_list.dart';
 import 'pages/notification/notification_list.dart';
 import 'pages/poi/poi_list.dart';
-import 'pages/poll/poll_list.dart';
-import 'pages/privilege/privilege_main.dart';
 import 'pages/privilegeSpecial/privilege_special_list.dart';
 import 'pages/profile/user_information.dart';
-import 'pages/reporter/reporter_main.dart';
-import 'pages/warning/warning_list.dart';
-import 'pages/welfare/welfare_list.dart';
 import 'profile.dart';
 import 'shared/api_provider.dart';
 import 'component/carousel_banner.dart';
@@ -43,13 +36,11 @@ class HomePageV2 extends StatefulWidget {
 }
 
 class _HomePageV2State extends State<HomePageV2> {
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   DateTime? currentBackPressTime;
 
   Future<dynamic>? _futureBanner;
   Future<dynamic>? _futureProfile;
-  Future<dynamic>? _futureOrganizationImage;
-  Future<dynamic>? _futureMenu;
   Future<dynamic>? _futureRotation;
   Future<dynamic>? _futureAboutUs;
   Future<dynamic>? _futureMainPopUp;
@@ -57,17 +48,16 @@ class _HomePageV2State extends State<HomePageV2> {
 
   String profileCode = '';
   String currentLocation = '-';
-  final seen = Set<String>();
+  final seen = <String>{};
   List unique = [];
   List imageLv0 = [];
   String test11 = '2';
   bool chkisCard = false;
   bool notShowOnDay = false;
   bool hiddenMainPopUp = false;
-  List<dynamic> _dataPolicy = [];
   bool checkDirection = false;
 
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   LatLng latLng = const LatLng(13.743989326935178, 100.53754006134743);
@@ -135,11 +125,9 @@ class _HomePageV2State extends State<HomePageV2> {
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: false,
-      header: WaterDropHeader(
-        complete: Container(
-          child: const Text(''),
-        ),
-        completeDuration: const Duration(milliseconds: 0),
+      header: const WaterDropHeader(
+        complete: Text(''),
+        completeDuration: Duration(milliseconds: 0),
       ),
       footer: CustomFooter(
         builder: (context, mode) {
@@ -155,7 +143,7 @@ class _HomePageV2State extends State<HomePageV2> {
           } else {
             body = const Text("No more Data");
           }
-          return Container(
+          return SizedBox(
             height: 55.0,
             child: Center(child: body),
           );
@@ -277,7 +265,7 @@ class _HomePageV2State extends State<HomePageV2> {
                         ),
                       );
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 30,
                       child: Image.asset('assets/icons/bell.png'),
                     ),
@@ -311,7 +299,7 @@ class _HomePageV2State extends State<HomePageV2> {
                                   context, '${snapshot.data['imageUrl']}'),
                             );
                           } else {
-                            return Container(
+                            return SizedBox(
                               height: 30,
                               child: Image.asset(
                                 'assets/images/user_not_found.png',
@@ -322,7 +310,7 @@ class _HomePageV2State extends State<HomePageV2> {
                         } else if (snapshot.hasError) {
                           return BlankLoading();
                         } else {
-                          return Container(
+                          return SizedBox(
                             height: 30,
                             child: Image.asset(
                               'assets/images/user_not_found.png',
@@ -611,7 +599,7 @@ class _HomePageV2State extends State<HomePageV2> {
         if (action == 'out') {
           // launchInWebViewWithJavaScript(path);
           // launchURL(path);
-          launch(path);
+          launchUrl(Uri.parse(path));
         } else if (action == 'in') {
           Navigator.push(
             context,
@@ -686,225 +674,6 @@ class _HomePageV2State extends State<HomePageV2> {
     );
   }
 
-  _buildGridMenu1() {
-    return FutureBuilder<dynamic>(
-      future: _futureMenu, // function where you call your api
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          return Row(
-            children: [
-              MenuGridItem(
-                title: snapshot.data[0]['title'],
-                imageUrl: snapshot.data[0]['imageUrl'],
-                isCenter: false,
-                isPrimaryColor: true,
-                nav: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EventCalendarMain(
-                        title: snapshot.data[0]['title'],
-                      ),
-                    ),
-                  );
-                  // if (checkDirection) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => EventCalendarMain(
-                  //         title: snapshot.data[0]['title'],
-                  //       ),
-                  //     ),
-                  //   );
-                  // } else {
-                  //   _showDialogDirection();
-                  // }
-                },
-              ),
-              MenuGridItem(
-                title: snapshot.data[1]['title'] != ''
-                    ? snapshot.data[1]['title']
-                    : '',
-                imageUrl: snapshot.data[1]['imageUrl'],
-                subTitle: '',
-                isCenter: true,
-                isPrimaryColor: true,
-                nav: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => KnowledgeList(
-                        title: snapshot.data[1]['title'],
-                      ),
-                    ),
-                  );
-                  // if (checkDirection) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => KnowledgeList(
-                  //         title: snapshot.data[1]['title'],
-                  //       ),
-                  //     ),
-                  //   );
-                  // } else {
-                  //   _showDialogDirection();
-                  // }
-                },
-              ),
-              MenuGridItem(
-                title: snapshot.data[2]['title'] != ''
-                    ? snapshot.data[2]['title']
-                    : '',
-                imageUrl: snapshot.data[2]['imageUrl'],
-                subTitle: '',
-                isCenter: false,
-                isPrimaryColor: true,
-                nav: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReporterMain(
-                        title: snapshot.data[2]['title'],
-                      ),
-                    ),
-                  );
-                  // if (checkDirection) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => ReporterMain(
-                  //         title: snapshot.data[2]['title'],
-                  //       ),
-                  //     ),
-                  //   );
-                  // } else {
-                  //   _showDialogDirection();
-                  // }
-                },
-              ),
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return Container();
-        } else {
-          return Container();
-        }
-      },
-    );
-  }
-
-  _buildGridMenu2() {
-    return FutureBuilder<dynamic>(
-      future: _futureMenu, // function where you call your api
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          return Row(
-            children: [
-              MenuGridItem(
-                title: snapshot.data[3]['title'] != ''
-                    ? snapshot.data[3]['title']
-                    : '',
-                imageUrl: snapshot.data[3]['imageUrl'],
-                subTitle: '',
-                isCenter: false,
-                isPrimaryColor: true,
-                nav: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WarningList(
-                        title: snapshot.data[3]['title'],
-                      ),
-                    ),
-                  );
-                  // if (checkDirection) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => WarningList(
-                  //         title: snapshot.data[3]['title'],
-                  //       ),
-                  //     ),
-                  //   );
-                  // } else {
-                  //   _showDialogDirection();
-                  // }
-                },
-              ),
-              MenuGridItem(
-                title: snapshot.data[4]['title'] != ''
-                    ? snapshot.data[4]['title']
-                    : '',
-                imageUrl: snapshot.data[4]['imageUrl'],
-                subTitle: '',
-                isCenter: true,
-                isPrimaryColor: true,
-                nav: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WelfareList(
-                        title: snapshot.data[4]['title'],
-                      ),
-                    ),
-                  );
-                  // if (checkDirection) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => WelfareList(
-                  //         title: snapshot.data[4]['title'],
-                  //       ),
-                  //     ),
-                  //   );
-                  // } else {
-                  //   _showDialogDirection();
-                  // }
-                },
-              ),
-              MenuGridItem(
-                title: snapshot.data[5]['title'] != ''
-                    ? snapshot.data[5]['title']
-                    : '',
-                imageUrl: snapshot.data[5]['imageUrl'],
-                subTitle: '',
-                isCenter: false,
-                isPrimaryColor: true,
-                nav: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewsList(
-                        title: snapshot.data[5]['title'],
-                      ),
-                    ),
-                  );
-                  // if (checkDirection) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => NewsList(
-                  //         title: snapshot.data[5]['title'],
-                  //       ),
-                  //     ),
-                  //   );
-                  // } else {
-                  //   _showDialogDirection();
-                  // }
-                },
-              ),
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return Container();
-        } else {
-          return Container();
-        }
-      },
-    );
-  }
-
   _buildRotation() {
     return CarouselRotation(
       model: _futureRotation,
@@ -912,7 +681,7 @@ class _HomePageV2State extends State<HomePageV2> {
         if (action == 'out') {
           // launchInWebViewWithJavaScript(path);
           // launchURL(path);
-          launch(path);
+          launchUrl(Uri.parse(path));
         } else if (action == 'in') {
           Navigator.push(
             context,
@@ -927,209 +696,6 @@ class _HomePageV2State extends State<HomePageV2> {
           );
         }
       },
-    );
-  }
-
-  _buildPrivilegeMenu() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-      child: FutureBuilder<dynamic>(
-        future: _futureMenu, // function where you call your api
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return ButtonMenuFull(
-              title: snapshot.data[7]['title'] != ''
-                  ? snapshot.data[7]['title']
-                  : '',
-              imageUrl: snapshot.data[7]['imageUrl'],
-              model: _futureMenu,
-              subTitle: 'สำหรับสมาชิก',
-              nav: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PrivilegeMain(
-                      title: snapshot.data[7]['title'],
-                      fromPolicy: false,
-                    ),
-                  ),
-                );
-                // if (!checkDirection) {
-                //   _showDialogDirection();
-                // } else if (_dataPolicy.length > 0) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => PolicyPrivilege(
-                //         title: snapshot.data[4]['title'],
-                //         username: userData.username,
-                //         fromPolicy: true,
-                //       ),
-                //     ),
-                //   );
-                // } else {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => PrivilegeMain(
-                //         title: snapshot.data[7]['title'],
-                //         fromPolicy: false,
-                //       ),
-                //     ),
-                //   );
-                // }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Container();
-          } else {
-            return Container();
-          }
-        },
-      ),
-    );
-  }
-
-  _buildContactMenu() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-      child: FutureBuilder<dynamic>(
-        future: _futureMenu, // function where you call your api
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return ButtonMenuFull(
-              title: snapshot.data[6]['title'] != ''
-                  ? snapshot.data[6]['title']
-                  : '',
-              imageUrl: snapshot.data[6]['imageUrl'],
-              model: _futureMenu,
-              subTitle: 'สำหรับสมาชิก',
-              nav: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ContactListCategory(
-                      title: snapshot.data[6]['title'],
-                    ),
-                  ),
-                );
-                // if (checkDirection) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => ContactListCategory(
-                //         title: snapshot.data[6]['title'],
-                //       ),
-                //     ),
-                //   );
-                // } else {
-                //   _showDialogDirection();
-                // }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Container();
-          } else {
-            return Container();
-          }
-        },
-      ),
-    );
-
-    ;
-  }
-
-  _buildPoiMenu() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-      child: FutureBuilder<dynamic>(
-        future: _futureMenu, // function where you call your api
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return ButtonMenuFull(
-              title: snapshot.data[8]['title'] != ''
-                  ? snapshot.data[8]['title']
-                  : '',
-              imageUrl: snapshot.data[8]['imageUrl'],
-              model: _futureMenu,
-              subTitle: 'สำหรับสมาชิก',
-              nav: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PoiList(
-                      title: snapshot.data[8]['title'],
-                    ),
-                  ),
-                );
-                // if (checkDirection) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => PoiList(
-                //         title: snapshot.data[8]['title'],
-                //       ),
-                //     ),
-                //   );
-                // } else {
-                //   _showDialogDirection();
-                // }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Container();
-          } else {
-            return Container();
-          }
-        },
-      ),
-    );
-  }
-
-  _buildPollMenu() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-      child: FutureBuilder<dynamic>(
-        future: _futureMenu, // function where you call your api
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return ButtonMenuFull(
-              title: snapshot.data[9]['title'] != ''
-                  ? snapshot.data[9]['title']
-                  : '',
-              imageUrl: snapshot.data[9]['imageUrl'],
-              model: _futureMenu,
-              subTitle: 'สำหรับสมาชิก',
-              nav: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PollList(
-                      title: snapshot.data[9]['title'],
-                    ),
-                  ),
-                );
-                // if (checkDirection) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => PollList(
-                //         title: snapshot.data[9]['title'],
-                //       ),
-                //     ),
-                //   );
-                // } else {
-                //   _showDialogDirection();
-                // }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Container();
-          } else {
-            return Container();
-          }
-        },
-      ),
     );
   }
 
@@ -1151,13 +717,10 @@ class _HomePageV2State extends State<HomePageV2> {
 
     //read profile
     profileCode = (await storage.read(key: 'profileCode2'))!;
-    if (profileCode != '' && profileCode != null) {
+    if (profileCode != '') {
       setState(() {
         _futureProfile = postDio(profileReadApi, {"code": profileCode});
-        _futureOrganizationImage =
-            postDio(organizationImageReadApi, {"code": profileCode});
       });
-      _futureMenu = postDio('${menuApi}read', {'limit': 10});
       _futureBanner = postDio('${mainBannerApi}read', {'limit': 10});
       _futureRotation = postDio('${mainRotationApi}read', {'limit': 10});
       _futureMainPopUp = postDio('${mainPopupHomeApi}read', {'limit': 10});
@@ -1173,11 +736,10 @@ class _HomePageV2State extends State<HomePageV2> {
         "ticket_id": ""
       });
 
-      var _profile = await _futureProfile;
+      var profile = await _futureProfile;
       setState(() {
-        chkisCard = _profile["idcard"] != '' && _profile['idcard'] != null
-            ? true
-            : false;
+        chkisCard =
+            profile["idcard"] != '' && profile['idcard'] != null ? true : false;
       });
       // getMainPopUp();
       // _getLocation();

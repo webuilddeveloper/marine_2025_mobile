@@ -26,14 +26,14 @@ class RenewLicensePayment extends StatefulWidget {
   RenewLicensePayment({super.key, this.model});
 
   final dynamic model;
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   @override
   _RenewLicensePayment createState() => _RenewLicensePayment();
 }
 
 class _RenewLicensePayment extends State<RenewLicensePayment> {
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   XFile? _image;
 
   ScrollController scrollController = new ScrollController();
@@ -55,9 +55,9 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
       child: ListView(
         controller: scrollController,
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: <Widget>[
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             width: MediaQuery.of(context).size.width > 336
                 ? 336
@@ -71,12 +71,12 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           InkWell(
             onTap: () => _downloadQR(),
             child: Container(
               alignment: Alignment.center,
-              child: new Text(
+              child: const Text(
                 'ดาวน์โหลด QR Code',
                 style: TextStyle(
                   fontSize: 18,
@@ -88,13 +88,13 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             // height: 500,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
               boxShadow: [
                 BoxShadow(
                   offset: const Offset(0, 20),
@@ -107,7 +107,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'ชำระค่าธรรมเนียม',
                   style: TextStyle(
                     fontSize: 20.0,
@@ -116,8 +116,8 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
-                Padding(
+                const SizedBox(height: 20),
+                const Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,8 +138,8 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Padding(
+                const SizedBox(height: 20),
+                const Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,8 +173,8 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Padding(
+                const SizedBox(height: 20),
+                const Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,7 +208,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Column(
                   children: [
                     Container(
@@ -220,16 +220,16 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                           _showPickerImage(context);
                         },
                         padding: const EdgeInsets.all(5.0),
-                        child: Icon(
+                        child: const Icon(
                           Icons.upload_file,
                           size: 50,
                           color: Color(0xFF0C387D),
                         ),
                       ),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Container(
-                      child: Text(
+                      child: const Text(
                         'อัพโหลดสลิปค่าธรรมเนียม',
                         textAlign: TextAlign.start,
                         style: TextStyle(
@@ -242,7 +242,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 widget.model['imageUrlPayment'] != '' &&
                         widget.model['imageUrlPayment'] != null
                     ? Image.network(
@@ -252,11 +252,11 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                         fit: BoxFit.fill,
                       )
                     : Container(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
               ],
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10.0),
           ),
           Row(
@@ -264,7 +264,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
             children: [
               Container(
                 width: 150,
-                margin: EdgeInsets.symmetric(vertical: 30.0),
+                margin: const EdgeInsets.symmetric(vertical: 30.0),
                 child: Material(
                   elevation: 2.0,
                   borderRadius: BorderRadius.circular(5.0),
@@ -277,7 +277,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                     },
                     child: new Text(
                       'ยืนยัน',
-                      style: new TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
@@ -303,8 +303,8 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
             child: new Wrap(
               children: <Widget>[
                 new ListTile(
-                    leading: new Icon(Icons.photo_library),
-                    title: new Text(
+                    leading: const Icon(Icons.photo_library),
+                    title: const Text(
                       'อัลบั้มรูปภาพ',
                       style: TextStyle(
                         fontSize: 13,
@@ -317,8 +317,8 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                       Navigator.of(context).pop();
                     }),
                 new ListTile(
-                  leading: new Icon(Icons.photo_camera),
-                  title: new Text(
+                  leading: const Icon(Icons.photo_camera),
+                  title: const Text(
                     'กล้องถ่ายรูป',
                     style: TextStyle(
                       fontSize: 13,
@@ -410,7 +410,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
             return Future.value(false);
           },
           child: CupertinoAlertDialog(
-            title: new Text(
+            title: const Text(
               'ขอบคุณที่ชำระค่าธรรมเนียมต่อใบอนุญาตใช้เรือ กรุณารอเจ้าหน้าที่ทำการตรวจสอบสักครู่',
               style: TextStyle(
                 fontSize: 17,
@@ -419,11 +419,11 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                 fontWeight: FontWeight.normal,
               ),
             ),
-            content: Text(" "),
+            content: const Text(" "),
             actions: [
               CupertinoDialogAction(
                 isDefaultAction: true,
-                child: new Text(
+                child: const Text(
                   "ตกลง",
                   style: TextStyle(
                     fontSize: 15,
@@ -435,11 +435,15 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                 onPressed: () {
                   Navigator.of(context).pop();
 
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                    ),
-                  );
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+
+                  // Navigator.of(context).pushReplacement(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => HomePage(),
+                  //   ),
+                  // );
                   // goBack();
                 },
               ),
@@ -460,7 +464,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
       appBar: AppBar(
         // forceMaterialTransparency: true,
         elevation: 0,
-        backgroundColor: Color(0xFFF3F5F5),
+        backgroundColor: const Color(0xFFF3F5F5),
         titleSpacing: 5,
         automaticallyImplyLeading: false,
         flexibleSpace: Container(
@@ -480,10 +484,10 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                   // alignment: Alignment.center,
                   width: 35,
                   decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
+                    color: const Color(0XFF213F91),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.arrow_back_ios_new,
                       size: 20,
@@ -492,8 +496,8 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                   ),
                 ),
               ),
-              SizedBox(width: 10),
-              Expanded(
+              const SizedBox(width: 10),
+              const Expanded(
                 child: Text(
                   '',
                   textAlign: TextAlign.center,
@@ -509,12 +513,12 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
           ),
         ),
       ),
-      backgroundColor: Color(0xFFF3F5F5),
+      backgroundColor: const Color(0xFFF3F5F5),
       body: Container(
         child: ListView(
           controller: scrollController,
           shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           children: <Widget>[
             Container(
               // color: Colors.white,

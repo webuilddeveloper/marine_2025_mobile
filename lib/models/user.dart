@@ -10,7 +10,7 @@ class LoginRegister {
   });
 
   static Map<String, dynamic> toMap(LoginRegister loginRegister) {
-    var map = Map<String, dynamic>();
+    var map = <String, dynamic>{};
     map['status'] = loginRegister.status;
     map['message'] = loginRegister.message;
     map['objectData'] = User.toMap(loginRegister);
@@ -18,10 +18,10 @@ class LoginRegister {
   }
 
   LoginRegister.map(dynamic obj) {
-    this.status = obj["status"];
-    this.message = obj["message"];
+    status = obj["status"];
+    message = obj["message"];
     if (obj['objectData'] != null) {
-      this.objectData = new User.map(obj['objectData']);
+      objectData = User.map(obj['objectData']);
     }
   }
 
@@ -30,14 +30,14 @@ class LoginRegister {
       return LoginRegister(
         status: json['status'],
         message: json['message'],
-        objectData: new User.fromJson(
+        objectData: User.fromJson(
           json['objectData'],
         ),
       );
     } else {
       return LoginRegister(
         status: json['status'],
-        message: json['message'], 
+        message: json['message'],
         objectData: User(),
       );
     }
@@ -90,53 +90,53 @@ class User {
   String? officerCode = "";
 
   User.map(dynamic json) {
-    this.prefixName = json['prefixName'];
-    this.firstName = json['firstName'];
-    this.lastName = json['lastName'];
-    this.email = json['email'];
-    this.category = json['category'];
-    this.code = json['code'];
-    this.username = json['username'];
-    this.password = json['password'];
-    this.isActive = json['isActive'];
-    this.status = json['status'];
-    this.createBy = json['createBy'];
-    this.createDate = json['createDate'];
-    this.imageUrl = json['imageUrl'];
-    this.updateBy = json['updateBy'];
-    this.updateDate = json['updateDate'];
-    this.birthDay = json['birthDay'];
-    this.phone = json['phone'];
-    this.facebookID = json['facebookID'];
-    this.googleID = json['googleID'];
-    this.lineID = json['lineID'];
-    this.appleID = json['appleID'];
-    this.line = json['line'];
-    this.sex = json['sex'];
-    this.address = json['address'];
-    this.tambonCode = json['tambonCode'];
-    this.tambon = json['tambon'];
-    this.amphoeCode = json['amphoeCode'];
-    this.amphoe = json['amphoe'];
-    this.provinceCode = json['provinceCode'];
-    this.province = json['province'];
-    this.postnoCode = json['postnoCode'];
-    this.postno = json['postno'];
-    this.job = json['job'];
-    this.idcard = json['idcard'];
-    this.countUnit = json['countUnit'];
-    this.lv0 = json['lv0'];
-    this.lv1 = json['lv1'];
-    this.lv2 = json['lv2'];
-    this.lv3 = json['lv3'];
-    this.lv4 = json['lv4'];
-    this.lv5 = json['lv5'];
-    this.linkAccount = json['linkAccount'];
-    this.officerCode = json['officerCode'];
+    prefixName = json['prefixName'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    email = json['email'];
+    category = json['category'];
+    code = json['code'];
+    username = json['username'];
+    password = json['password'];
+    isActive = json['isActive'];
+    status = json['status'];
+    createBy = json['createBy'];
+    createDate = json['createDate'];
+    imageUrl = json['imageUrl'];
+    updateBy = json['updateBy'];
+    updateDate = json['updateDate'];
+    birthDay = json['birthDay'];
+    phone = json['phone'];
+    facebookID = json['facebookID'];
+    googleID = json['googleID'];
+    lineID = json['lineID'];
+    appleID = json['appleID'];
+    line = json['line'];
+    sex = json['sex'];
+    address = json['address'];
+    tambonCode = json['tambonCode'];
+    tambon = json['tambon'];
+    amphoeCode = json['amphoeCode'];
+    amphoe = json['amphoe'];
+    provinceCode = json['provinceCode'];
+    province = json['province'];
+    postnoCode = json['postnoCode'];
+    postno = json['postno'];
+    job = json['job'];
+    idcard = json['idcard'];
+    countUnit = json['countUnit'];
+    lv0 = json['lv0'];
+    lv1 = json['lv1'];
+    lv2 = json['lv2'];
+    lv3 = json['lv3'];
+    lv4 = json['lv4'];
+    lv5 = json['lv5'];
+    linkAccount = json['linkAccount'];
+    officerCode = json['officerCode'];
   }
 
   static Map<String, dynamic> toMap(LoginRegister loginRegister) {
-    var map = Map<String, dynamic>();
+    var map = <String, dynamic>{};
     map['prefixName'] = loginRegister.objectData?.prefixName;
     map['firstName'] = loginRegister.objectData?.firstName;
     map['lastName'] = loginRegister.objectData?.lastName;
@@ -324,6 +324,7 @@ class User {
       };
 
   save() {
+    // ignore: avoid_print
     print('saving user using a web service');
   }
 }
