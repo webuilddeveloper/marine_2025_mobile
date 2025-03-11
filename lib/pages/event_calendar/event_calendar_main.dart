@@ -10,10 +10,10 @@ class EventCalendarMain extends StatefulWidget {
   final String? title;
 
   @override
-  _EventCalendarMain createState() => _EventCalendarMain();
+  EventCalendarMainState createState() => EventCalendarMainState();
 }
 
-class _EventCalendarMain extends State<EventCalendarMain> {
+class EventCalendarMainState extends State<EventCalendarMain> {
   bool showCalendar = false;
   @override
   void initState() {

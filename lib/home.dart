@@ -5,71 +5,57 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:marine_mobile/pages/about_us/about_us_form.dart';
-// import 'package:marine_mobile/pages/about_us/about_us_form_bk.dart';
 import 'package:marine_mobile/pages/complain/complain_list_category.dart';
 import 'package:marine_mobile/pages/license/check_license_list_category.dart';
 import 'package:marine_mobile/pages/my_qr_code.dart';
 import 'package:marine_mobile/pages/question/question_list.dart';
-// import 'package:marine_mobile/pages/training_course/training_course_list.dart';
 import 'package:marine_mobile/pages/training_course/training_course_list_category.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:marine_mobile/component/material/check_avatar.dart';
 import 'package:marine_mobile/pages/license/renew_license.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'component/button_menu_full.dart';
 import 'component/carousel_banner.dart';
 import 'component/carousel_form.dart';
-import 'component/carousel_rotation.dart';
 import 'component/link_url_in.dart';
 import 'login.dart';
 import 'pages/blank_page/blank_loading.dart';
 import 'pages/blank_page/toast_fail.dart';
-// import 'pages/coming_soon.dart';
-import 'pages/contact/contact_list_category.dart';
-// import 'pages/event_calendar/event_calendar_main.dart';
 import 'pages/knowledge/knowledge_list.dart';
 import 'pages/main_popup/dialog_main_popup.dart';
 import 'pages/news/news_form.dart';
 import 'pages/news/news_list.dart';
-import 'pages/poi/poi_list.dart';
-import 'pages/poll/poll_list.dart';
-import 'pages/privilege/privilege_main.dart';
 import 'shared/api_provider.dart';
 import 'package:intl/intl.dart';
 // import 'component/carousel_rotation.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   HomePage({super.key, this.changePage});
 
   Function? changePage;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final storage = new FlutterSecureStorage();
+class HomePageState extends State<HomePage> {
+  final storage = const FlutterSecureStorage();
   DateTime? currentBackPressTime;
 
   Future<dynamic>? _futureBanner;
   Future<dynamic>? _futureProfile;
   Future<dynamic>? _futureNews;
-  Future<dynamic>? _futureMenu;
-  Future<dynamic>? _futureRotation;
-  Future<dynamic>? _futureAboutUs;
   Future<dynamic>? _futureMainPopUp;
-  Future<dynamic>? _futureVerifyTicket;
 
   String profileCode = '';
   String currentLocation = '-';
-  final seen = Set<String>();
+  final seen = <String>{};
   List unique = [];
   List imageLv0 = [];
 
   bool notShowOnDay = false;
   bool hiddenMainPopUp = false;
-  List<dynamic> _dataPolicy = [];
   bool checkDirection = false;
 
   final RefreshController _refreshController = RefreshController(
@@ -80,7 +66,7 @@ class _HomePageState extends State<HomePage> {
   LatLng latLng = const LatLng(13.743989326935178, 100.53754006134743);
 
   int _currentNewsPage = 0;
-  int _newsLimit = 4;
+  final int _newsLimit = 4;
   List<dynamic> _newsList = [];
   bool _hasMoreNews = true;
 
@@ -119,36 +105,6 @@ class _HomePageState extends State<HomePage> {
       return Future.value(false);
     }
     return Future.value(true);
-  }
-
-  _buildBackgroundNew() {
-    return Stack(
-      children: [
-        Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          color: const Color(0XFFF3F5F5),
-        ),
-        Image.asset(
-          "assets/images/bg_top.png",
-          height: MediaQuery.of(context).size.height * 0.25,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.cover,
-        ),
-        Positioned(
-          top: MediaQuery.of(context).size.height * 0.2,
-          // child: _buildMenu(context),
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            height: MediaQuery.of(context).size.height * 0.8,
-            width: MediaQuery.of(context).size.width,
-            child: _buildNotificationListener(),
-          ),
-        ),
-      ],
-    );
   }
 
   _buildBackground() {
@@ -203,24 +159,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // _buildMenu(context) {
-  //   return SingleChildScrollView(
-  //     child: Container(
-  //       // color: Color(0XFFF3F5F5),
-  //       color: Colors.white,
-  //       child: Column(
-  //         children: [
-  //           _buildProfile(),
-  //           const SizedBox(height: 20),
-  //           _buildBanner(),
-  //           _buildService(),
-  //           _buildNews(),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
   _buildBanner() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -250,11 +188,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildProfile() {
-    return Container(
+    return SizedBox(
       height: 310,
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             height: 240,
             child: Image.asset(
               'assets/background/bg_home_marine.png',
@@ -262,9 +200,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Positioned.fill(
-            top: 290,
-            // top: 190,
-            bottom: 20,
+            top: 150,
             child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -277,14 +213,9 @@ class _HomePageState extends State<HomePage> {
           ),
           Positioned.fill(
             top: 150,
-            bottom: 20,
-            // child: _buildMenu(context),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
-                height: 40,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 decoration: BoxDecoration(
@@ -300,276 +231,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: FutureBuilder<dynamic>(
                   future: _futureProfile,
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    final item = snapshot.data ?? {}; // ป้องกัน Null
-
-                    final queryParameters =
-                        item.map<String, String?>((key, value) {
-                      if (key is! String) return MapEntry(key.toString(), null);
-                      if (value == null) return MapEntry(key, null);
-                      return MapEntry(key, value.toString());
-                    })
-                          ..removeWhere((key, value) => value == null);
-
-                    final Uri qrUri = Uri(
-                      scheme: "http",
-                      host: "gateway.we-builds.com",
-                      path: "security_information.html",
-                      queryParameters: queryParameters,
-                    );
-                    if (snapshot.hasData) {
-                      if (profileCode == snapshot.data['code']) {
-                        return Row(
-                          children: [
-                            SizedBox(
-                              height: 60,
-                              width: 60,
-                              child: checkAvatar(
-                                  context, '${snapshot.data['imageUrl']}'),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '${snapshot.data['firstName'] ?? ''} ${snapshot.data['lastName'] ?? ''}',
-                                      style: const TextStyle(
-                                        fontSize: 18.0,
-                                        color: Color(0xFF0C387D),
-                                        fontFamily: 'Kanit',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const Text(
-                                      'นายท้ายเรือ',
-                                      style: TextStyle(
-                                        fontSize: 24.0,
-                                        color: Color(0xFF0C387D),
-                                        fontFamily: 'Kanit',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            const VerticalDivider(
-                              thickness: 1,
-                              endIndent: 0,
-                              color: Color(0xFFD5E7D7),
-                            ),
-                            const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MyQrCode(
-                                      model: snapshot.data,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    QrImageView(
-                                      data: qrUri.toString(),
-                                      size:
-                                          80, // Replace 'Me' with a valid size like 200.0
-                                      backgroundColor: Colors.white,
-                                      foregroundColor: Color(0xFF0C387D),
-                                    ),
-                                    const Text(
-                                      'my qrcode',
-                                      style: TextStyle(
-                                        fontSize: 11.0,
-                                        color: Color(0xFF0C387D),
-                                        fontFamily: 'Kanit',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      } else {
-                        return Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Image.asset(
-                                  'assets/images/user_not_found.png',
-                                  color: const Color(0XFF0C387D),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  // color: Colors.red,
-                                  decoration: const BoxDecoration(
-                                    border: Border(
-                                      right: BorderSide(
-                                        color: Color(0XFFD5E7D7),
-                                      ),
-                                    ),
-                                  ),
-                                  child: const Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'ไม่พบข้อมูล',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Color(0XFF0C387D),
-                                          fontFamily: 'IBM Plex Mono',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      // Text(
-                                      //   'นายท้ายเรือ',
-                                      //   style: TextStyle(
-                                      //     fontSize: 20.0,
-                                      //     color: Color(0XFF0C387D),
-                                      //     fontFamily: 'IBM Plex Mono',
-                                      //     fontWeight: FontWeight.w600,
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.asset(
-                                      'assets/icons/qr_code.png',
-                                      height: 33,
-                                    ),
-                                  ),
-                                  const Text(
-                                    'my qrcode',
-                                    style: TextStyle(
-                                      fontSize: 11.0,
-                                      color: Color(0XFF59ACD4),
-                                      fontFamily: 'IBM Plex Mono',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                    } else if (snapshot.hasError) {
-                      return BlankLoading();
-                    } else {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 60,
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Image.asset(
-                                'assets/images/user_not_found.png',
-                                color: const Color(0XFF0C387D),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                // color: Colors.red,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    right: BorderSide(
-                                      color: Color(0XFFD5E7D7),
-                                    ),
-                                  ),
-                                ),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'กำลังโหลด',
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Color(0XFF0C387D),
-                                        fontFamily: 'IBM Plex Mono',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    // Text(
-                                    //   'นายท้ายเรือ',
-                                    //   style: TextStyle(
-                                    //     fontSize: 20.0,
-                                    //     color: Color(0XFF0C387D),
-                                    //     fontFamily: 'IBM Plex Mono',
-                                    //     fontWeight: FontWeight.w600,
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Image.asset(
-                                    'assets/icons/qr_code.png',
-                                    height: 33,
-                                  ),
-                                ),
-                                const Text(
-                                  'my qrcode',
-                                  style: TextStyle(
-                                    fontSize: 11.0,
-                                    color: Color(0XFF27544F),
-                                    fontFamily: 'IBM Plex Mono',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    }
+                  builder: (context, snapshot) {
+                    return _buildProfileContent(snapshot);
                   },
                 ),
               ),
@@ -580,410 +243,286 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // _buildProfile() {
-  //   return FutureBuilder<dynamic>(
-  //     future: _futureProfile,
-  //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-  //       if (snapshot.hasData) {
-  //         if (profileCode == snapshot.data['code']) {
-  //           return Container(
-  //             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-  //             decoration: BoxDecoration(
-  //               // color: Colors.white,
-  //               borderRadius: BorderRadius.circular(15),
-  //             ),
-  //             child: Row(
-  //               children: [
-  //                 Container(
-  //                   height: 60,
-  //                   width: 60,
-  //                   padding: EdgeInsets.only(right: 10),
-  //                   child: checkAvatar(context, '${snapshot.data['imageUrl']}'),
-  //                 ),
-  //                 Expanded(
-  //                   child: Container(
-  //                     // color: Colors.red,
-  //                     // decoration: BoxDecoration(
-  //                     //   border: Border(
-  //                     //     right: BorderSide(
-  //                     //       color: Color(0XFFD5E7D7),
-  //                     //     ),
-  //                     //   ),
-  //                     // ),
-  //                     child: Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text(
-  //                           'สวัสดี',
-  //                           style: TextStyle(
-  //                             fontSize: 24.0,
-  //                             // color: Color(0XFF0C387D),
-  //                             fontFamily: 'Kanit',
-  //                             fontWeight: FontWeight.w400,
-  //                           ),
-  //                         ),
-  //                         Text(
-  //                           '${snapshot.data['firstName'] ?? ''} ${snapshot.data['lastName'] ?? ''}',
-  //                           style: TextStyle(
-  //                             fontSize: 15.0,
-  //                             // color: Color(0XFF0C387D),
-  //                             fontFamily: 'Kanit',
-  //                             fontWeight: FontWeight.w400,
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 SizedBox(width: 10),
-  //                 GestureDetector(
-  //                   onTap: () {
-  //                     widget.changePage(4);
-  //                     // Navigator.push(
-  //                     //   context,
-  //                     //   MaterialPageRoute(
-  //                     //     builder: (context) => MyQrCode(),
-  //                     //   ),
-  //                     // );
-  //                   },
-  //                   child: Container(
-  //                     padding: EdgeInsets.all(10.0),
-  //                     decoration: BoxDecoration(
-  //                       color: Color(0XFFB03432),
-  //                       borderRadius: BorderRadius.circular(12),
-  //                     ),
-  //                     child: Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.center,
-  //                       children: [
-  //                         Image.asset(
-  //                           'assets/icons/qr_code.png',
-  //                           height: 33,
-  //                         ),
-  //                         Text(
-  //                           'สแกน',
-  //                           style: TextStyle(
-  //                             fontSize: 11.0,
-  //                             color: Color(0XFFFFFFFF),
-  //                             fontFamily: 'Kanit',
-  //                             fontWeight: FontWeight.w500,
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           );
-  //         } else {
-  //           return Container(
-  //             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-  //             decoration: BoxDecoration(
-  //               color: Colors.white,
-  //               borderRadius: BorderRadius.circular(15),
-  //             ),
-  //             child: Row(
-  //               children: [
-  //                 Container(
-  //                   height: 60,
-  //                   width: 60,
-  //                   padding: EdgeInsets.only(right: 10),
-  //                   child: Image.asset(
-  //                     'assets/images/user_not_found.png',
-  //                     color: Color(0XFF0C387D),
-  //                   ),
-  //                 ),
-  //                 Expanded(
-  //                   child: Container(
-  //                     // color: Colors.red,
-  //                     decoration: BoxDecoration(
-  //                       border: Border(
-  //                         right: BorderSide(
-  //                           color: Color(0XFFD5E7D7),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     child: Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text(
-  //                           'ไม่พบข้อมูล',
-  //                           style: TextStyle(
-  //                             fontSize: 16.0,
-  //                             color: Color(0XFF0C387D),
-  //                             fontFamily: 'IBM Plex Mono',
-  //                             fontWeight: FontWeight.w600,
-  //                           ),
-  //                         ),
-  //                         // Text(
-  //                         //   'นายท้ายเรือ',
-  //                         //   style: TextStyle(
-  //                         //     fontSize: 20.0,
-  //                         //     color: Color(0XFF0C387D),
-  //                         //     fontFamily: 'IBM Plex Mono',
-  //                         //     fontWeight: FontWeight.w600,
-  //                         //   ),
-  //                         // ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 SizedBox(width: 10),
-  //                 Column(
-  //                   crossAxisAlignment: CrossAxisAlignment.center,
-  //                   children: [
-  //                     Container(
-  //                       padding: EdgeInsets.all(10.0),
-  //                       child: Image.asset(
-  //                         'assets/icons/qr_code.png',
-  //                         height: 33,
-  //                       ),
-  //                     ),
-  //                     Text(
-  //                       'my qrcode',
-  //                       style: TextStyle(
-  //                         fontSize: 11.0,
-  //                         color: Color(0XFF27544F),
-  //                         fontFamily: 'IBM Plex Mono',
-  //                         fontWeight: FontWeight.w500,
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ],
-  //             ),
-  //           );
-  //         }
-  //       } else if (snapshot.hasError) {
-  //         return BlankLoading();
-  //       } else {
-  //         return Container(
-  //           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-  //           decoration: BoxDecoration(
-  //             color: Colors.white,
-  //             borderRadius: BorderRadius.circular(15),
-  //           ),
-  //           child: Row(
-  //             children: [
-  //               Container(
-  //                 height: 60,
-  //                 width: 60,
-  //                 padding: EdgeInsets.only(right: 10),
-  //                 child: Image.asset(
-  //                   'assets/images/user_not_found.png',
-  //                   color: Color(0XFF0C387D),
-  //                 ),
-  //               ),
-  //               Expanded(
-  //                 child: Container(
-  //                   // color: Colors.red,
-  //                   decoration: BoxDecoration(
-  //                     border: Border(
-  //                       right: BorderSide(
-  //                         color: Color(0XFFD5E7D7),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   child: Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       Text(
-  //                         'กำลังโหลด',
-  //                         style: TextStyle(
-  //                           fontSize: 16.0,
-  //                           color: Color(0XFF0C387D),
-  //                           fontFamily: 'IBM Plex Mono',
-  //                           fontWeight: FontWeight.w600,
-  //                         ),
-  //                       ),
-  //                       // Text(
-  //                       //   'นายท้ายเรือ',
-  //                       //   style: TextStyle(
-  //                       //     fontSize: 20.0,
-  //                       //     color: Color(0XFF0C387D),
-  //                       //     fontFamily: 'IBM Plex Mono',
-  //                       //     fontWeight: FontWeight.w600,
-  //                       //   ),
-  //                       // ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ),
-  //               SizedBox(width: 10),
-  //               Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.center,
-  //                 children: [
-  //                   Container(
-  //                     padding: EdgeInsets.all(10.0),
-  //                     child: Image.asset(
-  //                       'assets/icons/qr_code.png',
-  //                       height: 33,
-  //                     ),
-  //                   ),
-  //                   Text(
-  //                     'my qrcode',
-  //                     style: TextStyle(
-  //                       fontSize: 11.0,
-  //                       color: Color(0XFF27544F),
-  //                       fontFamily: 'IBM Plex Mono',
-  //                       fontWeight: FontWeight.w500,
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
+  Widget _buildProfileContent(AsyncSnapshot<dynamic> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return _buildProfileLoading();
+    }
 
-  _buildService() {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'บริการสมาชิก',
-                  style: TextStyle(
+    if (snapshot.hasError || snapshot.data == null) {
+      return _buildProfileNotFound();
+    }
+
+    final data = snapshot.data!;
+    final Uri qrUri = Uri(
+      scheme: "http",
+      host: "gateway.we-builds.com",
+      path: "security_information.html",
+      queryParameters: data
+          .map<String, String?>((k, v) => MapEntry(k.toString(), v?.toString()))
+        ..removeWhere((_, v) => v == null),
+    );
+
+    return profileCode == data['code']
+        ? _buildProfileDetails(data, qrUri)
+        : _buildProfileNotFound();
+  }
+
+  Widget _buildProfileDetails(dynamic data, Uri qrUri) {
+    return Row(
+      children: [
+        SizedBox(
+            height: 60,
+            width: 60,
+            child: checkAvatar(context, data['imageUrl'])),
+        const SizedBox(width: 20),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${data['firstName'] ?? ''} ${data['lastName'] ?? ''}',
+                style: const TextStyle(
                     fontSize: 18.0,
-                    fontFamily: 'Kanit',
-                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF0C387D),
+                    fontWeight: FontWeight.bold),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF0C387D), // พื้นหลังสีน้ำเงินเข้ม
+                  borderRadius: BorderRadius.circular(50), // มุมโค้งมน
+                ),
+                child: const Text(
+                  'ใบอนุญาตกัปตันเรือ',
+                  style: TextStyle(
+                    fontSize: 14.0, // ลดขนาดลงเล็กน้อยให้พอดีกรอบ
+                    color: Colors
+                        .white, // เปลี่ยนสีตัวอักษรเป็นขาวให้ตัดกับพื้นหลัง
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ],
+              )
+            ],
+          ),
+        ),
+        const SizedBox(width: 10),
+        const VerticalDivider(thickness: 1, color: Color(0xFFD5E7D7)),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MyQrCode(model: data))),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              QrImageView(
+                data: qrUri.toString(),
+                size: 55,
+                backgroundColor: Colors.white,
+                foregroundColor: const Color(0xFF0C387D),
+              ),
+              const Text(
+                'My QR',
+                style: TextStyle(
+                    fontSize: 11.0,
+                    color: Color(0xFF0C387D),
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProfileNotFound() {
+    return _buildProfileMessage('ไม่พบข้อมูล',
+        'assets/images/user_not_found.png', const Color(0XFF0C387D));
+  }
+
+  Widget _buildProfileLoading() {
+    return _buildProfileMessage('กำลังโหลด', 'assets/images/user_not_found.png',
+        const Color(0XFF0C387D));
+  }
+
+  Widget _buildProfileMessage(String text, String imagePath, Color color) {
+    return Row(
+      children: [
+        Container(
+            height: 60,
+            width: 60,
+            padding: const EdgeInsets.only(right: 10),
+            child: Image.asset(imagePath, color: color)),
+        Expanded(
+          child: Container(
+            decoration: const BoxDecoration(
+                border: Border(right: BorderSide(color: Color(0XFFD5E7D7)))),
+            child: Text(
+              text,
+              style: TextStyle(
+                  fontSize: 16.0, color: color, fontWeight: FontWeight.w600),
             ),
           ),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            height: 250,
-            width: MediaQuery.of(context).size.width,
-            child: GridView.count(
-              crossAxisCount: 2,
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(8),
-              childAspectRatio: 1 / 0.8,
-              shrinkWrap: true,
-              children: [
-                _buildServiceIcon(
-                  path: 'assets/icons/icon_menu2.png',
-                  title: 'ข่าวสาร',
-                  callBack: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewsList(
-                          title: 'ข่าวสาร',
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                _buildServiceIcon(
-                  path: 'assets/icons/icon_menu3.png',
-                  title: 'ต่อใบอนุญาต',
-                  callBack: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RenewLicensePage(),
-                      ),
-                    );
-                  },
-                ),
-                _buildServiceIcon(
-                  path: 'assets/icons/icon_menu4.png',
-                  title: 'ตรวจสอบใบอนุญาต',
-                  callBack: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CheckLicenseListCategory(
-                          title: 'ตรวจสอบใบอนุญาต',
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                _buildServiceIcon(
-                  path: 'assets/icons/icon_menu5.png',
-                  title: 'คลังความรู้',
-                  callBack: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            KnowledgeList(title: 'คลังความรู้'),
-                      ),
-                    );
-                  },
-                ),
-                _buildServiceIcon(
-                  path: 'assets/icons/icon_menu6.png',
-                  title: 'ถามตอบ',
-                  callBack: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => QuestionList(title: 'ถามตอบ'),
-                      ),
-                    );
-                  },
-                ),
-                _buildServiceIcon(
-                  path: 'assets/icons/icon_menu7.png',
-                  title: 'หลักสูตรอบรม',
-                  callBack: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            TrainingCourseListCategory(title: 'หลักสูตรอบรม'),
-                      ),
-                    );
-                  },
-                ),
-                _buildServiceIcon(
-                  path: 'assets/icons/icon_menu8.png',
-                  title: 'ร้องเรียน',
-                  callBack: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            ComplainListCategory(title: 'ร้องเรียน'),
-                      ),
-                    );
-                  },
-                ),
-                _buildServiceIcon(
-                  path: 'assets/icons/icon_menu1.png',
-                  title: 'เกี่ยวกับเรา',
-                  callBack: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AboutUsForm(
-                          // model: _futureAboutUs,
-                          title: 'ติดต่อเรา',
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+        ),
+        const SizedBox(width: 10),
+        Column(
+          children: [
+            Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.asset('assets/icons/qr_code.png', height: 33)),
+            const Text('my qrcode',
+                style: TextStyle(
+                    fontSize: 11.0,
+                    color: Color(0XFF59ACD4),
+                    fontWeight: FontWeight.w500)),
+          ],
+        ),
+      ],
+    );
+  }
+
+  _buildService() {
+    final List<Map<String, dynamic>> serviceItems = [
+      {
+        'path': 'assets/icons/icon_menu2.png',
+        'title': 'ข่าวสาร',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewsList(title: 'ข่าวสาร'),
+            ),
+          );
+        },
+      },
+      {
+        'path': 'assets/icons/icon_menu3.png',
+        'title': 'ต่อใบอนุญาต',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RenewLicensePage(),
+            ),
+          );
+        },
+      },
+      {
+        'path': 'assets/icons/icon_menu4.png',
+        'title': 'ตรวจสอบใบอนุญาต',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  CheckLicenseListCategory(title: 'ตรวจสอบใบอนุญาต'),
+            ),
+          );
+        },
+      },
+      {
+        'path': 'assets/icons/icon_menu5.png',
+        'title': 'คลังความรู้',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const KnowledgeList(title: 'คลังความรู้'),
+            ),
+          );
+        },
+      },
+      {
+        'path': 'assets/icons/icon_menu6.png',
+        'title': 'ถามตอบ',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => QuestionList(title: 'ถามตอบ'),
+            ),
+          );
+        },
+      },
+      {
+        'path': 'assets/icons/icon_menu7.png',
+        'title': 'หลักสูตรอบรม',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  TrainingCourseListCategory(title: 'หลักสูตรอบรม'),
+            ),
+          );
+        },
+      },
+      {
+        'path': 'assets/icons/icon_menu8.png',
+        'title': 'ร้องเรียน',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ComplainListCategory(title: 'ร้องเรียน'),
+            ),
+          );
+        },
+      },
+      {
+        'path': 'assets/icons/icon_menu1.png',
+        'title': 'เกี่ยวกับเรา',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AboutUsForm(title: 'ติดต่อเรา'),
+            ),
+          );
+        },
+      },
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+          child: Text(
+            'บริการสมาชิก',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontFamily: 'Kanit',
+              fontWeight: FontWeight.w400,
             ),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: (serviceItems.length / 4).ceil() *
+              130, // คำนวณความสูงให้พอดีกับจำนวนแถว
+          width: MediaQuery.of(context).size.width,
+          child: GridView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            physics: const NeverScrollableScrollPhysics(), // ปิดการ scroll
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4, // 4 คอลัมน์
+              crossAxisSpacing: 10, // ระยะห่างระหว่างคอลัมน์
+              mainAxisSpacing: 10, // ระยะห่างระหว่างแถว
+              childAspectRatio: 1 / 1.2, // ปรับให้พอดีกับข้อความ
+            ),
+            itemCount: serviceItems.length,
+            itemBuilder: (context, index) {
+              return _buildServiceIcon(
+                path: serviceItems[index]['path'],
+                title: serviceItems[index]['title'],
+                callBack: serviceItems[index]['callBack'],
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -1090,11 +629,9 @@ class _HomePageState extends State<HomePage> {
             future: _futureNews,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
-                print("กำลังรับข้อมูลจาก FutureBuilder");
                 // ลบเงื่อนไขการเช็ค _newsList.isEmpty เพื่อให้ข้อมูลอัพเดทเสมอ
                 if (snapshot.data != null && snapshot.data.length > 0) {
                   _newsList = snapshot.data;
-                  print("รับข้อมูล ${_newsList.length} รายการ");
                 }
                 return Center(
                   child: GridView.builder(
@@ -1269,260 +806,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildRotation() {
-    return CarouselRotation(
-      model: _futureRotation!,
-      nav: (String path, String action, dynamic model, String code) {
-        if (action == 'out') {
-          launchInWebViewWithJavaScript(path);
-          // launchURL(path);
-        } else if (action == 'in') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CarouselForm(
-                code: code,
-                model: model,
-                url: mainBannerApi,
-                urlGallery: bannerGalleryApi,
-              ),
-            ),
-          );
-        }
-      },
-    );
-  }
-
-  _buildPrivilegeMenu() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-      child: FutureBuilder<dynamic>(
-        future: _futureMenu, // function where you call your api
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return ButtonMenuFull(
-              title: snapshot.data[7]['title'] != ''
-                  ? snapshot.data[7]['title']
-                  : '',
-              imageUrl: snapshot.data[7]['imageUrl'],
-              model: _futureMenu!,
-              subTitle: 'สำหรับสมาชิก',
-              nav: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PrivilegeMain(
-                      title: snapshot.data[7]['title'],
-                      fromPolicy: false,
-                    ),
-                  ),
-                );
-                // if (!checkDirection) {
-                //   _showDialogDirection();
-                // } else if (_dataPolicy.length > 0) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => PolicyPrivilege(
-                //         title: snapshot.data[4]['title'],
-                //         username: userData.username,
-                //         fromPolicy: true,
-                //       ),
-                //     ),
-                //   );
-                // } else {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => PrivilegeMain(
-                //         title: snapshot.data[7]['title'],
-                //         fromPolicy: false,
-                //       ),
-                //     ),
-                //   );
-                // }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Container();
-          } else {
-            return Container();
-          }
-        },
-      ),
-    );
-  }
-
-  _buildContactMenu() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-      child: FutureBuilder<dynamic>(
-        future: _futureMenu, // function where you call your api
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return ButtonMenuFull(
-              title: snapshot.data[6]['title'] != ''
-                  ? snapshot.data[6]['title']
-                  : '',
-              imageUrl: snapshot.data[6]['imageUrl'],
-              model: _futureMenu!,
-              subTitle: 'สำหรับสมาชิก',
-              nav: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ContactListCategory(
-                      title: snapshot.data[6]['title'],
-                    ),
-                  ),
-                );
-                // if (checkDirection) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => ContactListCategory(
-                //         title: snapshot.data[6]['title'],
-                //       ),
-                //     ),
-                //   );
-                // } else {
-                //   _showDialogDirection();
-                // }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Container();
-          } else {
-            return Container();
-          }
-        },
-      ),
-    );
-
-    ;
-  }
-
-  _buildPoiMenu() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-      child: FutureBuilder<dynamic>(
-        future: _futureMenu, // function where you call your api
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return ButtonMenuFull(
-              title: snapshot.data[8]['title'] != ''
-                  ? snapshot.data[8]['title']
-                  : '',
-              imageUrl: snapshot.data[8]['imageUrl'],
-              model: _futureMenu!,
-              subTitle: 'สำหรับสมาชิก',
-              nav: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PoiList(
-                      title: snapshot.data[8]['title'],
-                    ),
-                  ),
-                );
-                // if (checkDirection) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => PoiList(
-                //         title: snapshot.data[8]['title'],
-                //       ),
-                //     ),
-                //   );
-                // } else {
-                //   _showDialogDirection();
-                // }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Container();
-          } else {
-            return Container();
-          }
-        },
-      ),
-    );
-  }
-
-  _buildPollMenu() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-      child: FutureBuilder<dynamic>(
-        future: _futureMenu, // function where you call your api
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return ButtonMenuFull(
-              title: snapshot.data[9]['title'] != ''
-                  ? snapshot.data[9]['title']
-                  : '',
-              imageUrl: snapshot.data[9]['imageUrl'],
-              model: _futureMenu!,
-              subTitle: 'สำหรับสมาชิก',
-              nav: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PollList(
-                      title: snapshot.data[9]['title'],
-                    ),
-                  ),
-                );
-                // if (checkDirection) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => PollList(
-                //         title: snapshot.data[9]['title'],
-                //       ),
-                //     ),
-                //   );
-                // } else {
-                //   _showDialogDirection();
-                // }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Container();
-          } else {
-            return Container();
-          }
-        },
-      ),
-    );
-  }
-
-  _buildFooter() {
-    return Container(
-      // height: 70,
-      padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-      child: Image.asset(
-        'assets/background/background_mics_webuilds.png',
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
   _read() async {
-    // print('-------------start response------------');
-
     _getLocation();
 
     //read profile
     profileCode = (await storage.read(key: 'profileCode2'))!;
-    print('==============>>>>> ${profileCode}');
     if (profileCode != '') {
       setState(() {
         _futureProfile = postDio(profileReadApi, {"code": profileCode});
       });
 
-      _futureMenu = postDio('${menuApi}read', {'limit': 10});
-      _futureBanner = postDio('${mainBannerApi}read', {'limit': 10});
-      _futureRotation = postDio('${mainRotationApi}read', {'limit': 10});
+      _futureBanner =
+          postDio('${mainBannerApi}read', {'limit': 10, 'app': 'marine'});
       _futureMainPopUp = postDio('${mainPopupHomeApi}read', {'limit': 10});
       // _futureNews = postDio('${newsApi}read',
       //     {'skip': 0, 'limit': 2, 'category': '20241028102720-101-712'});
@@ -1537,6 +832,7 @@ class _HomePageState extends State<HomePage> {
       // _getLocation();
       // print('-------------end response------------');
     } else {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => const LoginPage(),
@@ -1576,7 +872,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onRefresh() async {
-    print("เริ่มรีเฟรช");
     _currentNewsPage = 0;
     _hasMoreNews = true; // รีเซ็ตค่านี้เพื่อให้สามารถโหลดเพิ่มได้
 
@@ -1676,7 +971,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   _getLocation() async {
-    print('currentLocation');
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);
 

@@ -70,7 +70,7 @@ class _HomePageV2State extends State<HomePageV2> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
-  LatLng latLng = LatLng(13.743989326935178, 100.53754006134743);
+  LatLng latLng = const LatLng(13.743989326935178, 100.53754006134743);
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class _HomePageV2State extends State<HomePageV2> {
   Future<bool> confirmExit() {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+        now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
       toastFail(
         context,
@@ -137,23 +137,23 @@ class _HomePageV2State extends State<HomePageV2> {
       enablePullUp: false,
       header: WaterDropHeader(
         complete: Container(
-          child: Text(''),
+          child: const Text(''),
         ),
-        completeDuration: Duration(milliseconds: 0),
+        completeDuration: const Duration(milliseconds: 0),
       ),
       footer: CustomFooter(
         builder: (context, mode) {
           Widget body;
           if (mode == LoadStatus.idle) {
-            body = Text("pull up load");
+            body = const Text("pull up load");
           } else if (mode == LoadStatus.loading) {
-            body = Text("loading");
+            body = const Text("loading");
           } else if (mode == LoadStatus.failed) {
-            body = Text("Load Failed!Click retry!");
+            body = const Text("Load Failed!Click retry!");
           } else if (mode == LoadStatus.canLoading) {
-            body = Text("release to load more");
+            body = const Text("release to load more");
           } else {
-            body = Text("No more Data");
+            body = const Text("No more Data");
           }
           return Container(
             height: 55.0,
@@ -216,12 +216,12 @@ class _HomePageV2State extends State<HomePageV2> {
             _buildProfile(),
             _buildVerifyTicket(),
             _buildRotation(),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             // _buildGridMenu1(),
             // SizedBox(height: 1),
             // _buildGridMenu2(),
             chkisCard == false ? _buildDispute(1) : Container(),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             chkisCard == true ? _buildDispute(2) : Container(),
             _buildCardFirst(),
             _buildCardSecond(),
@@ -241,7 +241,7 @@ class _HomePageV2State extends State<HomePageV2> {
         flexibleSpace: Container(
           width: double.infinity,
           // height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/bg_header.png'),
               fit: BoxFit.cover,
@@ -250,7 +250,7 @@ class _HomePageV2State extends State<HomePageV2> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -258,7 +258,7 @@ class _HomePageV2State extends State<HomePageV2> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       alignment: Alignment.centerLeft,
                       height: 60,
                       child: Image.asset(
@@ -282,7 +282,7 @@ class _HomePageV2State extends State<HomePageV2> {
                       child: Image.asset('assets/icons/bell.png'),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   InkWell(
@@ -306,7 +306,7 @@ class _HomePageV2State extends State<HomePageV2> {
                           if (profileCode == snapshot.data['code']) {
                             return Container(
                               height: 50,
-                              padding: EdgeInsets.only(right: 10),
+                              padding: const EdgeInsets.only(right: 10),
                               child: checkAvatar(
                                   context, '${snapshot.data['imageUrl']}'),
                             );
@@ -355,10 +355,10 @@ class _HomePageV2State extends State<HomePageV2> {
       child: Container(
         height: 120,
         padding: param == 1
-            ? EdgeInsets.symmetric(horizontal: 25)
-            : EdgeInsets.symmetric(horizontal: 15),
+            ? const EdgeInsets.symmetric(horizontal: 25)
+            : const EdgeInsets.symmetric(horizontal: 15),
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.grey,
           image: DecorationImage(
             // image: NetworkImage('${model['imageUrl']}'),
@@ -367,7 +367,7 @@ class _HomePageV2State extends State<HomePageV2> {
           ),
         ),
         child: param == 1
-            ? Column(
+            ? const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
@@ -413,7 +413,7 @@ class _HomePageV2State extends State<HomePageV2> {
                   )
                 ],
               )
-            : Column(
+            : const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
@@ -504,7 +504,7 @@ class _HomePageV2State extends State<HomePageV2> {
         children: [
           colorItem('ปฏิทินกิจกรรม', '(Calendar)',
               'assets/icons/icon_calendar.png', 1,
-              linearGradient: LinearGradient(
+              linearGradient: const LinearGradient(
                 colors: [
                   Color(0xFF7847AB),
                   Color(0xFF4E2B68),
@@ -526,7 +526,7 @@ class _HomePageV2State extends State<HomePageV2> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => KnowledgeList(
+                builder: (context) => const KnowledgeList(
                   title: 'ความรู้คู่การขับขี่',
                 ),
               ),
@@ -574,7 +574,7 @@ class _HomePageV2State extends State<HomePageV2> {
           }),
           colorItem(
               'ติดต่อเรา', '(Contact us)', 'assets/images/icon_info.png', 1,
-              linearGradient: LinearGradient(
+              linearGradient: const LinearGradient(
                 colors: [
                   Color(0xFF281F37),
                   Color(0xFF281F37),
@@ -637,8 +637,8 @@ class _HomePageV2State extends State<HomePageV2> {
           // color: Color(0xFF000070),
           // padding: EdgeInsets.symmetric(horizontal: 5),
           alignment: Alignment.center,
-          padding: EdgeInsets.only(left: 10),
-          child: Row(
+          padding: const EdgeInsets.only(left: 10),
+          child: const Row(
             children: [
               Icon(Icons.credit_card),
               Text(
@@ -656,7 +656,7 @@ class _HomePageV2State extends State<HomePageV2> {
           // color: Color(0xFF000070),
           // padding: EdgeInsets.symmetric(horizontal: 5),
           alignment: Alignment.center,
-          padding: EdgeInsets.only(right: 10),
+          padding: const EdgeInsets.only(right: 10),
           height: 40,
           child: Row(
             children: [
@@ -932,7 +932,7 @@ class _HomePageV2State extends State<HomePageV2> {
 
   _buildPrivilegeMenu() {
     return Padding(
-      padding: EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
       child: FutureBuilder<dynamic>(
         future: _futureMenu, // function where you call your api
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -992,7 +992,7 @@ class _HomePageV2State extends State<HomePageV2> {
 
   _buildContactMenu() {
     return Padding(
-      padding: EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
       child: FutureBuilder<dynamic>(
         future: _futureMenu, // function where you call your api
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -1041,7 +1041,7 @@ class _HomePageV2State extends State<HomePageV2> {
 
   _buildPoiMenu() {
     return Padding(
-      padding: EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
       child: FutureBuilder<dynamic>(
         future: _futureMenu, // function where you call your api
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -1088,7 +1088,7 @@ class _HomePageV2State extends State<HomePageV2> {
 
   _buildPollMenu() {
     return Padding(
-      padding: EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
       child: FutureBuilder<dynamic>(
         future: _futureMenu, // function where you call your api
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -1136,7 +1136,7 @@ class _HomePageV2State extends State<HomePageV2> {
   _buildFooter() {
     return Container(
       // height: 70,
-      padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
       child: Image.asset(
         'assets/background/background_mics_webuilds.png',
         fit: BoxFit.cover,
@@ -1185,7 +1185,7 @@ class _HomePageV2State extends State<HomePageV2> {
     } else {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => LoginPage(),
+          builder: (context) => const LoginPage(),
         ),
         (Route<dynamic> route) => false,
       );
@@ -1274,7 +1274,7 @@ class _HomePageV2State extends State<HomePageV2> {
   }
 
   void _onLoading() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     _refreshController.loadComplete();
   }
 

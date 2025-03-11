@@ -43,7 +43,6 @@ class _EventCalendarList extends State<EventCalendarList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: header(context, goBack, title: widget.title),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
           overScroll.disallowIndicator();
@@ -51,12 +50,12 @@ class _EventCalendarList extends State<EventCalendarList> {
         },
         child: GestureDetector(
           onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
+            FocusScope.of(context).unfocus();
           },
           child: SmartRefresher(
             enablePullDown: false,
             enablePullUp: true,
-            footer: ClassicFooter(
+            footer: const ClassicFooter(
               loadingText: ' ',
               canLoadingText: ' ',
               idleText: ' ',
@@ -64,35 +63,109 @@ class _EventCalendarList extends State<EventCalendarList> {
             ),
             controller: _refreshController,
             onLoading: _onLoading,
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: 5.0,
-                ),
-                _buildCategory(),
-                SizedBox(
-                  height: 10.0,
-                ),
-                KeySearch(
-                  show: hideSearch,
-                  onKeySearchChange: (String val) {
-                    setState(() {
-                      keySearch = val;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                _buildList(),
-                SizedBox(
-                  height: 30.0,
-                ),
-              ],
+            child: FutureBuilder<List<Map<String, String>>>(
+              future: _fetchMockData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (snapshot.hasError) {
+                  return const Center(
+                      child: Text('เกิดข้อผิดพลาดในการโหลดข้อมูล'));
+                }
+
+                final List<Map<String, String>> activities =
+                    snapshot.data ?? [];
+
+                return ListView(
+                  children: [
+                    const SizedBox(height: 5.0),
+                    _buildCategory(),
+                    const SizedBox(height: 10.0),
+                    // KeySearch(
+                    //   show: hideSearch,
+                    //   onKeySearchChange: (String val) {
+                    //     setState(() {
+                    //       keySearch = val;
+                    //     });
+                    //   },
+                    // ),
+                    // const SizedBox(height: 10.0),
+                    _buildList(activities, context),
+                    const SizedBox(height: 30.0),
+                  ],
+                );
+              },
             ),
           ),
         ),
       ),
+    );
+  }
+
+  /// จำลองข้อมูลกิจกรรมของกรมเจ้าท่า
+  Future<List<Map<String, String>>> _fetchMockData() async {
+    return Future.delayed(
+      Duration(seconds: 2),
+      () => [
+        {
+          "title": "โครงการอบรมกัปตันเรือ",
+          "date": "10 มีนาคม 2567",
+          "description":
+              "หลักสูตรอบรมสำหรับผู้ที่ต้องการเป็นกัปตันเรือ โดยมีการฝึกปฏิบัติและเรียนรู้กฎหมายทางทะเล",
+        },
+        {
+          "title": "กิจกรรมทำความสะอาดชายฝั่ง",
+          "date": "15 มีนาคม 2567",
+          "description":
+              "ร่วมแรงร่วมใจกับกรมเจ้าท่าและอาสาสมัครเพื่อทำความสะอาดชายฝั่งและลดขยะในทะเล",
+        },
+        {
+          "title": "สัมมนาความปลอดภัยทางน้ำ",
+          "date": "20 มีนาคม 2567",
+          "description":
+              "สัมมนาให้ความรู้เกี่ยวกับความปลอดภัยในการเดินเรือและมาตรการป้องกันอุบัติเหตุทางน้ำ",
+        },
+        {
+          "title": "วันอนุรักษ์ทะเลไทย",
+          "date": "30 มีนาคม 2567",
+          "description":
+              "งานเฉลิมฉลองวันอนุรักษ์ทะเลไทย มีกิจกรรมปล่อยเต่าทะเลและบรรยายเกี่ยวกับการอนุรักษ์ทรัพยากรทางทะเล",
+        },
+      ],
+    );
+  }
+
+  /// สร้าง Widget แสดงรายการกิจกรรม และเปิดหน้ารายละเอียดเมื่อกด
+  Widget _buildList(
+      List<Map<String, String>> activities, BuildContext context) {
+    return Column(
+      children: activities.map((activity) {
+        return Card(
+          elevation: 2,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          child: ListTile(
+            leading: const Icon(Icons.event, color: Colors.blue),
+            title: Text(
+              activity["title"]!,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(activity["date"]!),
+            trailing: const Icon(Icons.arrow_forward_ios,
+                size: 16, color: Colors.grey),
+            onTap: () {
+              // นำทางไปยังหน้ารายละเอียดกิจกรรม
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ActivityDetailPage(activity: activity),
+                ),
+              );
+            },
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -102,7 +175,7 @@ class _EventCalendarList extends State<EventCalendarList> {
       "skip": 0,
       "limit": 999 // integer value type
     });
-    var response = await http.post(Uri.parse(eventCalendarCategoryApi + 'read'),
+    var response = await http.post(Uri.parse('${eventCalendarCategoryApi}read'),
         body: body,
         headers: {
           "Accept": "application/json",
@@ -127,21 +200,21 @@ class _EventCalendarList extends State<EventCalendarList> {
     }
   }
 
-  _buildList() {
-    return gridView = new EventCalendarListVertical(
-      site: 'DDPM',
-      model: post('${eventCalendarApi}read', {
-        'skip': 0,
-        'limit': _limit,
-        'keySearch': keySearch ?? '',
-        'isHighlight': isHighlight ?? false,
-        'category': categorySelected ?? ''
-      }),
-      urlGallery: eventCalendarGalleryApi,
-      urlComment: eventCalendarCommentApi,
-      url: '${eventCalendarApi}read',
-    );
-  }
+  // _buildList() {
+  //   return gridView = new EventCalendarListVertical(
+  //     site: 'DDPM',
+  //     model: post('${eventCalendarApi}read', {
+  //       'skip': 0,
+  //       'limit': _limit,
+  //       'keySearch': keySearch ?? '',
+  //       'isHighlight': isHighlight ?? false,
+  //       'category': categorySelected ?? ''
+  //     }),
+  //     urlGallery: eventCalendarGalleryApi,
+  //     urlComment: eventCalendarCommentApi,
+  //     url: '${eventCalendarApi}read',
+  //   );
+  // }
 
   _onLoading() async {
     setState(() {
@@ -162,7 +235,7 @@ class _EventCalendarList extends State<EventCalendarList> {
       );
     });
 
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
 
     _refreshController.loadComplete();
   }
@@ -179,15 +252,15 @@ class _EventCalendarList extends State<EventCalendarList> {
         if (snapshot.hasData) {
           return Container(
             height: 45.0,
-            padding: EdgeInsets.only(left: 5.0, right: 5.0),
-            margin: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+            margin: const EdgeInsets.symmetric(horizontal: 10.0),
             decoration: new BoxDecoration(
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 0,
                   blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
               ],
               borderRadius: new BorderRadius.circular(6.0),
@@ -226,7 +299,7 @@ class _EventCalendarList extends State<EventCalendarList> {
                                   color: Theme.of(context).primaryColor))
                           : null,
                     ),
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 5.0,
                       vertical: 10.0,
                     ),
@@ -257,15 +330,15 @@ class _EventCalendarList extends State<EventCalendarList> {
         } else {
           return Container(
             height: 45.0,
-            padding: EdgeInsets.only(left: 5.0, right: 5.0),
-            margin: EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+            margin: const EdgeInsets.symmetric(horizontal: 30.0),
             decoration: new BoxDecoration(
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 0,
                   blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
               ],
               borderRadius: new BorderRadius.circular(6.0),
@@ -274,6 +347,76 @@ class _EventCalendarList extends State<EventCalendarList> {
           );
         }
       },
+    );
+  }
+}
+
+class ActivityDetailPage extends StatelessWidget {
+  final Map<String, String> activity;
+
+  const ActivityDetailPage({Key? key, required this.activity})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          activity["title"]!,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF0C387D), // สีกรมเจ้าท่า
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // เพิ่มรูปภาพด้านบนของ Title
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10), // ทำให้รูปมีขอบโค้งมน
+                child: Image.network(
+                  "https://gateway.we-builds.com/wb-py-media/uploads/marine/20250310-144815-S__5251171.jpg",
+                  width: double.infinity,
+                  height: 200,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(child: CircularProgressIndicator());
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(Icons.broken_image,
+                          size: 50, color: Colors.grey),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                activity["title"]!,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF0C387D),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "วันที่จัดกิจกรรม: ${activity["date"]!}",
+                style: const TextStyle(fontSize: 16, color: Colors.black54),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                activity["description"] ?? "ไม่มีรายละเอียดเพิ่มเติม",
+                style: const TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:marine_mobile/splash.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  LineSDK.instance.setup('2006568128').then((_) {
+    print('LineSDK Prepared');
+  });
+
   runApp(const MyApp());
 }
 
@@ -15,8 +21,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Color(0XFF213F91),
-        primaryColorDark: Color(0xFF9C0000),
+        primaryColor: const Color(0XFF213F91),
+        primaryColorDark: const Color(0xFF9C0000),
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         fontFamily: 'Sarabun',

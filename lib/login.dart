@@ -27,7 +27,7 @@ import 'shared/google_firebase.dart';
 import 'shared/line.dart';
 import 'widget/text_field.dart';
 
-DateTime now = new DateTime.now();
+DateTime now = DateTime.now();
 void main() {
   // Intl.defaultLocale = 'th';
 
@@ -42,7 +42,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   late String _username;
   late String _password;
@@ -106,9 +106,9 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           loginWithGuest();
         },
-        child: new Text(
+        child: const Text(
           'เข้าสู่ระบบ',
-          style: new TextStyle(
+          style: TextStyle(
             fontSize: 18.0,
             color: Colors.white,
             fontWeight: FontWeight.normal,
@@ -143,11 +143,11 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: new EdgeInsets.only(
+                    padding: EdgeInsets.only(
                       top: MediaQuery.of(context).padding.top + 150,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                   Container(
@@ -159,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         elevation: 10,
                         child: Container(
-                          padding: EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(20),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                                   // ),
                                 ],
                               ),
-                              SizedBox(height: 20.0),
+                              const SizedBox(height: 20.0),
                               labelTextField(
                                 'ชื่อผู้ใช้งาน',
                                 Icon(
@@ -193,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                                   size: 20.00,
                                 ),
                               ),
-                              SizedBox(height: 5.0),
+                              const SizedBox(height: 5.0),
                               textField(
                                 txtUsername,
                                 null,
@@ -202,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                                 true,
                                 false,
                               ),
-                              SizedBox(height: 15.0),
+                              const SizedBox(height: 15.0),
                               labelTextField(
                                 'รหัสผ่าน',
                                 Icon(
@@ -211,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                                   size: 20.00,
                                 ),
                               ),
-                              SizedBox(height: 5.0),
+                              const SizedBox(height: 5.0),
                               textField(
                                 txtPassword,
                                 null,
@@ -262,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              new RegisterPage(
+                                              RegisterPage(
                                             username: "",
                                             password: "",
                                             facebookID: "",
@@ -323,53 +323,54 @@ class _LoginPageState extends State<LoginPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   if (Platform.isIOS)
-                                    new Container(
-                                      alignment: new FractionalOffset(0.5, 0.5),
+                                    Container(
+                                      alignment:
+                                          const FractionalOffset(0.5, 0.5),
                                       height: 50.0,
                                       width: 50.0,
-                                      child: new IconButton(
+                                      child: IconButton(
                                         onPressed: () async {
                                           _loginApple();
                                         },
-                                        icon: new Image.asset(
+                                        icon: Image.asset(
                                           "assets/logo/socials/apple.png",
                                         ),
-                                        padding: new EdgeInsets.all(5.0),
+                                        padding: const EdgeInsets.all(5.0),
                                       ),
                                     ),
-                                  new Container(
-                                    alignment: new FractionalOffset(0.5, 0.5),
+                                  Container(
+                                    alignment: const FractionalOffset(0.5, 0.5),
                                     height: 50.0,
                                     width: 50.0,
-                                    child: new IconButton(
+                                    child: IconButton(
                                       onPressed: () async {
                                         _loginFacebook();
                                       },
-                                      icon: new Image.asset(
+                                      icon: Image.asset(
                                         "assets/logo/socials/Group379.png",
                                       ),
-                                      padding: new EdgeInsets.all(5.0),
+                                      padding: const EdgeInsets.all(5.0),
                                     ),
                                   ),
-                                  new Container(
-                                    alignment: new FractionalOffset(0.5, 0.5),
+                                  Container(
+                                    alignment: const FractionalOffset(0.5, 0.5),
                                     height: 50.0,
                                     width: 50.0,
-                                    child: new IconButton(
+                                    child: IconButton(
                                       onPressed: () async {
                                         _loginGoogle();
                                       },
-                                      icon: new Image.asset(
+                                      icon: Image.asset(
                                         "assets/logo/socials/Group380.png",
                                       ),
-                                      padding: new EdgeInsets.all(5.0),
+                                      padding: const EdgeInsets.all(5.0),
                                     ),
                                   ),
-                                  new Container(
-                                    alignment: new FractionalOffset(0.5, 0.5),
+                                  Container(
+                                    alignment: const FractionalOffset(0.5, 0.5),
                                     height: 50.0,
                                     width: 50.0,
-                                    child: new IconButton(
+                                    child: IconButton(
                                       onPressed: () async {
                                         var obj = await loginLine();
 
@@ -377,59 +378,52 @@ class _LoginPageState extends State<LoginPage> {
                                         final idToken = obj.accessToken.idToken;
                                         // print('----- idToken -----' + idToken.toString());
                                         final userEmail = (idToken != null)
-                                            ? idToken['email'] != null
-                                                ? idToken['email']
-                                                : ''
+                                            ? idToken['email'] ?? ''
                                             : '';
 
-                                        if (obj != null) {
-                                          var model = {
-                                            "username": userEmail == ''
-                                                ? obj.userProfile!.userId
-                                                : userEmail,
-                                            "email": userEmail,
-                                            "imageUrl":
-                                                obj.userProfile!.pictureUrl,
-                                            "firstName":
-                                                obj.userProfile!.displayName,
-                                            "lastName": '',
-                                            "lineID": obj.userProfile!.userId
-                                          };
+                                        var model = {
+                                          "username": userEmail == ''
+                                              ? obj.userProfile!.userId
+                                              : userEmail,
+                                          "email": userEmail,
+                                          "imageUrl":
+                                              obj.userProfile!.pictureUrl,
+                                          "firstName":
+                                              obj.userProfile!.displayName,
+                                          "lastName": '',
+                                          "lineID": obj.userProfile!.userId
+                                        };
 
-                                          Dio dio = new Dio();
-                                          var response = await dio.post(
-                                            '${server}m/v2/register/line/login',
-                                            data: model,
-                                          );
+                                        Dio dio = Dio();
+                                        var response = await dio.post(
+                                          '${server}m/v2/register/line/login',
+                                          data: model,
+                                        );
 
-                                          // print(response.data['objectData']['code']);
-                                          // storage.write(
-                                          //   key: 'profileCode2',
-                                          //   value: response.data['objectData']['code'],
-                                          // );
+                                        // print(response.data['objectData']['code']);
+                                        // storage.write(
+                                        //   key: 'profileCode2',
+                                        //   value: response.data['objectData']['code'],
+                                        // );
 
-                                          // storage.write(key: 'profileCategory', value: 'line');
+                                        // storage.write(key: 'profileCategory', value: 'line');
 
-                                          createStorageApp(
-                                            model: response.data['objectData'],
-                                            category: 'line',
-                                          );
+                                        createStorageApp(
+                                          model: response.data['objectData'],
+                                          category: 'line',
+                                        );
 
-                                          if (obj != null) {
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Menu(),
-                                              ),
-                                            );
-                                          }
-                                        }
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const Menu(),
+                                          ),
+                                        );
                                       },
-                                      icon: new Image.asset(
+                                      icon: Image.asset(
                                         "assets/logo/socials/Group381.png",
                                       ),
-                                      padding: new EdgeInsets.all(5.0),
+                                      padding: const EdgeInsets.all(5.0),
                                     ),
                                   ),
                                 ],
@@ -490,12 +484,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void checkStatus() async {
-    final storage = new FlutterSecureStorage();
+    final storage = const FlutterSecureStorage();
     String? value = await storage.read(key: 'dataUserLoginDDPM');
     if (value != null && value != '') {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => Menu(),
+          builder: (context) => const Menu(),
         ),
         (Route<dynamic> route) => false,
       );
@@ -504,11 +498,11 @@ class _LoginPageState extends State<LoginPage> {
 
   //login username / password
   Future<dynamic> login() async {
-    if ((_username == null || _username == '') && _category == 'guest') {
+    if ((_username == '') && _category == 'guest') {
       return showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (BuildContext context) => new CupertinoAlertDialog(
+        builder: (BuildContext context) => CupertinoAlertDialog(
           title: const Text(
             'กรุณากรอกชื่อผู้ใช้',
             style: TextStyle(
@@ -518,7 +512,7 @@ class _LoginPageState extends State<LoginPage> {
               fontWeight: FontWeight.normal,
             ),
           ),
-          content: Text(" "),
+          content: const Text(" "),
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
@@ -538,11 +532,11 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       );
-    } else if ((_password == null || _password == '') && _category == 'guest') {
+    } else if ((_password == '') && _category == 'guest') {
       return showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (BuildContext context) => new CupertinoAlertDialog(
+        builder: (BuildContext context) => CupertinoAlertDialog(
           title: const Text(
             'กรุณากรอกรหัสผ่าน',
             style: TextStyle(
@@ -552,7 +546,7 @@ class _LoginPageState extends State<LoginPage> {
               fontWeight: FontWeight.normal,
             ),
           ),
-          content: Text(" "),
+          content: const Text(" "),
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
@@ -602,7 +596,7 @@ class _LoginPageState extends State<LoginPage> {
 
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => Menu(),
+            builder: (context) => const Menu(),
           ),
           (Route<dynamic> route) => false,
         );
@@ -611,8 +605,8 @@ class _LoginPageState extends State<LoginPage> {
           return showDialog(
             barrierDismissible: false,
             context: context,
-            builder: (BuildContext context) => new CupertinoAlertDialog(
-              title: new Text(
+            builder: (BuildContext context) => CupertinoAlertDialog(
+              title: Text(
                 result.message!,
                 style: const TextStyle(
                   fontSize: 16,
@@ -621,7 +615,7 @@ class _LoginPageState extends State<LoginPage> {
                   fontWeight: FontWeight.normal,
                 ),
               ),
-              content: Text(" "),
+              content: const Text(" "),
               actions: [
                 CupertinoDialogAction(
                   isDefaultAction: true,
@@ -677,7 +671,7 @@ class _LoginPageState extends State<LoginPage> {
 
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => Menu(),
+          builder: (context) => const Menu(),
         ),
         (Route<dynamic> route) => false,
       );
@@ -685,8 +679,8 @@ class _LoginPageState extends State<LoginPage> {
       return showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (BuildContext context) => new CupertinoAlertDialog(
-          title: new Text(
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(
             result.message!,
             style: const TextStyle(
               fontSize: 16,
@@ -695,7 +689,7 @@ class _LoginPageState extends State<LoginPage> {
               fontWeight: FontWeight.normal,
             ),
           ),
-          content: Text(" "),
+          content: const Text(" "),
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
@@ -737,7 +731,7 @@ class _LoginPageState extends State<LoginPage> {
     login();
   }
 
-  TextStyle style = TextStyle(
+  TextStyle style = const TextStyle(
     fontFamily: 'Sarabun',
     fontSize: 18.0,
   );
@@ -751,15 +745,15 @@ class _LoginPageState extends State<LoginPage> {
     // print(obj.credential.identityToken[8]);
 
     var model = {
-      "username": obj.user!.email != null ? obj.user!.email : obj.user!.uid,
-      "email": obj.user!.email != null ? obj.user!.email : '',
+      "username": obj.user!.email ?? obj.user!.uid,
+      "email": obj.user!.email ?? '',
       "imageUrl": '',
       "firstName": obj.user!.email,
       "lastName": '',
       "appleID": obj.user!.uid
     };
 
-    Dio dio = new Dio();
+    Dio dio = Dio();
     var response = await dio.post(
       '${server}m/v2/register/apple/login',
       data: model,
@@ -773,16 +767,14 @@ class _LoginPageState extends State<LoginPage> {
       category: 'apple',
     );
 
-    if (obj != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          // builder: (context) =>
-          //     PermissionRegisterPage(),
-          builder: (context) => Menu(),
-        ),
-      );
-    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        // builder: (context) =>
+        //     PermissionRegisterPage(),
+        builder: (context) => const Menu(),
+      ),
+    );
   }
 
   _loginFacebook() async {
@@ -792,13 +784,13 @@ class _LoginPageState extends State<LoginPage> {
       var model = {
         "username": obj.user!.email,
         "email": obj.user!.email,
-        "imageUrl": obj.user!.photoURL != null ? obj.user!.photoURL : '',
+        "imageUrl": obj.user!.photoURL ?? '',
         "firstName": obj.user!.displayName,
         "lastName": '',
         "facebookID": obj.user!.uid
       };
 
-      Dio dio = new Dio();
+      Dio dio = Dio();
       var response = await dio.post(
         '${server}m/v2/register/facebook/login',
         data: model,
@@ -807,7 +799,7 @@ class _LoginPageState extends State<LoginPage> {
       await storage.write(key: 'categorySocial', value: 'Facebook');
       await storage.write(
         key: 'imageUrlSocial',
-        value: obj.user!.photoURL != null ? obj.user!.photoURL : '',
+        value: obj.user!.photoURL ?? '',
       );
 
       createStorageApp(
@@ -815,59 +807,53 @@ class _LoginPageState extends State<LoginPage> {
         category: 'facebook',
       );
 
-      if (obj != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Menu(),
-          ),
-        );
-      }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Menu(),
+        ),
+      );
     }
   }
 
   _loginGoogle() async {
     var obj = await signInWithGoogle();
     // print('----- Login Google ----- ' + obj.toString());
-    if (obj != null) {
-      var model = {
-        "username": obj.user!.email,
-        "email": obj.user!.email,
-        "imageUrl": obj.user!.photoURL != null ? obj.user!.photoURL : '',
-        "firstName": obj.user!.displayName,
-        "lastName": '',
-        "googleID": obj.user!.uid
-      };
+    var model = {
+      "username": obj.user!.email,
+      "email": obj.user!.email,
+      "imageUrl": obj.user!.photoURL ?? '',
+      "firstName": obj.user!.displayName,
+      "lastName": '',
+      "googleID": obj.user!.uid
+    };
 
-      Dio dio = new Dio();
-      var response = await dio.post(
-        '${server}m/v2/register/google/login',
-        data: model,
-      );
+    Dio dio = Dio();
+    var response = await dio.post(
+      '${server}m/v2/register/google/login',
+      data: model,
+    );
 
-      await storage.write(
-        key: 'categorySocial',
-        value: 'Google',
-      );
+    await storage.write(
+      key: 'categorySocial',
+      value: 'Google',
+    );
 
-      await storage.write(
-        key: 'imageUrlSocial',
-        value: obj.user!.photoURL ?? '',
-      );
+    await storage.write(
+      key: 'imageUrlSocial',
+      value: obj.user!.photoURL ?? '',
+    );
 
-      createStorageApp(
-        model: response.data['objectData'],
-        category: 'google',
-      );
+    createStorageApp(
+      model: response.data['objectData'],
+      category: 'google',
+    );
 
-      if (obj != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Menu(),
-          ),
-        );
-      }
-    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Menu(),
+      ),
+    );
   }
 }
