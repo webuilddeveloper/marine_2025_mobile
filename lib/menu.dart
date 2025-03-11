@@ -157,7 +157,6 @@ class _MenuState extends State<Menu> {
           boxShadow: [
             BoxShadow(
               color: const Color(0xFF000000).withOpacity(0.10),
-              spreadRadius: 0,
               blurRadius: 4,
               offset: const Offset(0, -3),
             ),
