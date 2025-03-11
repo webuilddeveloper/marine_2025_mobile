@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'training_course_list.dart';
 
 class TrainingCourseListCategoryVertical extends StatefulWidget {
-  TrainingCourseListCategoryVertical({
+  const TrainingCourseListCategoryVertical({
     super.key,
     this.site,
     this.model,
@@ -18,11 +17,11 @@ class TrainingCourseListCategoryVertical extends StatefulWidget {
   final String? url;
 
   @override
-  _TrainingCourseListCategoryVertical createState() =>
-      _TrainingCourseListCategoryVertical();
+  TrainingCourseListCategoryVerticalState createState() =>
+      TrainingCourseListCategoryVerticalState();
 }
 
-class _TrainingCourseListCategoryVertical
+class TrainingCourseListCategoryVerticalState
     extends State<TrainingCourseListCategoryVertical> {
   @override
   void initState() {
@@ -42,7 +41,7 @@ class _TrainingCourseListCategoryVertical
             return Container(
               alignment: Alignment.center,
               height: 200,
-              child: Text(
+              child: const Text(
                 'ไม่พบข้อมูล',
                 style: TextStyle(
                   fontSize: 18,
@@ -55,9 +54,9 @@ class _TrainingCourseListCategoryVertical
             return Container(
               color: Colors.transparent,
               alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: ListView.builder(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot.data.length,
@@ -85,22 +84,22 @@ class _TrainingCourseListCategoryVertical
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 0,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                             // color: Color.fromRGBO(0, 0, 2, 1),
                           ),
-                          margin: EdgeInsets.only(bottom: 10.0),
+                          margin: const EdgeInsets.only(bottom: 10.0),
                           child: Column(
                             children: [
                               Container(
                                 height: 80.0,
                                 decoration: BoxDecoration(
-                                  borderRadius: new BorderRadius.circular(5.0),
-                                  color: Color(0xFFFFFFFF),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: const Color(0xFFFFFFFF),
                                 ),
-                                padding: EdgeInsets.all(5.0),
+                                padding: const EdgeInsets.all(5.0),
                                 alignment: Alignment.centerLeft,
                                 child: Row(
                                   mainAxisAlignment:
@@ -108,22 +107,21 @@ class _TrainingCourseListCategoryVertical
                                   children: [
                                     Row(
                                       children: [
-                                        SizedBox(width: 20),
+                                        const SizedBox(width: 20),
                                         Container(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
                                               0.75,
-                                          padding: EdgeInsets.all(5),
+                                          padding: const EdgeInsets.all(5),
                                           // color: Colors.red,
                                           child: Text(
                                             '${snapshot.data[index]['title']}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.normal,
                                               fontSize: 16,
                                               fontFamily: 'Kanit',
-                                              color:
-                                                  Color(0xFF0C387D),
+                                              color: Color(0xFF0C387D),
                                             ),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
@@ -131,13 +129,10 @@ class _TrainingCourseListCategoryVertical
                                         ),
                                       ],
                                     ),
-                                    Container(
-                                      // color: Colors.yellow,
-                                      child: Icon(
-                                        Icons.keyboard_arrow_right,
-                                        color: Color.fromRGBO(0, 0, 0, 0.5),
-                                        size: 40.0,
-                                      ),
+                                    const Icon(
+                                      Icons.keyboard_arrow_right,
+                                      color: Color.fromRGBO(0, 0, 0, 0.5),
+                                      size: 40.0,
                                     ),
                                   ],
                                 ),

@@ -21,7 +21,7 @@ scaleTransitionNav(Widget child) {
         child: child,
       );
     },
-    transitionDuration: Duration(milliseconds: 500),
+    transitionDuration: const Duration(milliseconds: 500),
   );
 }
 
@@ -46,6 +46,6 @@ fadeNav(Widget child) {
         child: child,
       );
     },
-    transitionDuration: Duration(seconds: 1),
+    transitionDuration: const Duration(seconds: 1),
   );
 }

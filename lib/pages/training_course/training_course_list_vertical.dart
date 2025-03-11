@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:marine_mobile/pages/training_course/training_crouse_detail.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TrainingCourseListVertical extends StatefulWidget {
-  TrainingCourseListVertical({
+  const TrainingCourseListVertical({
     super.key,
     this.site,
     this.model,
@@ -18,10 +17,12 @@ class TrainingCourseListVertical extends StatefulWidget {
   final String? url;
 
   @override
-  _TrainingCourseListVertical createState() => _TrainingCourseListVertical();
+  TrainingCourseListVerticalState createState() =>
+      TrainingCourseListVerticalState();
 }
 
-class _TrainingCourseListVertical extends State<TrainingCourseListVertical> {
+class TrainingCourseListVerticalState
+    extends State<TrainingCourseListVertical> {
   @override
   void initState() {
     super.initState();
@@ -49,7 +50,7 @@ class _TrainingCourseListVertical extends State<TrainingCourseListVertical> {
             return Container(
               alignment: Alignment.center,
               height: 200,
-              child: Text(
+              child: const Text(
                 'ไม่พบข้อมูล',
                 style: TextStyle(
                   fontSize: 18,
@@ -62,9 +63,9 @@ class _TrainingCourseListVertical extends State<TrainingCourseListVertical> {
             return Container(
               // color: Colors.transparent,
               alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: ListView.builder(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot.data.length,
@@ -86,12 +87,12 @@ class _TrainingCourseListVertical extends State<TrainingCourseListVertical> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          margin: EdgeInsets.only(bottom: 5.0),
+                          margin: const EdgeInsets.only(bottom: 5.0),
                           // width: 600,
                           child: Column(
                             children: [
                               Container(
-                                constraints: BoxConstraints(
+                                constraints: const BoxConstraints(
                                   minHeight: 80,
                                   minWidth: double.infinity,
                                 ),
@@ -102,13 +103,13 @@ class _TrainingCourseListVertical extends State<TrainingCourseListVertical> {
                                       color: Colors.grey.withOpacity(0.5),
                                       spreadRadius: 0,
                                       blurRadius: 7,
-                                      offset: Offset(
+                                      offset: const Offset(
                                           0, 3), // changes position of shadow
                                     ),
                                   ],
-                                  color: Color(0xFFFFFFFF),
+                                  color: const Color(0xFFFFFFFF),
                                 ),
-                                padding: EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(10.0),
                                 alignment: Alignment.centerLeft,
                                 child: Row(
                                   mainAxisAlignment:
@@ -125,8 +126,8 @@ class _TrainingCourseListVertical extends State<TrainingCourseListVertical> {
                                                       .size
                                                       .width *
                                                   0.75,
-                                              padding:
-                                                  EdgeInsets.only(left: 20.0),
+                                              padding: const EdgeInsets.only(
+                                                  left: 20.0),
                                               // color: Colors.red,
                                               child: Text(
                                                 '${snapshot.data[index]['title']}',
@@ -146,12 +147,12 @@ class _TrainingCourseListVertical extends State<TrainingCourseListVertical> {
                                                       .size
                                                       .width *
                                                   0.75,
-                                              padding:
-                                                  EdgeInsets.only(left: 20.0),
+                                              padding: const EdgeInsets.only(
+                                                  left: 20.0),
                                               // color: Colors.red,
                                               child: Text(
                                                 '${snapshot.data[index]['titleEN']}',
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   // fontWeight: FontWeight.normal,
                                                   fontSize: 15.0,
                                                   fontFamily: 'Kanit',

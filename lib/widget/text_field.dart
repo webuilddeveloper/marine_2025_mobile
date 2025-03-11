@@ -5,7 +5,7 @@ labelTextField(String label, Icon icon) {
     children: <Widget>[
       icon,
       Text(
-        ' ' + label,
+        ' $label',
         style: const TextStyle(
           fontSize: 15.000,
           fontFamily: 'Sarabun',
@@ -30,7 +30,7 @@ textField(
       obscureText: isPassword,
       controller: model,
       enabled: enabled,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.normal,
         fontFamily: 'Sarabun',
@@ -38,10 +38,10 @@ textField(
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: Color(0xFFC5DAFC),
-        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+        fillColor: const Color(0xFFC5DAFC),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: const TextStyle(color: Colors.grey),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide.none,

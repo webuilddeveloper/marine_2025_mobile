@@ -50,7 +50,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
         },
         title: 'ใบสั่ง',
       ),
-      backgroundColor: Color(0xFFF5F8FB),
+      backgroundColor: const Color(0xFFF5F8FB),
       body: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -66,7 +66,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
     return Column(
       children: [
         _categoryList(),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Expanded(
           child: _futureBuilder(),
         ),
@@ -84,7 +84,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
           } else {
             return Container(
               alignment: Alignment.center,
-              child: Text(
+              child: const Text(
                 'ไม่พบข้อมูล',
                 style: TextStyle(
                   fontFamily: 'Sarabun',
@@ -96,7 +96,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
         } else if (snapshot.hasError) {
           return Container(
             alignment: Alignment.center,
-            child: Text(
+            child: const Text(
               'เกิดข้อผิดพลาด กรุณากดลองใหม่อีกครั้ง',
               style: TextStyle(
                 fontFamily: 'Sarabun',
@@ -116,13 +116,13 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
       children: [
         Container(
           height: 40,
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          margin: EdgeInsets.only(bottom: 1),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          margin: const EdgeInsets.only(bottom: 1),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'ทั้งหมด',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -133,7 +133,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               ),
               Text(
                 totalData.toString() + ' รายการ',
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.normal,
                   fontFamily: 'Sarabun',
                   fontSize: 14.0,
@@ -148,7 +148,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
           child: SmartRefresher(
             enablePullDown: false,
             enablePullUp: true,
-            footer: ClassicFooter(
+            footer: const ClassicFooter(
               loadingText: ' ',
               canLoadingText: ' ',
               idleText: ' ',
@@ -158,7 +158,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
             onLoading: _onLoading,
             onRefresh: _onRefresh,
             child: ListView.builder(
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemCount: model.length,
@@ -174,7 +174,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
 
   _loading() {
     return ListView.builder(
-      physics: ScrollPhysics(),
+      physics: const ScrollPhysics(),
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       itemCount: 10,
@@ -182,7 +182,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
         return Container(
           width: double.infinity,
           height: 300,
-          margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+          margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
           child: BlankLoading(),
         );
       },
@@ -192,14 +192,14 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
   _categoryList() {
     return Container(
       height: 45.0,
-      padding: EdgeInsets.only(left: 3.0, right: 3.0),
+      padding: const EdgeInsets.only(left: 3.0, right: 3.0),
       decoration: new BoxDecoration(
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 0,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
         color: Colors.white,
@@ -254,7 +254,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
                       width: 2, color: Theme.of(context).primaryColor))
               : null,
         ),
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 5.0,
           vertical: 10.0,
         ),
@@ -287,8 +287,8 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
@@ -297,7 +297,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               color: Colors.grey.withOpacity(0.4),
               spreadRadius: 0,
               blurRadius: 4,
-              offset: Offset(1, 3), // changes position of shadow
+              offset: const Offset(1, 3), // changes position of shadow
             ),
           ],
         ),
@@ -311,7 +311,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'วันที่กระทำความผิด',
                       style: TextStyle(
                         fontFamily: 'Sarabun',
@@ -321,7 +321,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
                     ),
                     Text(
                       dateStringToDate(model['occur_DT']),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Sarabun',
                         fontSize: 13,
                       ),
@@ -336,33 +336,33 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
             _textRowExpanded(
               title: 'สถานที่เกิดเหตุ',
               value: model['place'],
-              titleColor: Color(0xFF9E9E9E),
+              titleColor: const Color(0xFF9E9E9E),
               spaceBetween: 60,
             ),
             _textRowExpanded(
               title: 'เลขที่ใบสั่ง',
               value: model['org_CODE'],
-              titleColor: Color(0xFF9E9E9E),
+              titleColor: const Color(0xFF9E9E9E),
               spaceBetween: 60,
             ),
             _textRowExpanded(
               title: 'หน่วยงานที่ออกใบสั่ง',
               value: model['org_ABBR'],
-              titleColor: Color(0xFF9E9E9E),
+              titleColor: const Color(0xFF9E9E9E),
               spaceBetween: 60,
             ),
             _line(),
             _textRowExpanded(
               title: 'ข้อหา',
               value: 'ค่าปรับ(บาท)',
-              titleColor: Color(0xFF9E9E9E),
-              valueColor: Color(0xFF9E9E9E),
+              titleColor: const Color(0xFF9E9E9E),
+              valueColor: const Color(0xFF9E9E9E),
             ),
             if (model['accuse1_CODE'] != null)
               _textRowExpanded(
                 title: model['accuse1_CODE'],
                 value: model['fine1'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -370,7 +370,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               _textRowExpanded(
                 title: model['accuse2_CODE'],
                 value: model['fine2'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -378,7 +378,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               _textRowExpanded(
                 title: model['accuse3_CODE'],
                 value: model['fine3'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -386,7 +386,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               _textRowExpanded(
                 title: model['accuse4_CODE'],
                 value: model['fine4'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -394,7 +394,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               _textRowExpanded(
                 title: model['accuse5_CODE'],
                 value: model['fine5'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -402,7 +402,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
             _textRowExpanded(
               title: 'ค่าปรับทั้งหมด',
               value: model['fine_AMT'],
-              valueColor: Color(0xFFFF7B06),
+              valueColor: const Color(0xFFFF7B06),
               valueSize: 20,
             ),
           ],
@@ -414,8 +414,8 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
   _line() {
     return Container(
       height: 2,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      color: Color(0xFFEDF0F3),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      color: const Color(0xFFEDF0F3),
     );
   }
 
@@ -430,7 +430,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
   }) {
     return title != ''
         ? Container(
-            margin: EdgeInsets.only(bottom: 8),
+            margin: const EdgeInsets.only(bottom: 8),
             child: expandedRight
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -493,27 +493,27 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
   statusBox(String value) {
     var status = '';
     List<Color> colors = [
-      Color(0xFF07C9A8),
-      Color(0xFF03996F),
+      const Color(0xFF07C9A8),
+      const Color(0xFF03996F),
     ];
     if (value == '1') {
       status = 'ค้างชำระ';
       colors = [
-        Color(0xFFFF2525),
-        Color(0xFFBC0611),
+        const Color(0xFFFF2525),
+        const Color(0xFFBC0611),
       ];
     } else if (value == '2') {
       status = 'เกินกำหนดแล้วยังไม่ชำระ';
       colors = [
-        Color(0xFFFFC200),
-        Color(0xFFFF7B06),
+        const Color(0xFFFFC200),
+        const Color(0xFFFF7B06),
       ];
     } else if (value == '3') {
       status = 'ชำระแล้ว';
     }
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 7),
       height: 30,
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -525,7 +525,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
       ),
       child: Text(
         status,
-        style: TextStyle(
+        style: const TextStyle(
           fontFamily: 'Sarabun',
           fontSize: 11,
           color: Colors.white,
@@ -554,7 +554,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
     });
     _read();
 
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
 
     _refreshController!.loadComplete();
   }

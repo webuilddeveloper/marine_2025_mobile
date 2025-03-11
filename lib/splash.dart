@@ -45,30 +45,30 @@ class _SplashPageState extends State<SplashPage> {
 
   _callRead() {
     futureModel =
-        postDio(server + 'm/splash/read', {"code": '20241030113208-998-123'});
+        postDio('${server}m/splash/read', {"code": '20241030113208-998-123'});
     // futureModel = postDio(server + 'm/splash/read', {});
   }
 
   _callTimer(time) async {
-    var _duration = new Duration(seconds: time);
-    return new Timer(_duration, _callNavigatorPage);
+    var duration = Duration(seconds: time);
+    return Timer(duration, _callNavigatorPage);
   }
 
   _callNavigatorPage() async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     String? value = await storage.read(key: 'profileCode2');
 
     if (value != null && value != '') {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => Menu(),
+          builder: (context) => const Menu(),
         ),
         (Route<dynamic> route) => false,
       );
     } else {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => LoginPage(),
+          builder: (context) => const LoginPage(),
         ),
         (Route<dynamic> route) => false,
       );

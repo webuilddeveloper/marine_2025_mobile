@@ -46,7 +46,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
         },
         title: 'ใบสั่งค้างชำระ (PTM)',
       ),
-      backgroundColor: Color(0xFFF5F8FB),
+      backgroundColor: const Color(0xFFF5F8FB),
       body: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -78,12 +78,12 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
     return Column(
       children: [
         Container(
-          color: Color(0xFFEDF0F3),
-          padding: EdgeInsets.all(10),
+          color: const Color(0xFFEDF0F3),
+          padding: const EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'ทั้งหมด',
                 style: TextStyle(
                   fontFamily: 'Sarabun',
@@ -92,7 +92,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               ),
               Text(
                 totalData.toString() + ' รายการ',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Sarabun',
                   fontSize: 15,
                   color: Color(0xFFB1B1B1),
@@ -101,12 +101,12 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
             ],
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Expanded(
           child: SmartRefresher(
             enablePullDown: false,
             enablePullUp: true,
-            footer: ClassicFooter(
+            footer: const ClassicFooter(
               loadingText: ' ',
               canLoadingText: ' ',
               idleText: ' ',
@@ -116,7 +116,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
             onLoading: _onLoading,
             onRefresh: _onRefresh,
             child: ListView.builder(
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemCount: model.length,
@@ -144,8 +144,8 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
@@ -154,7 +154,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               color: Colors.grey.withOpacity(0.4),
               spreadRadius: 0,
               blurRadius: 4,
-              offset: Offset(1, 3), // changes position of shadow
+              offset: const Offset(1, 3), // changes position of shadow
             ),
           ],
         ),
@@ -168,7 +168,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'วันที่กระทำความผิด',
                       style: TextStyle(
                         fontFamily: 'Sarabun',
@@ -178,7 +178,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
                     ),
                     Text(
                       dateStringToDate(model['occur_DT']),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Sarabun',
                         fontSize: 13,
                       ),
@@ -191,33 +191,33 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
             _textRowExpanded(
               title: 'สถานที่เกิดเหตุ',
               value: model['place'],
-              titleColor: Color(0xFF9E9E9E),
+              titleColor: const Color(0xFF9E9E9E),
               spaceBetween: 60,
             ),
             _textRowExpanded(
               title: 'เลขที่ใบสั่ง',
               value: model['org_CODE'],
-              titleColor: Color(0xFF9E9E9E),
+              titleColor: const Color(0xFF9E9E9E),
               spaceBetween: 60,
             ),
             _textRowExpanded(
               title: 'หน่วยงานที่ออกใบสั่ง',
               value: model['org_ABBR'],
-              titleColor: Color(0xFF9E9E9E),
+              titleColor: const Color(0xFF9E9E9E),
               spaceBetween: 60,
             ),
             _line(),
             _textRowExpanded(
               title: 'ข้อหา',
               value: 'ค่าปรับ(บาท)',
-              titleColor: Color(0xFF9E9E9E),
-              valueColor: Color(0xFF9E9E9E),
+              titleColor: const Color(0xFF9E9E9E),
+              valueColor: const Color(0xFF9E9E9E),
             ),
             if (model['accuse1_CODE'] != null)
               _textRowExpanded(
                 title: model['accuse1_CODE'],
                 value: model['fine1'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -225,7 +225,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse2_CODE'],
                 value: model['fine2'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -233,7 +233,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse3_CODE'],
                 value: model['fine3'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -241,7 +241,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse4_CODE'],
                 value: model['fine4'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -249,7 +249,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse5_CODE'],
                 value: model['fine5'],
-                valueColor: Color(0xFFFF7B06),
+                valueColor: const Color(0xFFFF7B06),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -257,7 +257,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
             _textRowExpanded(
               title: 'ค่าปรับทั้งหมด',
               value: model['fine_AMT'],
-              valueColor: Color(0xFFFF7B06),
+              valueColor: const Color(0xFFFF7B06),
               valueSize: 20,
             ),
           ],
@@ -269,8 +269,8 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
   _line() {
     return Container(
       height: 2,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      color: Color(0xFFEDF0F3),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      color: const Color(0xFFEDF0F3),
     );
   }
 
@@ -285,7 +285,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
   }) {
     return title != ''
         ? Container(
-            margin: EdgeInsets.only(bottom: 8),
+            margin: const EdgeInsets.only(bottom: 8),
             child: expandedRight
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -365,7 +365,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
     });
     _read();
 
-    await Future.delayed(Duration(milliseconds: 2000));
+    await Future.delayed(const Duration(milliseconds: 2000));
 
     _refreshController.loadComplete();
   }

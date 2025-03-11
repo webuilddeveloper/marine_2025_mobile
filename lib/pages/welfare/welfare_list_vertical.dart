@@ -7,7 +7,7 @@ import '../../shared/extension.dart';
 import 'welfare_form.dart';
 
 class WelfareListVertical extends StatefulWidget {
-  WelfareListVertical({
+  const WelfareListVertical({
     super.key,
     this.site,
     this.model,
@@ -25,10 +25,10 @@ class WelfareListVertical extends StatefulWidget {
   final String? urlGallery;
 
   @override
-  _WelfareListVertical createState() => _WelfareListVertical();
+  WelfareListVerticalState createState() => WelfareListVerticalState();
 }
 
-class _WelfareListVertical extends State<WelfareListVertical> {
+class WelfareListVerticalState extends State<WelfareListVertical> {
   @override
   void initState() {
     super.initState();
@@ -48,7 +48,7 @@ class _WelfareListVertical extends State<WelfareListVertical> {
             return Container(
               alignment: Alignment.center,
               height: 200,
-              child: Text(
+              child: const Text(
                 'ไม่พบข้อมูล',
                 style: TextStyle(
                   fontSize: 18,
@@ -61,9 +61,9 @@ class _WelfareListVertical extends State<WelfareListVertical> {
             return Container(
               color: Colors.transparent,
               alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: ListView.builder(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot.data.length,
@@ -98,22 +98,21 @@ class _WelfareListVertical extends State<WelfareListVertical> {
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 0,
                                     blurRadius: 7,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 3), // changes position of shadow
                                   ),
                                 ],
                               ),
-                              margin: EdgeInsets.only(bottom: 5.0),
+                              margin: const EdgeInsets.only(bottom: 5.0),
                               height: 100,
                               child: Column(
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFFFFFFF),
-                                      borderRadius:
-                                          new BorderRadius.circular(5.0),
+                                      color: const Color(0xFFFFFFFF),
+                                      borderRadius: BorderRadius.circular(5.0),
                                     ),
-                                    padding: EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(5),
                                     alignment: Alignment.centerLeft,
                                     child: Row(
                                       mainAxisAlignment:
@@ -127,30 +126,28 @@ class _WelfareListVertical extends State<WelfareListVertical> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               // margin: EdgeInsets.all(5),
                                               height: 90,
                                               width: 90,
-                                              child: Container(
-                                                child: Image.network(
-                                                  '${snapshot.data[index]['imageUrl']}',
-                                                  fit: BoxFit.cover,
-                                                  // loadingBuilder: (BuildContext context,
-                                                  //     Widget child,
-                                                  //     ImageChunkEvent loadingProgress) {
-                                                  //   if (loadingProgress == null)
-                                                  //     return child;
-                                                  //   return Container(
-                                                  //     color: Colors.white,
-                                                  //     height: 200,
-                                                  //     width: 600,
-                                                  //     child: loadingProgress
-                                                  //         .expectedTotalBytes !=
-                                                  //         null
-                                                  //         ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes : BlankLoading(width: 600.0,height: 200.0,),
-                                                  //   );
-                                                  // },
-                                                ),
+                                              child: Image.network(
+                                                '${snapshot.data[index]['imageUrl']}',
+                                                fit: BoxFit.cover,
+                                                // loadingBuilder: (BuildContext context,
+                                                //     Widget child,
+                                                //     ImageChunkEvent loadingProgress) {
+                                                //   if (loadingProgress == null)
+                                                //     return child;
+                                                //   return Container(
+                                                //     color: Colors.white,
+                                                //     height: 200,
+                                                //     width: 600,
+                                                //     child: loadingProgress
+                                                //         .expectedTotalBytes !=
+                                                //         null
+                                                //         ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes : BlankLoading(width: 600.0,height: 200.0,),
+                                                //   );
+                                                // },
                                               ),
                                             ),
                                           ],
@@ -164,11 +161,11 @@ class _WelfareListVertical extends State<WelfareListVertical> {
                                             Container(
                                               // color: Colors.red,
                                               width: width * 60 / 100,
-                                              margin: EdgeInsets.fromLTRB(
+                                              margin: const EdgeInsets.fromLTRB(
                                                   8, 0, 0, 0),
                                               child: Text(
                                                 '${snapshot.data[index]['title']}',
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Color(0xFF000000),
                                                   fontFamily: 'Sarabun',
                                                   fontSize: 15,
@@ -178,12 +175,12 @@ class _WelfareListVertical extends State<WelfareListVertical> {
                                               ),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.fromLTRB(
+                                              margin: const EdgeInsets.fromLTRB(
                                                   8, 0, 0, 0),
                                               child: Text(
                                                 dateStringToDate(snapshot
                                                     .data[index]['createDate']),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Color(0xFF000000),
                                                   fontFamily: 'Sarabun',
                                                   fontSize: 10,
@@ -241,7 +238,7 @@ class _WelfareListVertical extends State<WelfareListVertical> {
       "limit": 2 // integer value type
     });
 
-    var client = new http.Client();
+    var client = http.Client();
     client.post(
         Uri.parse("http://hwpolice.we-builds.com/hwpolice-api/privilege/read"),
         body: body,

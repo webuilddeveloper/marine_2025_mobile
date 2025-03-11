@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 header(BuildContext? context, void Function() goBack, {String? title}) {
   return AppBar(
-    backgroundColor: Color(0xFFFF7900),
+    backgroundColor: const Color(0xFFFF7900),
     title: Row(
       children: [
         Image.asset(
           'assets/logo/logo.png',
           height: 50,
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(
             left: 10,
           ),

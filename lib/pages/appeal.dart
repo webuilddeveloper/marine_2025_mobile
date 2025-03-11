@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 import '../component/material/custom_alert_dialog.dart';
 import '../component/material/input_with_label.dart';
@@ -12,11 +11,11 @@ import '../widget/header.dart';
 import 'blank_page/toast_fail.dart';
 
 class Appeal extends StatefulWidget {
-  Appeal({super.key, this.menuModel, this.title, this.ticket_ID});
+  const Appeal({super.key, this.menuModel, this.title, this.ticketId});
 
   final dynamic menuModel;
   final String? title;
-  final String? ticket_ID;
+  final String? ticketId;
   @override
   AppealState createState() => AppealState();
 }
@@ -24,7 +23,7 @@ class Appeal extends StatefulWidget {
 class AppealState extends State<Appeal> {
   XFile? _image;
   List<dynamic> items = [];
-  List<String> _itemImage = [];
+  final List<String> _itemImage = [];
   String profileCode = '';
   String profileImageUrl = '';
   String profileFirstName = '';
@@ -321,8 +320,7 @@ class AppealState extends State<Appeal> {
                       child: Image.network(
                         _itemImage[index],
                         fit: BoxFit.cover,
-                        loadingBuilder: (context, child,
-                            loadingProgress) {
+                        loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
                           return Center(
                             child: CircularProgressIndicator(
@@ -494,15 +492,14 @@ class AppealState extends State<Appeal> {
 
   // .end
   Future<dynamic> dialogVerification() async {
-    print('--------${widget.ticket_ID}=======');
     String? profileCode = await storage.read(key: 'profileCode2');
     if (profileCode != '' && profileCode != null) {
       final result = await postObjectDataMW(
-          serverMW + 'tickerDispute/updateTicketDispute', {
+          '${serverMW}tickerDispute/updateTicketDispute', {
         'code': profileCode,
         'createBy': profileCode,
         'updateBy': profileCode,
-        'ticketNo': widget.ticket_ID
+        'ticketNo': widget.ticketId
       });
       if (result['status'] == 'S') {
         return showDialog(

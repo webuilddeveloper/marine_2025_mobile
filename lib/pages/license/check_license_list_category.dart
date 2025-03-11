@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../component/carousel_banner.dart';
-import '../../component/carousel_form.dart';
-import '../../component/link_url_in.dart';
 import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
 import 'check_license_list_category_vertical.dart';
 
 class CheckLicenseListCategory extends StatefulWidget {
-  CheckLicenseListCategory({super.key, this.title});
+  const CheckLicenseListCategory({super.key, this.title});
   final String? title;
   @override
-  _CheckLicenseListCategory createState() => _CheckLicenseListCategory();
+  CheckLicenseListCategoryState createState() =>
+      CheckLicenseListCategoryState();
 }
 
-class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
+class CheckLicenseListCategoryState extends State<CheckLicenseListCategory> {
   CheckLicenseListCategoryVertical? contact;
   bool hideSearch = true;
   final txtDescription = TextEditingController();
@@ -48,8 +45,6 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
     },
   ];
 
-  Future<dynamic>? _futureBanner;
-  Future<dynamic>? _futureCategoryContact;
   // final ScrollController _controller = ScrollController();
   @override
   void dispose() {
@@ -60,11 +55,6 @@ class _CheckLicenseListCategory extends State<CheckLicenseListCategory> {
 
   @override
   void initState() {
-    _futureCategoryContact =
-        post('${contactCategoryApi}read', {'skip': 0, 'limit': 999});
-
-    _futureBanner = post('${contactBannerApi}read', {'skip': 0, 'limit': 50});
-
     // _controller.addListener(_scrollListener);
     super.initState();
     // contact = new CheckLicenseListCategoryVertical(

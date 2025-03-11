@@ -8,7 +8,7 @@ import '../../shared/api_provider.dart';
 
 // ignore: must_be_immutable
 class WarningForm extends StatefulWidget {
-  WarningForm({
+  const WarningForm({
     super.key,
     this.url,
     this.code,
@@ -24,14 +24,14 @@ class WarningForm extends StatefulWidget {
   final String? urlGallery;
 
   @override
-  _WarningForm createState() => _WarningForm();
+  WarningFormState createState() => WarningFormState();
 }
 
-class _WarningForm extends State<WarningForm> {
+class WarningFormState extends State<WarningForm> {
   Comment? comment;
   int? _limit;
 
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   void _onLoading() async {
@@ -47,7 +47,7 @@ class _WarningForm extends State<WarningForm> {
       );
     });
 
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
 
     _refreshController.loadComplete();
   }
@@ -82,7 +82,7 @@ class _WarningForm extends State<WarningForm> {
         child: SmartRefresher(
           enablePullDown: false,
           enablePullUp: true,
-          footer: ClassicFooter(
+          footer: const ClassicFooter(
             loadingText: ' ',
             canLoadingText: ' ',
             idleText: ' ',

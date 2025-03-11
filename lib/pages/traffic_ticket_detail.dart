@@ -49,7 +49,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
       appBar: header(context, () {
         Navigator.pop(context);
       }, title: 'รายละเอียดใบสั่ง'),
-      backgroundColor: Color(0xFFF5F8FB),
+      backgroundColor: const Color(0xFFF5F8FB),
       body: _futureBuilder(),
     );
   }
@@ -59,10 +59,11 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
       future: futureModel, // function where you call your api
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.data.length > 0)
+          if (snapshot.data.length > 0) {
             return _screen(snapshot.data[0]);
-          else
+          } else {
             return Container();
+          }
         } else if (snapshot.hasError) {
           return Container();
         } else {
@@ -80,9 +81,9 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
             height: 40,
             width: double.infinity,
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            color: Color(0xFFEDF0F3),
-            child: Text(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            color: const Color(0xFFEDF0F3),
+            child: const Text(
               'รายละเอียดใบสั่ง',
               style: TextStyle(
                 fontFamily: 'Sarabun',
@@ -158,20 +159,23 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
             title: 'เลขที่ใบอนุญาตขับขี่',
             value: model['card_ID'],
           ),
-          SizedBox(height: 25),
+          const SizedBox(height: 25),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
                 onTap: () {
                   List<ImageProvider> photos = [];
-                  if (model['pic1'] != null && model['pic1'] != '')
+                  if (model['pic1'] != null && model['pic1'] != '') {
                     photos.add(NetworkImage(model['pic1']));
-                  if (model['pic2'] != null && model['pic2'] != '')
+                  }
+                  if (model['pic2'] != null && model['pic2'] != '') {
                     photos.add(NetworkImage(model['pic2']));
-                  if (model['pic3'] != null && model['pic3'] != '')
+                  }
+                  if (model['pic3'] != null && model['pic3'] != '') {
                     photos.add(NetworkImage(model['pic3']));
-                  if (photos.length > 0) {
+                  }
+                  if (photos.isNotEmpty) {
                     showCupertinoDialog(
                       context: context,
                       builder: (context) {
@@ -198,10 +202,11 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 0,
                           blurRadius: 2,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ]),
-                  child: Text(
+                  child: const Text(
                     'ดูรูปการกระทำความผิด',
                     style: TextStyle(
                       fontFamily: 'Sarabun',
@@ -211,7 +216,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                   ),
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -228,17 +233,18 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                   alignment: Alignment.center,
                   // margin: EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                      color: Color(0xFFEBC22B),
+                      color: const Color(0xFFEBC22B),
                       borderRadius: BorderRadius.circular(5),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 0,
                           blurRadius: 2,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ]),
-                  child: Text(
+                  child: const Text(
                     'ชำระค่าปรับ',
                     style: TextStyle(
                       fontFamily: 'Sarabun',
@@ -250,7 +256,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
               )
             ],
           ),
-          SizedBox(height: 80),
+          const SizedBox(height: 80),
           InkWell(
             onTap: () {
               showDialog(
@@ -260,7 +266,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                 },
               );
             },
-            child: Text(
+            child: const Text(
               'ยื่นอุทธรณ์',
               style: TextStyle(
                 fontFamily: 'Sarabun',
@@ -270,7 +276,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
               ),
             ),
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
         ],
       ),
     );
@@ -286,10 +292,10 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
     double spaceBetween = 15,
   }) {
     return Container(
-      constraints: BoxConstraints(minHeight: 35),
+      constraints: const BoxConstraints(minHeight: 35),
       width: double.infinity,
       color: Colors.white,
-      padding: EdgeInsets.only(left: 15, right: 15, bottom: 5),
+      padding: const EdgeInsets.only(left: 15, right: 15, bottom: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -322,13 +328,13 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
 
   dialogVerification(dynamic model) {
     return CustomAlertDialog(
-      contentPadding: EdgeInsets.all(0),
+      contentPadding: const EdgeInsets.all(0),
       content: Container(
         width: 345,
         height: 280,
-        decoration: new BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.rectangle,
-          color: const Color(0xFFFFFF),
+          color: Color(0x00ffffff),
         ),
         child: Container(
           decoration: BoxDecoration(
@@ -337,8 +343,8 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
           ),
           child: Column(
             children: [
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'การยื่นเรื่องยื่นอุทธรณ์',
                 style: TextStyle(
                   fontFamily: 'Sarabun',
@@ -347,7 +353,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                   color: Color(0xFF6F267B),
                 ),
               ),
-              Text(
+              const Text(
                 '(กรุณาเลือกเรื่องยื่นอุทธรณ์)',
                 style: TextStyle(
                   fontFamily: 'Sarabun',
@@ -355,7 +361,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                   color: Color(0xFF414141),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -368,7 +374,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                           MaterialPageRoute(
                             builder: (context) => Appeal(
                               title: 'ทะเบียนรถในใบสั่งไม่ตรงกับรถของท่าน',
-                              ticket_ID: model['ticket_ID'],
+                              ticketId: model['ticket_ID'],
                             ),
                           ),
                         );
@@ -376,9 +382,9 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                       child: Container(
                         height: 169,
                         width: 150,
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Color(0xFF6F267B),
+                          color: const Color(0xFF6F267B),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Column(
@@ -390,7 +396,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                               width: 40,
                               color: Colors.white,
                             ),
-                            Text(
+                            const Text(
                               'ทะเบียนรถในใบสั่งไม่ตรงกับรถของท่าน',
                               style: TextStyle(
                                 fontFamily: 'Sarabun',
@@ -403,7 +409,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: InkWell(
                       onTap: () {
@@ -413,16 +419,16 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                           MaterialPageRoute(
                             builder: (context) => Appeal(
                                 title: 'รถที่ปรากฏตามใบสั่งไม่ใช่รถของท่าน',
-                                ticket_ID: model['ticket_ID']),
+                                ticketId: model['ticket_ID']),
                           ),
                         );
                       },
                       child: Container(
                         height: 169,
                         width: 150,
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Color(0xFF707070),
+                          color: const Color(0xFF707070),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Column(
@@ -434,7 +440,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                               width: 40,
                               color: Colors.white,
                             ),
-                            Text(
+                            const Text(
                               'รถที่ปรากฏตามใบสั่งไม่ใช่รถของท่าน',
                               style: TextStyle(
                                 fontFamily: 'Sarabun',

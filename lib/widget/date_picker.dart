@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as datatTimePicker;
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
+    as datatTimePicker;
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
 
 datePicker(
@@ -88,11 +89,7 @@ dialogOpenPickerDate(BuildContext context, TextEditingController controller) {
     //     date.year.toString() +
     //     date.month.toString() +
     //     date.day.toString());
-    controller.text = date.day.toString() +
-        '-' +
-        date.month.toString() +
-        '-' +
-        date.year.toString();
+    controller.text = '${date.day}-${date.month}-${date.year}';
     // controller.text = dateFormatGlobal(
     //     date.year.toString() + date.month.toString() + date.day.toString());
   },
