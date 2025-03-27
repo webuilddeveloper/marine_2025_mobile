@@ -27,6 +27,8 @@ import 'pages/news/news_form.dart';
 import 'pages/news/news_list.dart';
 import 'shared/api_provider.dart';
 import 'package:intl/intl.dart';
+
+import 'dart:math'; // สำหรับ pi
 // import 'component/carousel_rotation.dart';
 
 // ignore: must_be_immutable
@@ -256,7 +258,7 @@ class HomePageState extends State<HomePage> {
     final Uri qrUri = Uri(
       scheme: "http",
       host: "gateway.we-builds.com",
-      path: "security_information.html",
+      path: "marine_information.html",
       queryParameters: data
           .map<String, String?>((k, v) => MapEntry(k.toString(), v?.toString()))
         ..removeWhere((_, v) => v == null),
@@ -270,49 +272,136 @@ class HomePageState extends State<HomePage> {
   Widget _buildProfileDetails(dynamic data, Uri qrUri) {
     return Row(
       children: [
-        SizedBox(
-            height: 60,
-            width: 60,
-            child: checkAvatar(context, data['imageUrl'])),
-        const SizedBox(width: 20),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '${data['firstName'] ?? ''} ${data['lastName'] ?? ''}',
-                style: const TextStyle(
-                    fontSize: 18.0,
-                    color: Color(0xFF0C387D),
-                    fontWeight: FontWeight.bold),
+        GestureDetector(
+          onTap: () {
+            _buildVirtualCard(context, data);
+          },
+          child: Container(
+            width: 200,
+            height: 125,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFFB0D0F0),
+                  Color(0xFF0C387D), // สีน้ำเงินเข้ม
+                  Color(0xFF4F79C0), // สีฟ้ากลาง
+                  Color(0xFFB0D0F0), // สีฟ้าอ่อน
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF0C387D), // พื้นหลังสีน้ำเงินเข้ม
-                  borderRadius: BorderRadius.circular(50), // มุมโค้งมน
-                ),
-                child: const Text(
-                  'ใบอนุญาตกัปตันเรือ',
-                  style: TextStyle(
-                    fontSize: 14.0, // ลดขนาดลงเล็กน้อยให้พอดีกรอบ
-                    color: Colors
-                        .white, // เปลี่ยนสีตัวอักษรเป็นขาวให้ตัดกับพื้นหลัง
-                    fontWeight: FontWeight.bold,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: Colors.blueGrey.shade100, // 🔲 เส้นขอบสีดำ
+                width: 1.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  blurRadius: 6,
+                  offset: const Offset(0, 4),
+                )
+              ],
+            ),
+            child: Stack(
+              children: [
+                // 🎨 รูปพื้นหลังซ้ายบน (เล็กลง + จาง)
+                Positioned(
+                  top: 0,
+                  left: 20,
+                  child: Opacity(
+                    opacity: 0.2,
+                    child: Image.asset(
+                      'assets/bg_virtual_card.png',
+                      width: 150,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
-              )
-            ],
+
+                // 🧾 เนื้อหาหลัก
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: checkAvatar(context, data['imageUrl']),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${data['firstName'] ?? ''} ${data['lastName'] ?? ''}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1, // ✅ จำกัด 1 บรรทัด
+                              overflow: TextOverflow.ellipsis, // ✅ ขึ้น ...
+                            ),
+                            const SizedBox(height: 4),
+                            const Text(
+                              'กัปตันเรือ',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.white70,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            SizedBox(
+                              height: 28,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  minimumSize: const Size(0, 28),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    side: const BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  _buildVirtualCard(context, data);
+                                },
+                                child: const Text(
+                                  'ดูข้อมูลบัตร',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-        const SizedBox(width: 10),
+
+        const SizedBox(width: 50),
         const VerticalDivider(thickness: 1, color: Color(0xFFD5E7D7)),
-        const SizedBox(width: 10),
+        const SizedBox(width: 30),
+
+        // 📱 QR code ด้านขวา
         GestureDetector(
-          onTap: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MyQrCode(model: data))),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MyQrCode(model: data)),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -325,14 +414,159 @@ class HomePageState extends State<HomePage> {
               const Text(
                 'My QR',
                 style: TextStyle(
-                    fontSize: 11.0,
-                    color: Color(0xFF0C387D),
-                    fontWeight: FontWeight.w500),
+                  fontSize: 11.0,
+                  color: Color(0xFF0C387D),
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+
+  void _buildVirtualCard(BuildContext context, dynamic data) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'ปิดการ์ด',
+      barrierColor: Colors.black.withOpacity(0.8),
+      builder: (context) {
+        final screenWidth = MediaQuery.of(context).size.width;
+        final screenHeight = MediaQuery.of(context).size.height;
+
+        return RotatedBox(
+          quarterTurns: 1, // หมุน layout ทั้งหมด 90 องศา (ตามเข็ม)
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              width: screenWidth,
+              height: screenHeight,
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xFFB0D0F0),
+                    Color(0xFF0C387D),
+                    Color(0xFF4F79C0),
+                    Color(0xFFB0D0F0),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                image: const DecorationImage(
+                  image: AssetImage('assets/bg_virtual_card.png'),
+                  alignment: Alignment.topRight,
+                  fit: BoxFit.contain,
+                  opacity: 0.08,
+                ),
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: Colors.blueGrey.shade100,
+                  width: 1.5,
+                ),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(60),
+                      child: SizedBox(
+                        height: 150,
+                        width: 150,
+                        child: checkAvatar(context, data['imageUrl']),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${data['firstName'] ?? ''} ${data['lastName'] ?? ''}',
+                          style: const TextStyle(
+                            fontSize: 28,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: 38,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              minimumSize: const Size(0, 28),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                side: const BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              'กัปตันเรือ',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 22),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          children: [
+                            const Icon(Icons.badge,
+                                size: 20, color: Colors.white70),
+                            const SizedBox(width: 10),
+                            Flexible(
+                              child: Text(
+                                'เลขที่ใบอนุญาต: 1916-6-5432-1',
+                                style: const TextStyle(
+                                  fontSize: 28,
+                                  color: Colors.white70,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+                        Row(
+                          children: [
+                            const Icon(Icons.calendar_today,
+                                size: 20, color: Colors.white70),
+                            const SizedBox(width: 10),
+                            Flexible(
+                              child: Text(
+                                'หมดอายุ: 26 เม.ย. 2570',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white70,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

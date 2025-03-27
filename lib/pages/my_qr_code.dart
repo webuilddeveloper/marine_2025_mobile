@@ -56,7 +56,7 @@ class _MyQrCode extends State<MyQrCode> {
     final Uri qrUri = Uri(
       scheme: "http",
       host: "gateway.we-builds.com",
-      path: "security_information.html",
+      path: "marine_information.html",
       queryParameters: queryParameters,
     );
 
