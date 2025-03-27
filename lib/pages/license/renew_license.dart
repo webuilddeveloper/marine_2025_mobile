@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
@@ -852,16 +852,16 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
   _imageFromFile(String type) async {
     requestPermissions();
 
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
-    );
+    // FilePickerResult? result = await FilePicker.platform.pickFiles(
+    //   type: FileType.custom,
+    //   allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+    // );
 
-    if (result != null && result.files.single.path != null) {
-      setState(() {
-        _image = XFile(result.files.single.path!);
-      });
-    }
+    // if (result != null && result.files.single.path != null) {
+    //   setState(() {
+    //     _image = XFile(result.files.single.path!);
+    //   });
+    // }
     _upload(type);
   }
 

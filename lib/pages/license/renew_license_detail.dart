@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -82,7 +82,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                     fontFamily: 'Kanit',
                     fontWeight: FontWeight.bold,
                   ),
-                ),                
+                ),
                 SizedBox(height: 20),
                 Padding(
                   padding: EdgeInsets.only(left: 20),
@@ -92,7 +92,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                       Expanded(
                         flex: 1,
                         child: Text(
-                           widget.model['description'],
+                          widget.model['description'],
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 16.0,
@@ -102,11 +102,10 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                           ),
                         ),
                       ),
-                     
                     ],
                   ),
                 ),
-                 SizedBox(height: 20),
+                SizedBox(height: 20),
                 Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: Row(
