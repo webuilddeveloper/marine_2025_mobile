@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as datatTimePicker;
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
+    as datatTimePicker;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 
@@ -21,7 +22,6 @@ class IDCardVerification extends StatefulWidget {
 
 class _IDCardVerificationPageState extends State<IDCardVerification> {
   final storage = new FlutterSecureStorage();
-  final _formKey = GlobalKey<FormState>();
 
   DateTime selectedDate = DateTime.now();
   TextEditingController idCard = new TextEditingController();

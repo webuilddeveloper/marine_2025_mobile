@@ -1,12 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:marine_mobile/widget/text_form_field.dart';
-
-import '../../component/carousel_banner.dart';
-import '../../component/carousel_form.dart';
-import '../../component/link_url_in.dart';
-import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
-import 'check_license_list_category_vertical.dart';
 
 class CheckLicenseDetail extends StatefulWidget {
   CheckLicenseDetail({super.key, this.model});
@@ -22,7 +14,6 @@ class _CheckLicenseDetail extends State<CheckLicenseDetail> {
   String? category;
 
   final txtLicense = TextEditingController();
-  dynamic _model = {};
 
   @override
   void dispose() {

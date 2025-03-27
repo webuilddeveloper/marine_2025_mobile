@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../pages/traffic_ticket.dart';
@@ -41,7 +39,6 @@ class _VerifyTicket extends State<VerifyTicket> {
           //   return _buildCardNotRegister();
           // } else if (snapshot.hasError) {
           //   return BlankLoading();
-
         } else {
           return _buildCard();
         }
@@ -58,103 +55,6 @@ class _VerifyTicket extends State<VerifyTicket> {
           leftItem(),
           rightItem(notVerifyLenght),
         ],
-      ),
-    );
-  }
-
-  _buildCardNotRegister() {
-    return Expanded(
-      child: Container(
-        height: 118,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFFFFC200),
-              Color(0xFFFF8E00),
-            ],
-            begin: Alignment.centerRight,
-            // end: new Alignment(1, 0.0),
-            end: Alignment.centerLeft,
-          ),
-        ),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xFFFF8E00),
-                          Color(0xFFFFC200),
-                        ],
-                        begin: Alignment.centerRight,
-                        // end: new Alignment(1, 0.0),
-                        end: Alignment.centerLeft,
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'ตรวจสอบใบสั่งย้อนหลัง',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24.0,
-                            fontFamily: 'Sarabun',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'ท่านไม่สามารถใช้เมนูนี้ได้',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.0,
-                            fontFamily: 'Sarabun',
-                          ),
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'กรุณายืนยันตัวตร เพื่อเชื่อมต่อข้อมูล',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.0,
-                            fontFamily: 'Sarabun',
-                          ),
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10.0),
-              // padding: EdgeInsets.all(5),
-              height: 30,
-              width: 32,
-              decoration: BoxDecoration(
-                // color: Colors.transparent,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-              ),
-              child: Image.asset(
-                'assets/icons/traffic_ticket_icon.png',
-                // color: Color(0xFFFFC200),
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

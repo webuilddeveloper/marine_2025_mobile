@@ -1,13 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as datatTimePicker;
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
+    as datatTimePicker;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../shared/api_provider.dart';
 import '../../widget/header.dart';
@@ -193,7 +191,9 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                                     padding: const EdgeInsets.all(10.0),
                                     child: Image.asset(
                                       'assets/images/user_not_found.png',
-                                      color: Theme.of(context).colorScheme.secondary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                   ),
                           ),
@@ -354,29 +354,29 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
         }
 
         setState(() {
-          _imageUrl = result['objectData'][0]['imageUrl'] ?? '';
-          txtFirstName.text = result['objectData'][0]['firstName'] ?? '';
-          txtLastName.text = result['objectData'][0]['lastName'] ?? '';
-          txtEmail.text = result['objectData'][0]['email'] ?? '';
-          txtPhone.text = result['objectData'][0]['phone'] ?? '';
+          _imageUrl = result['objectData'][0]['imageUrl'];
+          txtFirstName.text = result['objectData'][0]['firstName'];
+          txtLastName.text = result['objectData'][0]['lastName'];
+          txtEmail.text = result['objectData'][0]['email'];
+          txtPhone.text = result['objectData'][0]['phone'];
           // _selectedPrefixName = result['objectData'][0]['prefixName'];
-          _code = result['objectData'][0]['code'] ?? '';
-          txtPhone.text = result['objectData'][0]['phone'] ?? '';
-          txtUsername.text = result['objectData'][0]['username'] ?? '';
-          txtIdCard.text = result['objectData'][0]['idcard'] ?? '';
-          txtLineID.text = result['objectData'][0]['lineID'] ?? '';
-          txtOfficerCode.text = result['objectData'][0]['officerCode'] ?? '';
-          txtAddress.text = result['objectData'][0]['address'] ?? '';
-          txtMoo.text = result['objectData'][0]['moo'] ?? '';
-          txtSoi.text = result['objectData'][0]['soi'] ?? '';
-          txtRoad.text = result['objectData'][0]['road'] ?? '';
-          txtPrefixName.text = result['objectData'][0]['prefixName'] ?? '';
+          _code = result['objectData'][0]['code'];
+          txtPhone.text = result['objectData'][0]['phone'];
+          txtUsername.text = result['objectData'][0]['username'];
+          txtIdCard.text = result['objectData'][0]['idcard'];
+          txtLineID.text = result['objectData'][0]['lineID'];
+          txtOfficerCode.text = result['objectData'][0]['officerCode'];
+          txtAddress.text = result['objectData'][0]['address'];
+          txtMoo.text = result['objectData'][0]['moo'];
+          txtSoi.text = result['objectData'][0]['soi'];
+          txtRoad.text = result['objectData'][0]['road'];
+          txtPrefixName.text = result['objectData'][0]['prefixName'];
 
-          _selectedProvince = result['objectData'][0]['provinceCode'] ?? '';
-          _selectedDistrict = result['objectData'][0]['amphoeCode'] ?? '';
-          _selectedSubDistrict = result['objectData'][0]['tambonCode'] ?? '';
-          _selectedPostalCode = result['objectData'][0]['postnoCode'] ?? '';
-          _selectedSex = result['objectData'][0]['sex'] ?? '';
+          _selectedProvince = result['objectData'][0]['provinceCode'];
+          _selectedDistrict = result['objectData'][0]['amphoeCode'];
+          _selectedSubDistrict = result['objectData'][0]['tambonCode'];
+          _selectedPostalCode = result['objectData'][0]['postnoCode'];
+          _selectedSex = result['objectData'][0]['sex'];
         });
       }
       if (_selectedProvince != '') {
@@ -414,29 +414,29 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
     }
 
     setState(() {
-      _imageUrl = model[0]['imageUrl'] ?? '';
-      txtFirstName.text = model[0]['firstName'] ?? '';
-      txtLastName.text = model[0]['lastName'] ?? '';
-      txtEmail.text = model[0]['email'] ?? '';
-      txtPhone.text = model[0]['phone'] ?? '';
+      _imageUrl = model[0]['imageUrl'];
+      txtFirstName.text = model[0]['firstName'];
+      txtLastName.text = model[0]['lastName'];
+      txtEmail.text = model[0]['email'];
+      txtPhone.text = model[0]['phone'];
       // _selectedPrefixName = result['objectData'][0]['prefixName'];
-      _code = model[0]['code'] ?? '';
-      txtPhone.text = model[0]['phone'] ?? '';
-      txtUsername.text = model[0]['username'] ?? '';
-      txtIdCard.text = model[0]['idcard'] ?? '';
-      txtLineID.text = model[0]['lineID'] ?? '';
-      txtOfficerCode.text = model[0]['officerCode'] ?? '';
-      txtAddress.text = model[0]['address'] ?? '';
-      txtMoo.text = model[0]['moo'] ?? '';
-      txtSoi.text = model[0]['soi'] ?? '';
-      txtRoad.text = model[0]['road'] ?? '';
-      txtPrefixName.text = model[0]['prefixName'] ?? '';
+      _code = model[0]['code'];
+      txtPhone.text = model[0]['phone'];
+      txtUsername.text = model[0]['username'];
+      txtIdCard.text = model[0]['idcard'];
+      txtLineID.text = model[0]['lineID'];
+      txtOfficerCode.text = model[0]['officerCode'];
+      txtAddress.text = model[0]['address'];
+      txtMoo.text = model[0]['moo'];
+      txtSoi.text = model[0]['soi'];
+      txtRoad.text = model[0]['road'];
+      txtPrefixName.text = model[0]['prefixName'];
 
-      _selectedProvince = model[0]['provinceCode'] ?? '';
-      _selectedDistrict = model[0]['amphoeCode'] ?? '';
-      _selectedSubDistrict = model[0]['tambonCode'] ?? '';
-      _selectedPostalCode = model[0]['postnoCode'] ?? '';
-      _selectedSex = model[0]['sex'] ?? '';
+      _selectedProvince = model[0]['provinceCode'];
+      _selectedDistrict = model[0]['amphoeCode'];
+      _selectedSubDistrict = model[0]['tambonCode'];
+      _selectedPostalCode = model[0]['postnoCode'];
+      _selectedSex = model[0]['sex'];
     });
 
     // if (_selectedProvince != '') {
@@ -518,13 +518,13 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
   Future<dynamic> submitUpdateUser() async {
     var value = await storage.read(key: 'dataUserLoginDDPM');
     var user = json.decode(value!);
-    user['imageUrl'] = _imageUrl ?? '';
-    // user['prefixName'] = _selectedPrefixName ?? '';
-    user['prefixName'] = txtPrefixName.text ?? '';
-    user['firstName'] = txtFirstName.text ?? '';
-    user['lastName'] = txtLastName.text ?? '';
-    user['email'] = txtEmail.text ?? '';
-    user['phone'] = txtPhone.text ?? '';
+    user['imageUrl'] = _imageUrl;
+    // user['prefixName'] = _selectedPrefixName ;
+    user['prefixName'] = txtPrefixName.text;
+    user['firstName'] = txtFirstName.text;
+    user['lastName'] = txtLastName.text;
+    user['email'] = txtEmail.text;
+    user['phone'] = txtPhone.text;
 
     user['birthDay'] = DateFormat("yyyyMMdd").format(
       DateTime(
@@ -533,21 +533,21 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
         _selectedDay,
       ),
     );
-    user['sex'] = _selectedSex ?? '';
-    user['address'] = txtAddress.text ?? '';
-    user['soi'] = txtSoi.text ?? '';
-    user['moo'] = txtMoo.text ?? '';
-    user['road'] = txtRoad.text ?? '';
+    user['sex'] = _selectedSex;
+    user['address'] = txtAddress.text;
+    user['soi'] = txtSoi.text;
+    user['moo'] = txtMoo.text;
+    user['road'] = txtRoad.text;
     user['tambon'] = '';
     user['amphoe'] = '';
     user['province'] = '';
     user['postno'] = '';
-    user['tambonCode'] = _selectedSubDistrict ?? '';
-    user['amphoeCode'] = _selectedDistrict ?? '';
-    user['provinceCode'] = _selectedProvince ?? '';
-    user['postnoCode'] = _selectedPostalCode ?? '';
-    user['idcard'] = txtIdCard.text ?? '';
-    user['officerCode'] = txtOfficerCode.text ?? '';
+    user['tambonCode'] = _selectedSubDistrict;
+    user['amphoeCode'] = _selectedDistrict;
+    user['provinceCode'] = _selectedProvince;
+    user['postnoCode'] = _selectedPostalCode;
+    user['idcard'] = txtIdCard.text;
+    user['officerCode'] = txtOfficerCode.text;
     user['linkAccount'] =
         user['linkAccount'] != null ? user['linkAccount'] : '';
     user['appleID'] = user['appleID'] != null ? user['appleID'] : "";
@@ -669,18 +669,18 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
 
     if (user['code'] != '') {
       setState(() {
-        _imageUrl = user['imageUrl'] ?? '';
-        txtFirstName.text = user['firstName'] ?? '';
-        txtLastName.text = user['lastName'] ?? '';
-        txtEmail.text = user['email'] ?? '';
-        txtPhone.text = user['phone'] ?? '';
+        _imageUrl = user['imageUrl'];
+        txtFirstName.text = user['firstName'];
+        txtLastName.text = user['lastName'];
+        txtEmail.text = user['email'];
+        txtPhone.text = user['phone'];
         txtPrefixName.text = user['prefixName'];
-        txtPrefixName.text = user['prefixName'] ?? '';
+        txtPrefixName.text = user['prefixName'];
         _code = user['code'];
-        _selectedProvince = user['provinceCode'] ?? '';
-        _selectedDistrict = user['amphoeCode'] ?? '';
-        _selectedSubDistrict = user['tambonCode'] ?? '';
-        _selectedPostalCode = user['postnoCode'] ?? '';
+        _selectedProvince = user['provinceCode'];
+        _selectedDistrict = user['amphoeCode'];
+        _selectedSubDistrict = user['tambonCode'];
+        _selectedPostalCode = user['postnoCode'];
       });
 
       if (user['birthDay'] != '') {
@@ -921,7 +921,8 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color(0xFFC5DAFC),
-                    contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                     hintText: "วันเดือนปีเกิด",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),

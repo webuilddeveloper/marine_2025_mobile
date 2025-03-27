@@ -4,9 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'dart:ui';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as GMap;
-import 'package:url_launcher/url_launcher.dart';
 
 import '../shared/api_provider.dart';
 import '../shared/extension.dart';
@@ -61,8 +59,9 @@ class _ContentReporter extends State<ContentReporter> {
       for (var item in result['objectData']) {
         data.add(item['imageUrl']);
 
-        dataPro.add(
-            item['imageUrl'] != null ? NetworkImage(item['imageUrl']) : NetworkImage(""));
+        dataPro.add(item['imageUrl'] != null
+            ? NetworkImage(item['imageUrl'])
+            : NetworkImage(""));
       }
       setState(() {
         urlImage = data;
@@ -149,9 +148,8 @@ class _ContentReporter extends State<ContentReporter> {
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: '${model['imageUrlCreateBy']}' != null
-                        ? NetworkImage('${model['imageUrlCreateBy']}')
-                        : null,
+                    backgroundImage:
+                        NetworkImage('${model['imageUrlCreateBy']}'),
                     // child: Image.network(
                     //     '${snapshot.data[0]['imageUrlCreateBy']}'),
                   ),
@@ -197,12 +195,11 @@ class _ContentReporter extends State<ContentReporter> {
             left: 10,
           ),
           child: new Html(
-            data: model['description'],
-            onLinkTap: (url, context, attributes) {
-              // ignore: deprecated_member_use
-                    launch(url!);
-                  }
-          ),
+              data: model['description'],
+              onLinkTap: (url, context, attributes) {
+                // ignore: deprecated_member_use
+                launch(url!);
+              }),
 
           // HtmlView(
           //   data: model['description'],
@@ -248,7 +245,8 @@ class _ContentReporter extends State<ContentReporter> {
         GMap.Marker(
           markerId: GMap.MarkerId('1'),
           position: GMap.LatLng(lat, lng),
-          icon: GMap.BitmapDescriptor.defaultMarkerWithHue(GMap.BitmapDescriptor.hueRed),
+          icon: GMap.BitmapDescriptor.defaultMarkerWithHue(
+              GMap.BitmapDescriptor.hueRed),
         ),
       ].toSet(),
     );

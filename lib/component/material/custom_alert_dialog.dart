@@ -159,7 +159,7 @@ class CustomAlertDialog extends StatelessWidget {
     this.contentPadding = const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 24.0),
     this.actions,
     this.semanticLabel,
-  })  : assert(contentPadding != null);
+  }) : assert(contentPadding != null);
 
   /// The (optional) title of the dialog is displayed in a large font at the top
   /// of the dialog.
@@ -246,11 +246,8 @@ class CustomAlertDialog extends StatelessWidget {
           label = semanticLabel ??
               MaterialLocalizations.of(context).alertDialogLabel;
         case TargetPlatform.linux:
-          // TODO: Handle this case.
         case TargetPlatform.macOS:
-          // TODO: Handle this case.
         case TargetPlatform.windows:
-          // TODO: Handle this case.
       }
     }
 
@@ -269,7 +266,7 @@ class CustomAlertDialog extends StatelessWidget {
     if (actions != null) {
       children.add(ButtonTheme.fromButtonThemeData(
         data: ButtonThemeData(),
-        child: new ButtonBar(
+        child: new OverflowBar(
           children: actions!,
         ),
       ));
@@ -431,8 +428,7 @@ class SimpleDialog extends StatelessWidget {
     this.children,
     this.contentPadding = const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
     this.semanticLabel,
-  })  : assert(titlePadding != null),
-        assert(contentPadding != null);
+  });
 
   /// The (optional) title of the dialog is displayed in a large font at the top
   /// of the dialog.
@@ -506,11 +502,8 @@ class SimpleDialog extends StatelessWidget {
           label =
               semanticLabel ?? MaterialLocalizations.of(context).dialogLabel;
         case TargetPlatform.linux:
-          // TODO: Handle this case.
         case TargetPlatform.macOS:
-          // TODO: Handle this case.
         case TargetPlatform.windows:
-          // TODO: Handle this case.
       }
     }
 
@@ -551,8 +544,7 @@ class _DialogRoute<T> extends PopupRoute<T> {
     this.barrierLabel,
     @required this.child,
     RouteSettings? settings,
-  })  : assert(barrierDismissible != null),
-        _barrierDismissible = barrierDismissible,
+  })  : _barrierDismissible = barrierDismissible,
         super(settings: settings);
 
   final Widget? child;
@@ -626,14 +618,13 @@ class _DialogRoute<T> extends PopupRoute<T> {
 ///  * [Dialog], on which [SimpleDialog] and [AlertDialog] are based.
 ///  * <https://material.google.com/components/dialogs.html>
 Future<T?> customShowDialog<T>({
-  @required
-      BuildContext? context,
+  @required BuildContext? context,
   bool barrierDismissible = true,
   @Deprecated(
       'Instead of using the "child" argument, return the child from a closure '
       'provided to the "builder" argument. This will ensure that the BuildContext '
       'is appropriate for widgets built in the dialog.')
-      Widget? child,
+  Widget? child,
   WidgetBuilder? builder,
 }) {
   assert(child == null || builder == null);

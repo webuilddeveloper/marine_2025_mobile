@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -159,15 +158,15 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
       "description": txtDescription.text,
       "enDescription": txtDescription.text,
       "category": widget.code,
-      "latitude": latitude.toString() ?? '',
-      "longitude": longitude.toString() ?? '',
-      "createBy": user['username'] ?? '',
-      "firstName": user['firstName'] ?? '',
-      "lastName": user['lastName'] ?? '',
-      "imageUrlCreateBy": user['imageUrl'] ?? '',
-      "imageUrl": widget.imageUrl ?? '',
+      "latitude": latitude.toString(),
+      "longitude": longitude.toString(),
+      "createBy": user['username'],
+      "firstName": user['firstName'],
+      "lastName": user['lastName'],
+      "imageUrlCreateBy": user['imageUrl'],
+      "imageUrl": widget.imageUrl,
       "gallery": _itemImage,
-      "province": currentLocation ?? '',
+      "province": currentLocation,
       "lv0": user['lv0'],
       "lv1": user['lv1'],
       "lv2": user['lv2'],
@@ -340,6 +339,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                 if (model!.isEmpty) {
                   return 'กรุณากรอกรายละเอียด.';
                 }
+                return null;
               },
               controller: txtDescription,
               enabled: true,
@@ -530,9 +530,9 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                                           Navigator.of(context).pop();
                                         },
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color(0xFFFF7514),
+                                          backgroundColor:
+                                              const Color(0xFFFF7514),
                                         ),
-                                        
                                         child: const Text(
                                           'ตกลง',
                                           style: TextStyle(

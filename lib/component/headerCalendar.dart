@@ -1,14 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-headerCalendar(
-  BuildContext context,
-  Function functionGoBack,
-  bool showCalendar, {
-  String title = '',
-  Function? rightButton,
-  bool showLeading = true
-}) {
+headerCalendar(BuildContext context, Function functionGoBack, bool showCalendar,
+    {String title = '', Function? rightButton, bool showLeading = true}) {
   return AppBar(
     centerTitle: true,
     flexibleSpace: Container(
@@ -28,7 +21,7 @@ headerCalendar(
     titleSpacing: 5,
     automaticallyImplyLeading: false,
     title: Text(
-      title != null ? title : '',
+      title,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 15,

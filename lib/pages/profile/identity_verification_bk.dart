@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../shared/api_provider.dart';
@@ -25,7 +23,6 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
   final storage = new FlutterSecureStorage();
 
   String? _imageUrl;
-  String? _code;
   String? _username;
 
   final _formKey = GlobalKey<FormState>();
@@ -50,8 +47,6 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
   List<dynamic> _itemPostalCode = [];
   String? _selectedPostalCode;
 
-  List<dynamic> _itemOrganizationLv0 = [];
-
   final txtEmail = TextEditingController();
   final txtPassword = TextEditingController();
   final txtConPassword = TextEditingController();
@@ -72,8 +67,6 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
   TextEditingController txtDate = TextEditingController();
 
   Future<dynamic>? _futureProfile;
-
-  XFile? _image;
 
   int _selectedDay = 0;
   int _selectedMonth = 0;
@@ -204,26 +197,25 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
       _imageUrl = model[0]['imageUrl'];
       txtFirstName.text = model[0]['firstName'];
       txtLastName.text = model[0]['lastName'];
-      txtEmail.text = model[0]['email'] ?? '';
-      txtPhone.text = model[0]['phone'] ?? '';
+      txtEmail.text = model[0]['email'];
+      txtPhone.text = model[0]['phone'];
       // _selectedPrefixName = result['objectData'][0]['prefixName'];
-      _code = model[0]['code'] ?? '';
-      txtPhone.text = model[0]['phone'] ?? '';
-      txtUsername.text = model[0]['username'] ?? '';
-      txtIdCard.text = model[0]['idcard'] ?? '';
-      txtLineID.text = model[0]['lineID'] ?? '';
-      txtOfficerCode.text = model[0]['officerCode'] ?? '';
-      txtAddress.text = model[0]['address'] ?? '';
-      txtMoo.text = model[0]['moo'] ?? '';
-      txtSoi.text = model[0]['soi'] ?? '';
-      txtRoad.text = model[0]['road'] ?? '';
-      txtPrefixName.text = model[0]['prefixName'] ?? '';
+      txtPhone.text = model[0]['phone'];
+      txtUsername.text = model[0]['username'];
+      txtIdCard.text = model[0]['idcard'];
+      txtLineID.text = model[0]['lineID'];
+      txtOfficerCode.text = model[0]['officerCode'];
+      txtAddress.text = model[0]['address'];
+      txtMoo.text = model[0]['moo'];
+      txtSoi.text = model[0]['soi'];
+      txtRoad.text = model[0]['road'];
+      txtPrefixName.text = model[0]['prefixName'];
 
-      _selectedProvince = model[0]['provinceCode'] ?? '';
-      _selectedDistrict = model[0]['amphoeCode'] ?? '';
-      _selectedSubDistrict = model[0]['tambonCode'] ?? '';
-      _selectedPostalCode = model[0]['postnoCode'] ?? '';
-      _selectedSex = model[0]['sex'] ?? '';
+      _selectedProvince = model[0]['provinceCode'];
+      _selectedDistrict = model[0]['amphoeCode'];
+      _selectedSubDistrict = model[0]['tambonCode'];
+      _selectedPostalCode = model[0]['postnoCode'];
+      _selectedSex = model[0]['sex'];
     });
 
     // if (_selectedProvince != '') {
@@ -1201,9 +1193,8 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
         })
       },
       style: ButtonStyle(
-                padding: WidgetStateProperty.all<EdgeInsets>(
-                    const EdgeInsets.all(0)),
-              ),
+        padding: WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
+      ),
       child: const Column(
         children: [
           Row(
@@ -2288,18 +2279,18 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
       );
       if (index == -1) {
         dataCountUnit.add({
-          "lv0": _selectedLv0 ?? '',
-          "titleLv0": _selectedTitleLv0 ?? '',
-          "lv1": _selectedLv1 ?? '',
-          "titleLv1": _selectedTitleLv1 ?? '',
-          "lv2": _selectedLv2 ?? '',
-          "titleLv2": _selectedTitleLv2 ?? '',
-          "lv3": _selectedLv3 ?? '',
-          "titleLv3": _selectedTitleLv3 ?? '',
-          "lv4": _selectedLv4 ?? '',
-          "titleLv4": _selectedTitleLv4 ?? '',
-          "lv5": _selectedLv5 ?? '',
-          "titleLv5": _selectedTitleLv5 ?? '',
+          "lv0": _selectedLv0,
+          "titleLv0": _selectedTitleLv0,
+          "lv1": _selectedLv1,
+          "titleLv1": _selectedTitleLv1,
+          "lv2": _selectedLv2,
+          "titleLv2": _selectedTitleLv2,
+          "lv3": _selectedLv3,
+          "titleLv3": _selectedTitleLv3,
+          "lv4": _selectedLv4,
+          "titleLv4": _selectedTitleLv4,
+          "lv5": _selectedLv5,
+          "titleLv5": _selectedTitleLv5,
           "status": "V",
         });
 
@@ -2356,18 +2347,18 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
       }
     } else {
       dataCountUnit.add({
-        "lv0": _selectedLv0 ?? '',
-        "titleLv0": _selectedTitleLv0 ?? '',
-        "lv1": _selectedLv1 ?? '',
-        "titleLv1": _selectedTitleLv1 ?? '',
-        "lv2": _selectedLv2 ?? '',
-        "titleLv2": _selectedTitleLv2 ?? '',
-        "lv3": _selectedLv3 ?? '',
-        "titleLv3": _selectedTitleLv3 ?? '',
-        "lv4": _selectedLv4 ?? '',
-        "titleLv4": _selectedTitleLv4 ?? '',
-        "lv5": _selectedLv5 ?? '',
-        "titleLv5": _selectedTitleLv5 ?? '',
+        "lv0": _selectedLv0,
+        "titleLv0": _selectedTitleLv0,
+        "lv1": _selectedLv1,
+        "titleLv1": _selectedTitleLv1,
+        "lv2": _selectedLv2,
+        "titleLv2": _selectedTitleLv2,
+        "lv3": _selectedLv3,
+        "titleLv3": _selectedTitleLv3,
+        "lv4": _selectedLv4,
+        "titleLv4": _selectedTitleLv4,
+        "lv5": _selectedLv5,
+        "titleLv5": _selectedTitleLv5,
         "status": "V",
       });
 
@@ -2435,36 +2426,36 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
 
       // var dataRow = dataCountUnit;
       for (var i in dataCountUnit) {
-        if (codeLv0 != "" && codeLv0 != null) {
+        if (codeLv0 != "") {
           codeLv0 = codeLv0 + "," + i['lv0'];
         } else {
           codeLv0 = i['lv0'];
         }
 
-        if (codeLv1 != "" && codeLv1 != null) {
+        if (codeLv1 != "") {
           codeLv1 = codeLv1 + "," + i['lv1'];
         } else {
           codeLv1 = i['lv1'];
         }
 
-        if (codeLv2 != "" && codeLv2 != null) {
+        if (codeLv2 != "") {
           codeLv2 = codeLv2 + "," + i['lv2'];
         } else {
           codeLv2 = i['lv2'];
         }
 
-        if (codeLv3 != "" && codeLv3 != null) {
+        if (codeLv3 != "") {
           codeLv3 = codeLv3 + "," + i['lv3'];
         } else {
           codeLv3 = i['lv3'];
         }
 
-        if (codeLv4 != "" && codeLv4 != null) {
+        if (codeLv4 != "") {
           codeLv4 = codeLv4 + "," + i['lv4'];
         } else {
           codeLv4 = i['lv4'];
         }
-        if (codeLv5 != "" && codeLv5 != null) {
+        if (codeLv5 != "") {
           codeLv5 = codeLv4 + "," + i['lv4'];
         } else {
           codeLv5 = i['lv4'];
@@ -2475,13 +2466,13 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
 
       var value = await storage.read(key: 'dataUserLoginDDPM');
       var user = json.decode(value!);
-      user['imageUrl'] = _imageUrl ?? '';
-      // user['prefixName'] = _selectedPrefixName ?? '';
-      user['prefixName'] = txtPrefixName.text ?? '';
-      user['firstName'] = txtFirstName.text ?? '';
-      user['lastName'] = txtLastName.text ?? '';
-      user['email'] = txtEmail.text ?? '';
-      user['phone'] = txtPhone.text ?? '';
+      user['imageUrl'] = _imageUrl;
+      // user['prefixName'] = _selectedPrefixName;
+      user['prefixName'] = txtPrefixName.text;
+      user['firstName'] = txtFirstName.text;
+      user['lastName'] = txtLastName.text;
+      user['email'] = txtEmail.text;
+      user['phone'] = txtPhone.text;
 
       user['birthDay'] = DateFormat("yyyyMMdd").format(
         DateTime(
@@ -2490,21 +2481,21 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
           _selectedDay,
         ),
       );
-      user['sex'] = _selectedSex ?? '';
-      user['address'] = txtAddress.text ?? '';
-      user['soi'] = txtSoi.text ?? '';
-      user['moo'] = txtMoo.text ?? '';
-      user['road'] = txtRoad.text ?? '';
+      user['sex'] = _selectedSex;
+      user['address'] = txtAddress.text;
+      user['soi'] = txtSoi.text;
+      user['moo'] = txtMoo.text;
+      user['road'] = txtRoad.text;
       user['tambon'] = '';
       user['amphoe'] = '';
       user['province'] = '';
       user['postno'] = '';
-      user['tambonCode'] = _selectedSubDistrict ?? '';
-      user['amphoeCode'] = _selectedDistrict ?? '';
-      user['provinceCode'] = _selectedProvince ?? '';
-      user['postnoCode'] = _selectedPostalCode ?? '';
-      user['idcard'] = txtIdCard.text ?? '';
-      user['officerCode'] = txtOfficerCode.text ?? '';
+      user['tambonCode'] = _selectedSubDistrict;
+      user['amphoeCode'] = _selectedDistrict;
+      user['provinceCode'] = _selectedProvince;
+      user['postnoCode'] = _selectedPostalCode;
+      user['idcard'] = txtIdCard.text;
+      user['officerCode'] = txtOfficerCode.text;
       user['linkAccount'] =
           user['linkAccount'] != null ? user['linkAccount'] : '';
       user['countUnit'] = json.encode(dataCountUnit);
@@ -2635,14 +2626,13 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
 
     if (user['code'] != '') {
       setState(() {
-        _imageUrl = user['imageUrl'] ?? '';
-        txtFirstName.text = user['firstName'] ?? '';
-        txtLastName.text = user['lastName'] ?? '';
-        txtEmail.text = user['email'] ?? '';
-        txtPhone.text = user['phone'] ?? '';
-        txtPrefixName.text = user['prefixName'] ?? '';
+        _imageUrl = user['imageUrl'];
+        txtFirstName.text = user['firstName'];
+        txtLastName.text = user['lastName'];
+        txtEmail.text = user['email'];
+        txtPhone.text = user['phone'];
+        txtPrefixName.text = user['prefixName'];
         // _selectedPrefixName = user['prefixName'];
-        _code = user['code'];
       });
 
       if (user['birthDay'] != '') {
@@ -2671,7 +2661,8 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
         borderRadius: BorderRadius.circular(15.0),
       ),
       elevation: 5,
-      child: Padding(padding: const EdgeInsets.all(15), child: _buildContentCard()),
+      child: Padding(
+          padding: const EdgeInsets.all(15), child: _buildContentCard()),
     );
   }
 
@@ -2820,86 +2811,6 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
           ),
         ],
       ),
-    );
-  }
-
-  _imgFromCamera() async {
-    final ImagePicker _picker = ImagePicker();
-    // Pick an image
-    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      _image = image;
-    });
-
-    _upload();
-  }
-
-  _imgFromGallery() async {
-    final ImagePicker _picker = ImagePicker();
-    // Pick an image
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = image;
-    });
-    _upload();
-  }
-
-  void _upload() async {
-    if (_image == null) return;
-
-    uploadImage(_image!).then((res) {
-      setState(() {
-        _imageUrl = res;
-      });
-    }).catchError((err) {
-      print(err);
-    });
-  }
-
-  void _showPickerImage(context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return SafeArea(
-          child: Container(
-            child: new Wrap(
-              children: <Widget>[
-                new ListTile(
-                    leading: new Icon(Icons.photo_library),
-                    title: new Text(
-                      'อัลบั้มรูปภาพ',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontFamily: 'Sarabun',
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    onTap: () {
-                      _imgFromGallery();
-                      Navigator.of(context).pop();
-                    }),
-                new ListTile(
-                  leading: new Icon(Icons.photo_camera),
-                  title: new Text(
-                    'กล้องถ่ายรูป',
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'Sarabun',
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  onTap: () {
-                    _imgFromCamera();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 

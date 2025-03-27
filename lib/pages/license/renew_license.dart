@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
-// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
     as datatTimePicker;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -25,32 +22,11 @@ class RenewLicensePage extends StatefulWidget {
 class _RenewLicensePageState extends State<RenewLicensePage> {
   final storage = new FlutterSecureStorage();
 
-  String? _imageUrl;
-  String? _code;
-
   final _formKey = GlobalKey<FormState>();
 
-  List<String> _itemPrefixName = ['นาย', 'นาง', 'นางสาว']; // Option 2
-  String? _selectedPrefixName;
-
-  List<dynamic> _itemSex = [
-    {'title': 'ชาย', 'code': 'ชาย'},
-    {'title': 'หญิง', 'code': 'หญิง'},
-    {'title': 'ไม่ระบุเพศ', 'code': ''}
-  ];
-  String? _selectedSex;
-
-  List<dynamic> _itemProvince = [];
   String? _selectedProvince;
-
-  List<dynamic> _itemDistrict = [];
   String? _selectedDistrict;
-
-  List<dynamic> _itemSubDistrict = [];
   String? _selectedSubDistrict;
-
-  List<dynamic> _itemPostalCode = [];
-  String? _selectedPostalCode;
 
   final txtTitle = TextEditingController();
   final txtFirstName = TextEditingController();
@@ -80,9 +56,6 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
   ScrollController scrollController = new ScrollController();
 
   XFile? _image;
-  XFile? _file;
-
-  File? _selectedFile;
 
   int _selectedDay = 0;
   int _selectedMonth = 0;
@@ -92,7 +65,6 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
   int day = 0;
 
   String? _selectedOption;
-  String? _selectedOption2;
 
   final List<String> _options = [
     'บุคคลธรรมดา',
@@ -101,11 +73,6 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
     'ห้างหุ้นส่วนจำกัด',
     'บริษัทจำกัด',
     'บริษัทมหาชนจำกัด',
-  ];
-
-  final List<String> _options2 = [
-    'เป็นของคนไทยทั้งหมด',
-    'มีคนต่างด้าวเป็นเจ้าของร่วมในกิจการในฐานะเป็นหุ้นส่วน/ผู้ถือหุ้น',
   ];
 
   @override
@@ -137,9 +104,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
   Future<dynamic> getProvince() async {
     final result = await postObjectData("route/province/read", {});
     if (result['status'] == 'S') {
-      setState(() {
-        _itemProvince = result['objectData'];
-      });
+      setState(() {});
     }
   }
 
@@ -148,9 +113,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
       'province': _selectedProvince,
     });
     if (result['status'] == 'S') {
-      setState(() {
-        _itemDistrict = result['objectData'];
-      });
+      setState(() {});
     }
   }
 
@@ -160,9 +123,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
       'district': _selectedDistrict,
     });
     if (result['status'] == 'S') {
-      setState(() {
-        _itemSubDistrict = result['objectData'];
-      });
+      setState(() {});
     }
   }
 
@@ -171,9 +132,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
       'tambon': _selectedSubDistrict,
     });
     if (result['status'] == 'S') {
-      setState(() {
-        _itemPostalCode = result['objectData'];
-      });
+      setState(() {});
     }
   }
 
@@ -212,10 +171,10 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
     //     : "";
 
     var user = {};
-    // user['title'] = txtTitle.text ?? '-';
-    // user['firstName'] = txtFirstName.text ?? '-';
-    // user['lastName'] = txtLastName.text ?? '-';
-    // user['phone'] = txtPhone.text ?? '-';
+    // user['title'] = txtTitle.text ;
+    // user['firstName'] = txtFirstName.text ;
+    // user['lastName'] = txtLastName.text ;
+    // user['phone'] = txtPhone.text ;
     // user['renewDate'] = DateFormat("dd-MM-yyyy").format(
     //   DateTime(
     //     DateTime.now().year,
@@ -230,28 +189,28 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
         _selectedDay,
       ),
     );
-    // user['address'] = txtAddress.text ?? '-';
-    // user['soi'] = txtSoi.text ?? '-';
-    // user['moo'] = txtMoo.text ?? '-';
-    // user['road'] = txtRoad.text ?? '-';
+    // user['address'] = txtAddress.text ;
+    // user['soi'] = txtSoi.text ;
+    // user['moo'] = txtMoo.text ;
+    // user['road'] = txtRoad.text ;
     // user["tambonCode"] = _selectedSubDistrict ?? '';
-    // user["tambon"] = tambon ?? '-';
+    // user["tambon"] = tambon ;
     // user["amphoeCode"] = _selectedDistrict ?? '';
-    // user["amphoe"] = amphoe ?? '-';
+    // user["amphoe"] = amphoe ;
     // user["provinceCode"] = _selectedProvince ?? '';
-    // user["province"] = province ?? '-';
+    // user["province"] = province ;
     // user["postnoCode"] = _selectedPostalCode ?? '';
-    // user['phone'] = txtPhone.text ?? '-';
-    user['description'] = _selectedOption ?? '-';
-    user['boatName'] = txtBoatName.text ?? '-';
-    user['boatLicense'] = txtBoatLicense.text ?? '-';
-    // user['age'] = txtAge.text ?? '-';
-    // user['nationality'] = txtNationality.text ?? '-';
-    user['fileBoatLicense'] = itemImage1['imageUrl'] ?? '-';
-    user['fileBoatLicenseName'] = itemImage1['imageName'] ?? '-';
-    user['fileShipInspection'] = itemImage2['imageUrl'] ?? '-';
-    user['fileShipInspectionName'] = itemImage2['imageName'] ?? '-';
-    user['fileImageOther'] = itemImage3['imageUrl'] ?? '-';
+    // user['phone'] = txtPhone.text ;
+    user['description'] = _selectedOption;
+    user['boatName'] = txtBoatName.text;
+    user['boatLicense'] = txtBoatLicense.text;
+    // user['age'] = txtAge.text ;
+    // user['nationality'] = txtNationality.text ;
+    user['fileBoatLicense'] = itemImage1['imageUrl'];
+    user['fileBoatLicenseName'] = itemImage1['imageName'];
+    user['fileShipInspection'] = itemImage2['imageUrl'];
+    user['fileShipInspectionName'] = itemImage2['imageName'];
+    user['fileImageOther'] = itemImage3['imageUrl'];
 
     // final result = await postObjectData('m/v2/Register/update', user);
 
@@ -376,16 +335,12 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
 
     if (user['code'] != '') {
       setState(() {
-        _imageUrl = user['imageUrl'] ?? '';
         txtFirstName.text = user['firstName'] ?? '';
         txtLastName.text = user['lastName'] ?? '';
         txtPhone.text = user['phone'] ?? '';
-        _selectedPrefixName = user['prefixName'];
-        _code = user['code'];
         _selectedProvince = user['provinceCode'] ?? '';
         _selectedDistrict = user['amphoeCode'] ?? '';
         _selectedSubDistrict = user['tambonCode'] ?? '';
-        _selectedPostalCode = user['postnoCode'] ?? '';
       });
 
       if (user['birthDay'] != '') {
@@ -602,6 +557,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                       if (model!.isEmpty) {
                         return 'กรุณากรอกวันเดือนปีเกิด.';
                       }
+                      return null;
                     },
                   ),
                 ),

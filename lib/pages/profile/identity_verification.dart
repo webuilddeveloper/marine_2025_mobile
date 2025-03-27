@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
     as datatTimePicker;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -10,7 +9,6 @@ import 'package:intl/intl.dart';
 
 import '../../home_v2.dart';
 import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
 import '../../widget/text_form_field.dart';
 import '../blank_page/dialog_fail.dart';
 import 'policy_identity_verification.dart';
@@ -25,13 +23,11 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
   final storage = new FlutterSecureStorage();
 
   String? _imageUrl;
-  String? _code;
   String? _username;
 
   final _formKey = GlobalKey<FormState>();
   final _formOrganizationKey = GlobalKey<FormState>();
 
-  List<String> _itemPrefixName = ['นาย', 'นาง', 'นางสาว']; // Option 2
   String? _selectedPrefixName;
 
   List<dynamic> _itemSex = [
@@ -52,8 +48,6 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
 
   List<dynamic> _itemPostalCode = [];
   String? _selectedPostalCode;
-
-  List<dynamic> _itemOrganizationLv0 = [];
 
   final txtEmail = TextEditingController();
   final txtPassword = TextEditingController();
@@ -333,33 +327,32 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
         }
 
         setState(() {
-          _username = result['objectData'][0]['username'] ?? '';
+          _username = result['objectData'][0]['username'];
           dataCountUnit = result['objectData'][0]['countUnit'] != null
               ? json.decode(result['objectData'][0]['countUnit'])
               : [];
-          _imageUrl = result['objectData'][0]['imageUrl'] ?? '';
-          txtFirstName.text = result['objectData'][0]['firstName'] ?? '';
-          txtLastName.text = result['objectData'][0]['lastName'] ?? '';
-          txtEmail.text = result['objectData'][0]['email'] ?? '';
-          txtPhone.text = result['objectData'][0]['phone'] ?? '';
+          _imageUrl = result['objectData'][0]['imageUrl'];
+          txtFirstName.text = result['objectData'][0]['firstName'];
+          txtLastName.text = result['objectData'][0]['lastName'];
+          txtEmail.text = result['objectData'][0]['email'];
+          txtPhone.text = result['objectData'][0]['phone'];
           _selectedPrefixName = result['objectData'][0]['prefixName'];
-          _code = result['objectData'][0]['code'] ?? '';
-          txtPhone.text = result['objectData'][0]['phone'] ?? '';
-          txtUsername.text = result['objectData'][0]['username'] ?? '';
-          txtIdCard.text = result['objectData'][0]['idcard'] ?? '';
-          txtLineID.text = result['objectData'][0]['lineID'] ?? '';
-          txtOfficerCode.text = result['objectData'][0]['officerCode'] ?? '';
-          txtAddress.text = result['objectData'][0]['address'] ?? '';
-          txtMoo.text = result['objectData'][0]['moo'] ?? '';
-          txtSoi.text = result['objectData'][0]['soi'] ?? '';
-          txtRoad.text = result['objectData'][0]['road'] ?? '';
-          txtPrefixName.text = result['objectData'][0]['prefixName'] ?? '';
+          txtPhone.text = result['objectData'][0]['phone'];
+          txtUsername.text = result['objectData'][0]['username'];
+          txtIdCard.text = result['objectData'][0]['idcard'];
+          txtLineID.text = result['objectData'][0]['lineID'];
+          txtOfficerCode.text = result['objectData'][0]['officerCode'];
+          txtAddress.text = result['objectData'][0]['address'];
+          txtMoo.text = result['objectData'][0]['moo'];
+          txtSoi.text = result['objectData'][0]['soi'];
+          txtRoad.text = result['objectData'][0]['road'];
+          txtPrefixName.text = result['objectData'][0]['prefixName'];
 
-          _selectedProvince = result['objectData'][0]['provinceCode'] ?? '';
-          _selectedDistrict = result['objectData'][0]['amphoeCode'] ?? '';
-          _selectedSubDistrict = result['objectData'][0]['tambonCode'] ?? '';
-          _selectedPostalCode = result['objectData'][0]['postnoCode'] ?? '';
-          _selectedSex = result['objectData'][0]['sex'] ?? '';
+          _selectedProvince = result['objectData'][0]['provinceCode'];
+          _selectedDistrict = result['objectData'][0]['amphoeCode'];
+          _selectedSubDistrict = result['objectData'][0]['tambonCode'];
+          _selectedPostalCode = result['objectData'][0]['postnoCode'];
+          _selectedSex = result['objectData'][0]['sex'];
         });
       }
       if (_selectedProvince != '') {
@@ -392,18 +385,18 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
       );
       if (index == -1) {
         dataCountUnit.add({
-          "lv0": _selectedLv0 ?? '',
-          "titleLv0": _selectedTitleLv0 ?? '',
-          "lv1": _selectedLv1 ?? '',
-          "titleLv1": _selectedTitleLv1 ?? '',
-          "lv2": _selectedLv2 ?? '',
-          "titleLv2": _selectedTitleLv2 ?? '',
-          "lv3": _selectedLv3 ?? '',
-          "titleLv3": _selectedTitleLv3 ?? '',
-          "lv4": _selectedLv4 ?? '',
-          "titleLv4": _selectedTitleLv4 ?? '',
-          "lv5": _selectedLv5 ?? '',
-          "titleLv5": _selectedTitleLv5 ?? '',
+          "lv0": _selectedLv0,
+          "titleLv0": _selectedTitleLv0,
+          "lv1": _selectedLv1,
+          "titleLv1": _selectedTitleLv1,
+          "lv2": _selectedLv2,
+          "titleLv2": _selectedTitleLv2,
+          "lv3": _selectedLv3,
+          "titleLv3": _selectedTitleLv3,
+          "lv4": _selectedLv4,
+          "titleLv4": _selectedTitleLv4,
+          "lv5": _selectedLv5,
+          "titleLv5": _selectedTitleLv5,
           "status": "V",
         });
 
@@ -460,18 +453,18 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
       }
     } else {
       dataCountUnit.add({
-        "lv0": _selectedLv0 ?? '',
-        "titleLv0": _selectedTitleLv0 ?? '',
-        "lv1": _selectedLv1 ?? '',
-        "titleLv1": _selectedTitleLv1 ?? '',
-        "lv2": _selectedLv2 ?? '',
-        "titleLv2": _selectedTitleLv2 ?? '',
-        "lv3": _selectedLv3 ?? '',
-        "titleLv3": _selectedTitleLv3 ?? '',
-        "lv4": _selectedLv4 ?? '',
-        "titleLv4": _selectedTitleLv4 ?? '',
-        "lv5": _selectedLv5 ?? '',
-        "titleLv5": _selectedTitleLv5 ?? '',
+        "lv0": _selectedLv0,
+        "titleLv0": _selectedTitleLv0,
+        "lv1": _selectedLv1,
+        "titleLv1": _selectedTitleLv1,
+        "lv2": _selectedLv2,
+        "titleLv2": _selectedTitleLv2,
+        "lv3": _selectedLv3,
+        "titleLv3": _selectedTitleLv3,
+        "lv4": _selectedLv4,
+        "titleLv4": _selectedTitleLv4,
+        "lv5": _selectedLv5,
+        "titleLv5": _selectedTitleLv5,
         "status": "V",
       });
 
@@ -539,36 +532,36 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
 
       // var dataRow = dataCountUnit;
       for (var i in dataCountUnit) {
-        if (codeLv0 != "" && codeLv0 != null) {
+        if (codeLv0 != "") {
           codeLv0 = codeLv0 + "," + i['lv0'];
         } else {
           codeLv0 = i['lv0'];
         }
 
-        if (codeLv1 != "" && codeLv1 != null) {
+        if (codeLv1 != "") {
           codeLv1 = codeLv1 + "," + i['lv1'];
         } else {
           codeLv1 = i['lv1'];
         }
 
-        if (codeLv2 != "" && codeLv2 != null) {
+        if (codeLv2 != "") {
           codeLv2 = codeLv2 + "," + i['lv2'];
         } else {
           codeLv2 = i['lv2'];
         }
 
-        if (codeLv3 != "" && codeLv3 != null) {
+        if (codeLv3 != "") {
           codeLv3 = codeLv3 + "," + i['lv3'];
         } else {
           codeLv3 = i['lv3'];
         }
 
-        if (codeLv4 != "" && codeLv4 != null) {
+        if (codeLv4 != "") {
           codeLv4 = codeLv4 + "," + i['lv4'];
         } else {
           codeLv4 = i['lv4'];
         }
-        if (codeLv5 != "" && codeLv5 != null) {
+        if (codeLv5 != "") {
           codeLv5 = codeLv4 + "," + i['lv4'];
         } else {
           codeLv5 = i['lv4'];
@@ -579,13 +572,13 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
 
       var value = await storage.read(key: 'dataUserLoginOPEC');
       var user = json.decode(value!);
-      user['imageUrl'] = _imageUrl ?? '';
-      // user['prefixName'] = _selectedPrefixName ?? '';
-      user['prefixName'] = txtPrefixName.text ?? '';
-      user['firstName'] = txtFirstName.text ?? '';
-      user['lastName'] = txtLastName.text ?? '';
-      user['email'] = txtEmail.text ?? '';
-      user['phone'] = txtPhone.text ?? '';
+      user['imageUrl'] = _imageUrl;
+      // user['prefixName'] = _selectedPrefixName;
+      user['prefixName'] = txtPrefixName.text;
+      user['firstName'] = txtFirstName.text;
+      user['lastName'] = txtLastName.text;
+      user['email'] = txtEmail.text;
+      user['phone'] = txtPhone.text;
 
       user['birthDay'] = DateFormat("yyyyMMdd").format(
         DateTime(
@@ -594,21 +587,21 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
           _selectedDay,
         ),
       );
-      user['sex'] = _selectedSex ?? '';
-      user['address'] = txtAddress.text ?? '';
-      user['soi'] = txtSoi.text ?? '';
-      user['moo'] = txtMoo.text ?? '';
-      user['road'] = txtRoad.text ?? '';
+      user['sex'] = _selectedSex;
+      user['address'] = txtAddress.text;
+      user['soi'] = txtSoi.text;
+      user['moo'] = txtMoo.text;
+      user['road'] = txtRoad.text;
       user['tambon'] = '';
       user['amphoe'] = '';
       user['province'] = '';
       user['postno'] = '';
-      user['tambonCode'] = _selectedSubDistrict ?? '';
-      user['amphoeCode'] = _selectedDistrict ?? '';
-      user['provinceCode'] = _selectedProvince ?? '';
-      user['postnoCode'] = _selectedPostalCode ?? '';
-      user['idcard'] = txtIdCard.text ?? '';
-      user['officerCode'] = txtOfficerCode.text ?? '';
+      user['tambonCode'] = _selectedSubDistrict;
+      user['amphoeCode'] = _selectedDistrict;
+      user['provinceCode'] = _selectedProvince;
+      user['postnoCode'] = _selectedPostalCode;
+      user['idcard'] = txtIdCard.text;
+      user['officerCode'] = txtOfficerCode.text;
       user['linkAccount'] =
           user['linkAccount'] != null ? user['linkAccount'] : '';
       user['countUnit'] = json.encode(dataCountUnit);
@@ -746,14 +739,13 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
 
     if (user['code'] != '') {
       setState(() {
-        _imageUrl = user['imageUrl'] ?? '';
-        txtFirstName.text = user['firstName'] ?? '';
-        txtLastName.text = user['lastName'] ?? '';
-        txtEmail.text = user['email'] ?? '';
-        txtPhone.text = user['phone'] ?? '';
-        txtPrefixName.text = user['prefixName'] ?? '';
+        _imageUrl = user['imageUrl'];
+        txtFirstName.text = user['firstName'];
+        txtLastName.text = user['lastName'];
+        txtEmail.text = user['email'];
+        txtPhone.text = user['phone'];
+        txtPrefixName.text = user['prefixName'];
         // _selectedPrefixName = user['prefixName'];
-        _code = user['code'];
       });
 
       if (user['birthDay'] != '') {

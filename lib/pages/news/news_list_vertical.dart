@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
-import '../blank_page/blank_data.dart';
 import '../blank_page/blank_loading.dart';
 import 'news_form.dart';
 
@@ -41,11 +40,9 @@ class _NewsListVertical extends State<NewsListVertical> {
   checkImageAvatar(String img) {
     return CircleAvatar(
       backgroundColor: Colors.white,
-      backgroundImage: img != null
-          ? NetworkImage(
-              img,
-            )
-          : null,
+      backgroundImage: NetworkImage(
+        img,
+      ),
     );
   }
 

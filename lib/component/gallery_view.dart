@@ -243,7 +243,7 @@ class _ImageViewerState extends State<ImageViewer>
 
   @override
   void initState() {
-    _pageController = PageController(initialPage: widget.initialIndex ?? 0);
+    _pageController = PageController(initialPage: widget.initialIndex);
     _currentPageIndex = widget.initialIndex;
 
     _offsetController =
@@ -496,6 +496,5 @@ class OffsetTransition extends AnimatedWidget {
     );
   }
 }
-
 
 // main() => runApp(GalleryView());

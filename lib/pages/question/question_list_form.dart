@@ -3,15 +3,9 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:marine_mobile/pages/question/question_list.dart';
 import 'package:marine_mobile/widget/text_form_field.dart';
 
-import '../../component/carousel_banner.dart';
-import '../../component/carousel_form.dart';
-import '../../component/link_url_in.dart';
 import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
-import 'question_list_vertical.dart';
 
 class QuestionListForm extends StatefulWidget {
   QuestionListForm({super.key, this.title});
@@ -332,8 +326,6 @@ class _QuestionListForm extends State<QuestionListForm> {
     Random random = new Random();
     uploadImage(_image!).then((res) {
       setState(() {
-        String fileName = res.split('/').last;
-
         _itemsImage.add({
           'imageUrl': res,
           'id': random.nextInt(100).toString(),

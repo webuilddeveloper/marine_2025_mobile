@@ -66,21 +66,6 @@ class _BehaviorPointsPageState extends State<BehaviorPoints> {
     );
   }
 
-  _futureBuilder() {
-    return FutureBuilder<dynamic>(
-      future: futureModel, // function where you call your api
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          return _screen(snapshot.data);
-        } else if (snapshot.hasError) {
-          return Container();
-        } else {
-          return Container();
-        }
-      },
-    );
-  }
-
   _screen(dynamic model) {
     var totalPoint = '80';
     return Column(

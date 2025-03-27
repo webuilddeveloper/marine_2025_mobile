@@ -5,7 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../login.dart';
 import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
 import '../../widget/text_form_field.dart';
 import 'user_information.dart';
 
@@ -22,7 +21,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final txtPasswordOld = TextEditingController();
   final txtPasswordNew = TextEditingController();
   final txtConPasswordNew = TextEditingController();
-  String? _imageUrl;
   bool showTxtPasswordOld = true;
   bool showTxtPasswordNew = true;
   bool showTxtConPasswordNew = true;
@@ -160,9 +158,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     var user = json.decode(value!);
 
     if (user['code'] != '') {
-      setState(() {
-        _imageUrl = user['imageUrl'] ?? '';
-      });
+      setState(() {});
     }
   }
 
@@ -225,6 +221,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               if (model!.isEmpty) {
                 return 'กรุณากรอกรหัสผ่านปัจจุบัน.';
               }
+              return null;
             },
             controller: txtPasswordOld,
             enabled: true,
@@ -273,6 +270,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               if (!regex.hasMatch(model)) {
                 return 'กรุณากรอกรูปแบบรหัสผ่านให้ถูกต้อง.';
               }
+              return null;
             },
             controller: txtPasswordNew,
             enabled: true,
@@ -318,7 +316,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 return 'กรุณากรอกยืนยันรหัสผ่านใหม่.';
               }
 
-              if (model != txtPasswordNew.text && txtPasswordNew != null) {
+              if (model != txtPasswordNew.text) {
                 return 'กรุณากรอกรหัสผ่านให้ตรงกัน.';
               }
 
@@ -327,6 +325,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               if (!regex.hasMatch(model)) {
                 return 'กรุณากรอกรูปแบบรหัสผ่านให้ถูกต้อง.';
               }
+              return null;
             },
             controller: txtConPasswordNew,
             enabled: true,

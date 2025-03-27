@@ -28,7 +28,7 @@ import 'pages/news/news_list.dart';
 import 'shared/api_provider.dart';
 import 'package:intl/intl.dart';
 
-import 'dart:math'; // สำหรับ pi
+// สำหรับ pi
 // import 'component/carousel_rotation.dart';
 
 // ignore: must_be_immutable

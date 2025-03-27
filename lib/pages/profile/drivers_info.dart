@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../component/header.dart';
 import '../../component/material/custom_alert_dialog.dart';
-import '../../shared/api_provider.dart';
-import '../blank_page/toast_fail.dart';
 import '../notification/notification_list.dart';
 
 class DriversInfo extends StatefulWidget {
@@ -15,7 +12,6 @@ class DriversInfo extends StatefulWidget {
 }
 
 class _DriversInfoPageState extends State<DriversInfo> {
-  Future<dynamic>? _futureModel;
   final storage = new FlutterSecureStorage();
   dynamic tempData;
   dynamic categoryList = [
@@ -26,16 +22,12 @@ class _DriversInfoPageState extends State<DriversInfo> {
   ];
   String imageTemp =
       'https://instagram.fbkk5-6.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/c0.180.1440.1440a/s640x640/133851894_231577355006812_2104786467046058604_n.jpg?_nc_ht=instagram.fbkk5-6.fna.fbcdn.net&_nc_cat=1&_nc_ohc=t-y0eYG-FkYAX8VbpYj&tp=1&oh=d5fed0e8846f1056c70836b6fce223eb&oe=601E2B77';
-  int _limit = 10;
   int selectedCategory = 0;
   String profileCode = "";
   String idcard = "";
   String profileImage = "";
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
   String isExpireDate = "2";
   GlobalKey globalKey = new GlobalKey();
-  String _dataString = "Hello from this QR";
 
   dynamic model = [];
 
@@ -548,7 +540,7 @@ class _DriversInfoPageState extends State<DriversInfo> {
     setState(() {
       model.add({
         'isExpire': false,
-        'code': profileCode ?? '',
+        'code': profileCode,
         'pltNo': '6600011',
         'pltDesc': 'รถแท็กซี่สาธารณะ',
         'titleDesc': 'นาย',
@@ -561,7 +553,7 @@ class _DriversInfoPageState extends State<DriversInfo> {
 
       model.add({
         'isExpire': true,
-        'code': profileCode ?? '',
+        'code': profileCode,
         'pltNo': '6600012',
         'pltDesc': 'รถจักรยานรับจ้าง',
         'titleDesc': 'นาย',
@@ -686,69 +678,5 @@ class _DriversInfoPageState extends State<DriversInfo> {
         );
       },
     );
-  }
-
-  _screen(dynamic model) {
-    return SmartRefresher(
-      enablePullDown: false,
-      enablePullUp: true,
-      footer: ClassicFooter(
-        loadingText: ' ',
-        canLoadingText: ' ',
-        idleText: ' ',
-        idleIcon: Icon(Icons.arrow_upward, color: Colors.transparent),
-      ),
-      controller: _refreshController,
-      onLoading: _onLoading,
-      onRefresh: _onRefresh,
-      child: ListView.builder(
-        physics: ScrollPhysics(),
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemCount: model.length,
-        itemBuilder: (context, index) {
-          return _buildCard(model[index]);
-        },
-      ),
-    );
-  }
-
-  _update() async {
-    final result =
-        await postObjectDataMW(serverMW + 'DLTLC/updateDriverLicenceByDocNo', {
-      'code': profileCode,
-      'createBy': profileCode,
-      'updateBy': profileCode,
-      'docType': '8',
-      'docNo': idcard,
-      'reqDocNo': idcard,
-    });
-    if (result['status'] == 'S') {
-      _callRead();
-      toastFail(context, text: 'อัพเดทข้อมูลสำเร็จ');
-    } else {
-      toastFail(context, text: 'อัพเดทข้อมูลล้มเหลว');
-    }
-  }
-
-  _onLoading() async {
-    // setState(() {
-    //   _limit = _limit + 2;
-    // });
-    _callRead();
-
-    await Future.delayed(Duration(milliseconds: 2000));
-
-    _refreshController.loadComplete();
-  }
-
-  void _onRefresh() async {
-    // getCurrentUserData();
-    // _getLocation();
-    _callRead();
-
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-    // _refreshController.loadComplete();
   }
 }

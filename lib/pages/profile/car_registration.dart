@@ -16,7 +16,6 @@ class CarRegistration extends StatefulWidget {
 }
 
 class _CarRegistrationPageState extends State<CarRegistration> {
-  Future<dynamic>? _futureModel;
   final storage = new FlutterSecureStorage();
   dynamic tempData;
   dynamic categoryList = [
@@ -28,8 +27,6 @@ class _CarRegistrationPageState extends State<CarRegistration> {
   String imageTemp =
       'https://instagram.fbkk5-6.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/c0.180.1440.1440a/s640x640/133851894_231577355006812_2104786467046058604_n.jpg?_nc_ht=instagram.fbkk5-6.fna.fbcdn.net&_nc_cat=1&_nc_ohc=t-y0eYG-FkYAX8VbpYj&tp=1&oh=d5fed0e8846f1056c70836b6fce223eb&oe=601E2B77';
   int selectedCategory = 0;
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
   GlobalKey globalKey = new GlobalKey();
 
   dynamic model = [
@@ -668,53 +665,5 @@ class _CarRegistrationPageState extends State<CarRegistration> {
         ),
       ),
     );
-  }
-
-  _screen(dynamic model) {
-    return SmartRefresher(
-      enablePullDown: false,
-      enablePullUp: true,
-      footer: ClassicFooter(
-        loadingText: ' ',
-        canLoadingText: ' ',
-        idleText: ' ',
-        idleIcon: Icon(Icons.arrow_upward, color: Colors.transparent),
-      ),
-      controller: _refreshController,
-      onLoading: _onLoading,
-      onRefresh: _onRefresh,
-      child: ListView.builder(
-        physics: ScrollPhysics(),
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemCount: model.length,
-        itemBuilder: (context, index) {
-          return _buildCard(model[index]);
-        },
-      ),
-    );
-  }
-
-  _update() async {}
-
-  _onLoading() async {
-    // setState(() {
-    //   _limit = _limit + 2;
-    // });
-    _callRead();
-
-    await Future.delayed(Duration(milliseconds: 2000));
-
-    _refreshController.loadComplete();
-  }
-
-  void _onRefresh() async {
-    // getCurrentUserData();
-    // _getLocation();
-    _callRead();
-
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-    // _refreshController.loadComplete();
   }
 }

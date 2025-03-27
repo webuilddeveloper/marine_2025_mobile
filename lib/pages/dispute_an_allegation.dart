@@ -1,9 +1,5 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../shared/api_provider.dart';
@@ -24,7 +20,6 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
   dynamic test2;
   String profileCode = "";
   String idcard = "";
-  int _limit = 10;
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -370,7 +365,7 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
     profileCode = (await storage.read(key: 'profileCode2'))!;
     idcard = (await storage.read(key: 'idcard'))!;
 
-    if (profileCode != '' && profileCode != null)
+    if (profileCode != '')
       setState(() {
         _futureModel = postDio('${serverMW}tickerDispute/searchTickerDispute', {
           "code": profileCode,
@@ -410,15 +405,5 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
     await Future.delayed(Duration(milliseconds: 2000));
 
     _refreshController.loadComplete();
-  }
-
-  void _onRefresh() async {
-    // getCurrentUserData();
-    // _getLocation();
-    _read();
-
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-    // _refreshController.loadComplete();
   }
 }

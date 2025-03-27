@@ -64,7 +64,7 @@ class _ListContentHorizontalLoading extends State<ListContentHorizontalLoading>
             height: 150,
             decoration: BoxDecoration(
               borderRadius: new BorderRadius.circular(5),
-              color: background!.evaluate(
+              color: background.evaluate(
                 AlwaysStoppedAnimation(_controller!.value),
               ),
             ),

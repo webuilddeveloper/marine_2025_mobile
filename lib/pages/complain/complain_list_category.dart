@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../component/carousel_banner.dart';
-import '../../component/carousel_form.dart';
-import '../../component/link_url_in.dart';
 import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
 import 'complain_list_category_vertical.dart';
 
 class ComplainListCategory extends StatefulWidget {
@@ -58,8 +54,6 @@ class _ComplainListCategory extends State<ComplainListCategory> {
     {'code': '10', 'title': 'โทรศัพท์หน่วยงาน หมายเลข 0-22331311-8', 'url': ''},
   ];
 
-  Future<dynamic>? _futureBanner;
-  Future<dynamic>? _futureCategoryContact;
   // final ScrollController _controller = ScrollController();
   @override
   void dispose() {
@@ -70,11 +64,6 @@ class _ComplainListCategory extends State<ComplainListCategory> {
 
   @override
   void initState() {
-    _futureCategoryContact =
-        post('${contactCategoryApi}read', {'skip': 0, 'limit': 999});
-
-    _futureBanner = post('${contactBannerApi}read', {'skip': 0, 'limit': 50});
-
     // _controller.addListener(_scrollListener);
     super.initState();
     // contact = new ComplainListCategoryVertical(

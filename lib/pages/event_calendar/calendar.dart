@@ -19,7 +19,6 @@ class _CalendarPageState extends State<CalendarPage>
     with TickerProviderStateMixin {
   final storage = new FlutterSecureStorage();
   ValueNotifier<List<dynamic>>? _selectedEvents;
-  Map<DateTime, List>? _events;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -66,8 +65,6 @@ class _CalendarPageState extends State<CalendarPage>
     });
     if (result['status'] == 'S') {
       objectData = result['objectData'];
-
-      _events = {};
 
       for (int i = 0; i < objectData.length; i++) {
         if (objectData[i]['items'].length > 0) {

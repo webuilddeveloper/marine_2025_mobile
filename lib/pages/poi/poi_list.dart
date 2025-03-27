@@ -2,10 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../component/header.dart';
@@ -154,8 +152,6 @@ class _PoiList extends State<PoiList> {
 
 // show map
   SlidingUpPanel _buildMap() {
-    const double _initFabHeight = 50.0;
-    double _fabHeight;
     double _panelHeightOpen = MediaQuery.of(context).size.height -
         (MediaQuery.of(context).padding.top + 50);
     double _panelHeightClosed = 90;
@@ -177,8 +173,6 @@ class _PoiList extends State<PoiList> {
         setState(
           () {
             positionScroll = pos;
-            _fabHeight =
-                pos * (_panelHeightOpen - _panelHeightClosed) + _initFabHeight;
           },
         ),
       },
@@ -269,24 +263,6 @@ class _PoiList extends State<PoiList> {
         }
       },
     );
-  }
-
-  LatLngBounds _createBounds() {
-    List<LatLng>? positions;
-    positions!.add(widget.latLng!);
-    final southwestLat = positions.map((p) => p.latitude).reduce(
-        (value, element) => value < element ? value : element); // smallest
-    final southwestLon = positions
-        .map((p) => p.longitude)
-        .reduce((value, element) => value < element ? value : element);
-    final northeastLat = positions.map((p) => p.latitude).reduce(
-        (value, element) => value > element ? value : element); // biggest
-    final northeastLon = positions
-        .map((p) => p.longitude)
-        .reduce((value, element) => value > element ? value : element);
-    return LatLngBounds(
-        southwest: LatLng(southwestLat, southwestLon),
-        northeast: LatLng(northeastLat, northeastLon));
   }
 
   Widget _panel(ScrollController sc) {

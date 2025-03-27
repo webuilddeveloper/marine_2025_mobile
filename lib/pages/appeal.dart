@@ -78,8 +78,9 @@ class AppealState extends State<Appeal> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: header(context, () => {Navigator.pop(context)},
-            title: 'ยื่นอุธรณ์'),
+        appBar: header(context, () {
+          Navigator.pop(context);
+        }, title: 'ยื่นอุธรณ์'),
         body: new InkWell(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
@@ -419,7 +420,6 @@ class AppealState extends State<Appeal> {
   void _upload() async {
     if (_image == null) return;
 
-    var id = new DateTime.now().millisecondsSinceEpoch;
     setState(() {
       showLoadingImage = true;
     });

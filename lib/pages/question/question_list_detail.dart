@@ -6,15 +6,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:marine_mobile/component/material/check_avatar.dart';
-import 'package:marine_mobile/pages/question/question_list.dart';
 import 'package:marine_mobile/widget/text_form_field.dart';
 
-import '../../component/carousel_banner.dart';
-import '../../component/carousel_form.dart';
-import '../../component/link_url_in.dart';
 import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
-import 'question_list_vertical.dart';
 
 class QuestionListDetail extends StatefulWidget {
   QuestionListDetail({super.key, this.model});

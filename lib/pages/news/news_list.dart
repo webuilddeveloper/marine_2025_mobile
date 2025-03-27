@@ -5,7 +5,6 @@ import '../../component/tab_category.dart';
 import '../../shared/api_provider.dart' as service;
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../widget/header.dart';
 import 'news_list_vertical.dart';
 
 class NewsList extends StatefulWidget {

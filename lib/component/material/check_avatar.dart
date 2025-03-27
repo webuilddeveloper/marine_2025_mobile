@@ -4,7 +4,7 @@ checkAvatar(BuildContext context, String image) {
   return image != ''
       ? CircleAvatar(
           backgroundColor: Colors.transparent,
-          backgroundImage: image != null ? NetworkImage(image) : null,
+          backgroundImage: NetworkImage(image),
         )
       : Container(
           padding: EdgeInsets.all(10.0),

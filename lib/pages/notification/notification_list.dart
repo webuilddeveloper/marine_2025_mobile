@@ -6,7 +6,6 @@ import 'package:marine_mobile/component/header.dart';
 import '../../home_v2.dart';
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
-import '../blank_page/blank_loading.dart';
 import '../blank_page/toast_fail.dart';
 import '../event_calendar/event_calendar_form.dart';
 import '../knowledge/knowledge_form.dart';
@@ -27,18 +26,11 @@ class NotificationList extends StatefulWidget {
 }
 
 class _NotificationList extends State<NotificationList> {
-  Future<dynamic>? _futureModel;
-
   @override
   void initState() {
     super.initState();
 
-    setState(() {
-      _futureModel = postDio(
-        '${notificationApi}read',
-        {'skip': 0, 'limit': 999},
-      );
-    });
+    setState(() {});
   }
 
   checkNavigationPage(String page, dynamic model) {
@@ -56,12 +48,7 @@ class _NotificationList extends State<NotificationList> {
                 urlGallery: newsGalleryApi,
               ),
             ),
-          ).then((value) => {
-                setState(() {
-                  _futureModel =
-                      postDio('${notificationApi}read', {'limit': 999});
-                })
-              });
+          ).then((value) => {setState(() {})});
         }
         break;
 
@@ -78,12 +65,7 @@ class _NotificationList extends State<NotificationList> {
                 urlGallery: eventCalendarGalleryApi,
               ),
             ),
-          ).then((value) => {
-                setState(() {
-                  _futureModel = postDio(
-                      '${notificationApi}read', {'skip': 0, 'limit': 999});
-                })
-              });
+          ).then((value) => {setState(() {})});
         }
         break;
 
@@ -97,12 +79,7 @@ class _NotificationList extends State<NotificationList> {
                 model: model,
               ),
             ),
-          ).then((value) => {
-                setState(() {
-                  _futureModel = postDio(
-                      '${notificationApi}read', {'skip': 0, 'limit': 999});
-                })
-              });
+          ).then((value) => {setState(() {})});
         }
         break;
 
@@ -116,12 +93,7 @@ class _NotificationList extends State<NotificationList> {
                 model: model,
               ),
             ),
-          ).then((value) => {
-                setState(() {
-                  _futureModel = postDio(
-                      '${notificationApi}read', {'skip': 0, 'limit': 999});
-                })
-              });
+          ).then((value) => {setState(() {})});
         }
         break;
 
@@ -138,12 +110,7 @@ class _NotificationList extends State<NotificationList> {
                 urlGallery: poiGalleryApi,
               ),
             ),
-          ).then((value) => {
-                setState(() {
-                  _futureModel = postDio(
-                      '${notificationApi}read', {'skip': 0, 'limit': 999});
-                })
-              });
+          ).then((value) => {setState(() {})});
         }
         break;
 
@@ -157,12 +124,7 @@ class _NotificationList extends State<NotificationList> {
                 model: model,
               ),
             ),
-          ).then((value) => {
-                setState(() {
-                  _futureModel = postDio(
-                      '${notificationApi}read', {'skip': 0, 'limit': 999});
-                })
-              });
+          ).then((value) => {setState(() {})});
         }
         break;
 
@@ -176,12 +138,7 @@ class _NotificationList extends State<NotificationList> {
                 model: model,
               ),
             ),
-          ).then((value) => {
-                setState(() {
-                  _futureModel = postDio(
-                      '${notificationApi}read', {'skip': 0, 'limit': 999});
-                })
-              });
+          ).then((value) => {setState(() {})});
         }
         break;
 
@@ -195,12 +152,7 @@ class _NotificationList extends State<NotificationList> {
                 model: model,
               ),
             ),
-          ).then((value) => {
-                setState(() {
-                  _futureModel = postDio(
-                      '${notificationApi}read', {'skip': 0, 'limit': 999});
-                })
-              });
+          ).then((value) => {setState(() {})});
         }
         break;
 
@@ -211,12 +163,7 @@ class _NotificationList extends State<NotificationList> {
             MaterialPageRoute(
               builder: (context) => HomePageV2(),
             ),
-          ).then((value) => {
-                setState(() {
-                  _futureModel = postDio(
-                      '${notificationApi}read', {'skip': 0, 'limit': 999});
-                })
-              });
+          ).then((value) => {setState(() {})});
         }
         break;
 
@@ -235,7 +182,6 @@ class _NotificationList extends State<NotificationList> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: header(
@@ -430,10 +376,7 @@ class _NotificationList extends State<NotificationList> {
                 setState(() {
                   postAny('${notificationApi}update', {}).then((response) {
                     if (response == 'S') {
-                      setState(() {
-                        _futureModel = postDio('${notificationApi}read',
-                            {'skip': 0, 'limit': 999});
-                      });
+                      setState(() {});
                     }
                   });
                 });
@@ -453,10 +396,7 @@ class _NotificationList extends State<NotificationList> {
                 setState(() {
                   postAny('${notificationApi}delete', {}).then((response) {
                     if (response == 'S') {
-                      setState(() {
-                        _futureModel = postDio('${notificationApi}read',
-                            {'skip': 0, 'limit': 999});
-                      });
+                      setState(() {});
                     }
                   });
                 });

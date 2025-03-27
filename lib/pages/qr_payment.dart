@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-import 'dart:io';
-import 'package:flutter/rendering.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../widget/header.dart';
 
@@ -82,12 +76,6 @@ class QRPaymentState extends State<QRPayment> {
     );
   }
 
-  void _updateWidget() {
-    setState(() {
-      currentWidget = currentWidget == 1 ? 2 : 1;
-    });
-  }
-
   _buildWidget() {
     return FutureBuilder(
       future: Future.value(currentWidget),
@@ -157,125 +145,5 @@ class QRPaymentState extends State<QRPayment> {
         Container(height: 1, color: Colors.grey),
       ],
     );
-  }
-
-  _buildSuccess() {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      color: Colors.white,
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 100),
-          Container(
-            height: 130,
-            width: 130,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.green[50],
-              shape: BoxShape.circle,
-            ),
-            child: Container(
-              height: 110,
-              width: 110,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.green[100],
-                shape: BoxShape.circle,
-              ),
-              child: Container(
-                height: 90,
-                width: 90,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.green[200],
-                  shape: BoxShape.circle,
-                ),
-                child: Container(
-                  height: 70,
-                  width: 70,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.green[400],
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.check_rounded,
-                    size: 50,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 50),
-          Text(
-            'ชำระเงินสำเร็จ',
-            style: TextStyle(
-              fontFamily: 'Kanit',
-              fontSize: 20,
-              color: Colors.greenAccent,
-            ),
-          ),
-          Text(
-            'เลข order : ' + widget.code!,
-            style: TextStyle(
-              fontFamily: 'Kanit',
-              fontSize: 13,
-              color: Colors.grey,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          // Text(
-          //   'ราคา : ' + priceFormat.format(widget.model['netPrice']),
-          //   style: TextStyle(
-          //     fontFamily: 'Kanit',
-          //     fontSize: 13,
-          //     color: Colors.grey,
-          //   ),
-          //   textAlign: TextAlign.center,
-          // ),
-          SizedBox(height: 100),
-          Expanded(child: Container()),
-          SizedBox(height: 50),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _captureAndSharePng() async {
-    _requestPermission();
-    try {
-      RenderRepaintBoundary boundary =
-          globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
-      var image = await boundary.toImage();
-      ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-      Directory appDocumentsDirectory = await getTemporaryDirectory();
-      // await getExternalStorageDirectory(); // only android.
-      // await getApplicationDocumentsDirectory();
-      String appExternalStoragePath = appDocumentsDirectory.path;
-      var gen = new DateTime.now().millisecondsSinceEpoch.toString();
-      final file =
-          await new File(appExternalStoragePath + gen + '.png').create();
-      await file.writeAsBytes(pngBytes);
-
-      // final channel = const MethodChannel('channel:me.alfian.share/share');
-      // channel.invokeMethod('shareFile', 'image.png');
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  _requestPermission() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.storage,
-    ].request();
-
-    final info = statuses[Permission.storage].toString();
-    // toastFail(context, text: info);
   }
 }

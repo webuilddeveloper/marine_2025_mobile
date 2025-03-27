@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../component/key_search.dart';
 import '../../shared/api_provider.dart';
 import 'event_calendar_list_vertical.dart';
 

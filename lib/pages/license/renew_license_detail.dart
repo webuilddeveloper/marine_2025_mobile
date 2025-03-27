@@ -1,24 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
-// import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
-    as datatTimePicker;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:marine_mobile/pages/license/renew_license_payment.dart';
-
-import '../../home_v2.dart';
-import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
-import '../../widget/text_form_field.dart';
-import '../blank_page/dialog_fail.dart';
 
 class RenewLicenseDetail extends StatefulWidget {
   RenewLicenseDetail({super.key, this.model});

@@ -5,10 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 
 import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
 import '../../widget/text_form_field.dart';
 import '../blank_page/dialog_fail.dart';
 import 'user_information.dart';
@@ -26,12 +24,9 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
   String? _appleID;
   String? _googleID;
   String? _lineID;
-  String? _email;
-  String? _imageUrl;
   String? _category;
   String? _code;
   String? _username;
-  String? _password;
   Map? userProfile;
 
   final txtUsername = TextEditingController();
@@ -87,7 +82,6 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
       setState(() {
         txtUsername.text = result['objectData'][0]['username'] ?? '';
         txtPassword.text = result['objectData'][0]['password'] ?? '';
-        _imageUrl = result['objectData'][0]['imageUrl'] ?? '';
         _facebookID = result['objectData'][0]['facebookID'] ?? '';
         _appleID = result['objectData'][0]['appleID'] ?? '';
         _googleID = result['objectData'][0]['googleID'] ?? '';
@@ -383,14 +377,12 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
 
     if (user['code'] != '') {
       setState(() {
-        _imageUrl = user['imageUrl'] ?? '';
         _facebookID = user['facebookID'] ?? '';
         _appleID = user['appleID'] ?? '';
         _googleID = user['googleID'] ?? '';
         _lineID = user['lineID'] ?? '';
         _code = user['code'] ?? '';
         _username = user['username'] ?? '';
-        _password = user['password'] ?? '';
         txtUsername.text = user['username'] ?? '';
         txtPassword.text = user['password'] ?? '';
         futureModel = readUser();
@@ -412,15 +404,7 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
         option: loginOption,
       );
 
-      final idToken = result.accessToken.idToken;
-      final userEmail = (idToken != null)
-          ? idToken['email'] != null
-              ? idToken['email']
-              : ''
-          : '';
-
       setState(() {
-        _email = userEmail.toString() ?? '';
         _category = 'line';
         _lineID = result.userProfile!.userId.toString();
       });
@@ -457,9 +441,8 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
       final result = await _googleSignIn.signIn();
 
       setState(() {
-        _email = result!.email.toString() ?? '';
         _category = 'google';
-        _googleID = result.id.toString();
+        _googleID = result!.id.toString();
       });
       submitConnectSocial();
     } catch (err) {
@@ -698,6 +681,7 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
                   if (!regex.hasMatch(model)) {
                     return 'กรุณากรอกรูปแบบรหัสผ่านให้ถูกต้อง.';
                   }
+                  return null;
                 },
                 controller: txtPassword,
                 enabled: showIsEdit,
@@ -760,7 +744,7 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
                       return 'กรุณากรอกยืนยันรหัสผ่านใหม่.';
                     }
 
-                    if (model != txtPassword.text && txtPassword != null) {
+                    if (model != txtPassword.text) {
                       return 'กรุณากรอกรหัสผ่านให้ตรงกัน.';
                     }
 
@@ -770,6 +754,7 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
                     if (!regex.hasMatch(model)) {
                       return 'กรุณากรอกรูปแบบรหัสผ่านให้ถูกต้อง.';
                     }
+                    return null;
                   },
                   controller: txtConPassword,
                   enabled: showIsEdit,

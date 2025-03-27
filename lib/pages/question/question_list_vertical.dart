@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:marine_mobile/pages/license/check_license.dart';
 import 'package:marine_mobile/pages/question/question_list_detail.dart';
 
 class QuestionListVertical extends StatefulWidget {
@@ -65,8 +64,8 @@ class _QuestionListVertical extends State<QuestionListVertical> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => QuestionListDetail(
-                              model: snapshot.data[index]),
+                          builder: (context) =>
+                              QuestionListDetail(model: snapshot.data[index]),
                         ),
                       );
                     },

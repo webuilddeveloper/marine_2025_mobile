@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marine_mobile/pages/question/question_list_form.dart';
 
-import '../../component/carousel_banner.dart';
-import '../../component/carousel_form.dart';
-import '../../component/link_url_in.dart';
 import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
 import 'question_list_vertical.dart';
 
 class QuestionList extends StatefulWidget {
@@ -28,14 +24,12 @@ class _QuestionList extends State<QuestionList> {
       'title': 'สอบถามหน่อยครับ',
       'description': 'สอบถามหน่อยครับ',
       'date': '3 วัน ที่ผ่านมา',
-      'createDate' : '20/06/2025 5:32 pm',
+      'createDate': '20/06/2025 5:32 pm',
       'view': '535',
       'userName': 'Xxxx1'
     },
   ];
 
-  Future<dynamic>? _futureBanner;
-  Future<dynamic>? _futureCategoryContact;
   // final ScrollController _controller = ScrollController();
   @override
   void dispose() {

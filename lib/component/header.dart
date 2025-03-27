@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 header(
@@ -38,7 +37,7 @@ header(
       titleSpacing: 5,
       automaticallyImplyLeading: false,
       title: Text(
-        title != null ? title : '',
+        title,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 13,

@@ -15,7 +15,6 @@ class ComingSoon extends StatefulWidget {
 class _ComingSoon extends State<ComingSoon> {
   bool showCalendar = false;
   final storage = new FlutterSecureStorage();
-  Future<dynamic>? _futureProfile;
   String profileCode = '';
 
   @override
@@ -118,8 +117,11 @@ class _ComingSoon extends State<ComingSoon> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Menu(pageIndex: 0,),
-                  ),(Route<dynamic> route) => false,
+                    builder: (context) => Menu(
+                      pageIndex: 0,
+                    ),
+                  ),
+                  (Route<dynamic> route) => false,
                 ),
               },
               child: Padding(
@@ -134,11 +136,10 @@ class _ComingSoon extends State<ComingSoon> {
                   child: Text(
                     'กลับหน้าหลัก',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'Kanit',
-                      fontWeight: FontWeight.w600
-                    ),
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: 'Kanit',
+                        fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
                   ),
                 ),
